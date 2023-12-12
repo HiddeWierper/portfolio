@@ -63,10 +63,7 @@
  
 
   echo '<section class="languages">';
-  
-    $servername = "localhost";
-    $username = "root";
-    $password = "root";
+
     $dbname = "portfolio";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -94,7 +91,6 @@
   </section>
  </section>
 </div>
-
 
 <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
 <script src="script.js"></script>

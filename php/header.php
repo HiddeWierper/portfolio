@@ -6,6 +6,7 @@
     <a href=""><li>ABOUT</li></a>
     <a href=""><li>PROJECTS</li></a>
     <a href=""><li>CONTACT</li></a>
+    <a href="/php/login.php"><li>LOGIN</li></a>
   </ul>
   </span>
 </header>
