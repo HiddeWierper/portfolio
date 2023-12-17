@@ -1,3 +1,24 @@
+
+
+var activeLink = null;
+
+function active(id){
+  
+  if (activeLink) {
+    activeLink.style.color = "black";
+  }
+  var element = document.getElementById(id);
+  element.style.color = "#7843e9";
+  activeLink = element;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  console.log("DOM fully loaded and parsed");
+  active('skill');  
+});
+
+
+
 //add var for every skill icon
 var html = document.querySelector(".html");
 var css = document.querySelector(".css");
@@ -101,3 +122,8 @@ termText.addEventListener("mouseout", function(){
   term.style.transform = "";
   term.style.boxShadow = "";
 });
+
+
+
+
+

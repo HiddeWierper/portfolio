@@ -33,7 +33,7 @@
 
 <div class="form-container">
   <h1>Login</h1>
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <form class="skillsEdit" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required placeholder="Enter your username">
 
@@ -44,13 +44,11 @@
     </form>
 </div>
 
-
-
 <?php
 
 session_start();
 if ($_SESSION["loggedin"] === true) {
-    header("location: admin.php");
+    header("location: /portfolio/subpages/admin.php#skills");
     exit;
 }
 
@@ -69,9 +67,9 @@ try {
   $dbh = new PDO('mysql: host=' . $host.'; dbname='.$db
                 .'; port=' . $port, $user, $pass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
-}
+  } catch (PDOException $e) {
+      echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+  }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -92,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (count($result) > 0) {
                 $_SESSION["loggedin"] = true;
                 $_SESSION["username"] = $username;
-                header("location: admin.php");
+                header("location: /portfolio/subpages/admin.php#skills");
                 exit;
             } else {
                 echo "<script>alert('Incorrect username or password')</script>";
