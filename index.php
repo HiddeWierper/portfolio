@@ -45,8 +45,8 @@
       $user = 'root';
     }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
       $host = 'thuis.wierper.net';
-      $pass = 'gamer';
-      $user = 'NOescape!';
+      $pass = 'Wierper1411';
+      $user = 'root';
     }
   
   $conn = new mysqli($host, $user, $pass, $dbname);
