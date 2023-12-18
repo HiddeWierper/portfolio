@@ -42,6 +42,7 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
   $host = 'thuis.wierper.net';
   $pass = 'NOescape!';
   $user = 'gamer';
+  
 }
 
 try {
