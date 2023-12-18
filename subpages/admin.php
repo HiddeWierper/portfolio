@@ -28,13 +28,19 @@ $specialMessage = ($_SESSION["username"] === "root")
     : "You are logged in as a regular user. No special actions can be performed";
 
 // Database connection details
-$pass = 'root';
-$host = 'localhost';
-$port = '3306';
-$user = 'root';
-$db = 'portfolio';
+try {   
+  $port='3306';
 
-try {
+  if($_SERVER['SERVER_NAME'] == 'localhost') {
+    $host = 'localhost';
+    $pass = 'root';
+    $user = 'root';
+  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+    $host = 'thuis.wierper.net';
+    $pass = 'NOescape!';
+    $user = 'gamer';
+  }
+  $db= 'portfolio';
     $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
