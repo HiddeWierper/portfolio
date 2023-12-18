@@ -39,15 +39,15 @@
     $port='3306';
     $dbname = 'portfolio'; // replace with your database name
   
-    if($_SERVER['SERVER_NAME'] == 'localhost') {
-      $host = 'localhost';
-      $pass = 'root';
-      $user = 'root';
-    }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+    // if($_SERVER['SERVER_NAME'] == 'localhost') {
+    //   $host = 'localhost';
+    //   $pass = 'root';
+    //   $user = 'root';
+    // }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
       $host = 'thuis.wierper.net';
       $pass = 'Wierper1411';
       $user = 'root';
-    }
+    // }
   
   $conn = new mysqli($host, $user, $pass, $dbname);
 
