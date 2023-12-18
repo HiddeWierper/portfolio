@@ -52,19 +52,21 @@ if ($_SESSION["loggedin"] === true) {
     exit;
 }
 
+try {
+//   when on server remove //
+  // $host = 'thuis.wierper.net';
+  // $pass = 'Wierper1411';
 
-  try {   
-    $port='3306';
-  
-    if($_SERVER['SERVER_NAME'] == 'localhost') {
-      $host = 'localhost';
-      $pass = 'root';
-      $user = 'root';
-    }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-      $host = 'thuis.wierper.net';
-      $pass = 'Wierper1411';
-      $user = 'root';
-    }
+
+  if($_SERVER['SERVER_NAME'] == 'localhost') {
+    $host = 'localhost';
+    $pass = 'root';
+    $user = 'root';
+  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+    $host = 'thuis.wierper.net';
+    $pass = 'Wierper1411';
+    $user = 'root';
+  }
   
   $db= 'login';
   $dbh = new PDO('mysql: host=' . $host.'; dbname='.$db

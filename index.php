@@ -35,21 +35,20 @@
   <section class="all">
   <?php
   // Maak verbinding met de database
-  try {   
-    $port='3306';
-    $dbname = 'portfolio'; // replace with your database name
-  
-    // if($_SERVER['SERVER_NAME'] == 'localhost') {
-    //   $host = 'localhost';
-    //   $pass = 'root';
-    //   $user = 'root';
-    // }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-      $host = 'localhost';
-      $pass = 'Wierper1411';
-      $user = 'root';
-    // }
-  
-  $conn = new mysqli($host, $user, $pass, $dbname);
+
+  $dbname = "portfolio";
+
+  if($_SERVER['SERVER_NAME'] == 'localhost') {
+    $servername = 'localhost';
+    $password = 'root';
+    $username = 'root';
+  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+    $hostname = 'thuis.wierper.net';
+    $password = 'Wierper1411';
+    $username = 'root';
+  }
+
+  $conn = new mysqli($servername, $username, $password, $dbname);
 
   // Controleer de verbinding
   if ($conn->connect_error) {
@@ -59,9 +58,6 @@
   // Voer de query uit
   $sql = "SELECT skills_explanation FROM skills_explanation";
   $result = $conn->query($sql);
-} catch(Exception $e) {
-  echo 'Message: ' .$e->getMessage();
-}
 
   // Verwerk en druk de resultaten af
   if ($result->num_rows > 0) {
@@ -78,7 +74,7 @@
 
     $dbname = "portfolio";
 
-    $conn = new mysqli($host, $user, $pass, $dbname);
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
