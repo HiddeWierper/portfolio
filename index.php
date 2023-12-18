@@ -44,7 +44,7 @@
     //   $pass = 'root';
     //   $user = 'root';
     // }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-      $host = 'thuis.wierper.net';
+      $host = 'localhost';
       $pass = 'Wierper1411';
       $user = 'root';
     // }
