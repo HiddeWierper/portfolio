@@ -32,6 +32,7 @@ $specialMessage = ($_SESSION["username"] === "root")
 $port = '3306';
 $db = 'portfolio';
 
+
 if($_SERVER['SERVER_NAME'] == 'localhost') {
   $host = 'localhost';
   $pass = 'root';
