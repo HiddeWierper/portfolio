@@ -122,6 +122,7 @@ termText.addEventListener("mouseover", function(){
 });
 termText.addEventListener("mouseout", function(){
   term.style.transform = "";
+  
   term.style.boxShadow = "";
 });
 
