@@ -43,6 +43,8 @@ var githubText = document.getElementById("githubText");
 var termText = document.getElementById("termText");
 
 
+
+
 //now add that if mouseover, the icon will be red
 htmlText.addEventListener("mouseover", function(){
   html.style.transform = "scale(1.3)";
