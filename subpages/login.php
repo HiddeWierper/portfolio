@@ -33,7 +33,7 @@
 
 <div class="form-container">
   <h1>Login</h1>
-    <form class="skillsEdit" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required placeholder="Enter your username">
 

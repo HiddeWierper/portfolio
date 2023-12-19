@@ -125,7 +125,5 @@ termText.addEventListener("mouseout", function(){
   term.style.boxShadow = "";
 });
 
-//fdsd
-
 
 

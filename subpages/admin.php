@@ -72,6 +72,38 @@ try {
 } catch (PDOException $e) {
     echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
 }
+try {
+  $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+  // Retrieve content from the database
+  $sql = "SELECT skill_icon FROM skills ORDER BY order_number";
+  $stmt = $dbh->query($sql);
+  $skills = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  
+  // Update content if the form is submitted
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      for ($i = 1; $i <= 9; $i++) {
+          $skillName = 'skill' . $i;
+          $newSkill = $_POST[$skillName];
+
+          $updateSql = "UPDATE skills SET skill_icon = :newSkill WHERE order_number = :orderNumber";
+          $updateStmt = $dbh->prepare($updateSql);
+          $updateStmt->bindParam(':newSkill', $newSkill);
+          $updateStmt->bindParam(':orderNumber', $i);
+          $updateStmt->execute();
+
+          // Update the content variable to reflect the changes
+          $skills[$i - 1]['skill_icon'] = $newSkill;
+      }
+
+      $specialMessage = "Records updated successfully";
+      sleep(1);
+      header("location: /portfolio/subpages/admin.php#skills");
+  }
+} catch (PDOException $e) {
+  echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,10 +147,21 @@ try {
       <span><h2>Admin Panel</h2><p><?php echo"$specialMessage" ?></p></span>
       <div class="admin-panel">
         <div class="admin-panel-item" id="skills">
-          <form class="skillsEdit" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
-            <textarea name="content" id="" cols="30" rows="10"><?php echo $content; ?></textarea>
-            <input type="submit">
+          <div class="skillsEdit">
+          <form class="informationEdit" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+            <textarea name="content" id="s" cols="30" rows="10"><?php echo $content; ?></textarea>
+            <input class="left" type="submit">
           </form>
+          <form class="skillIconEdit" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+          <?php
+            for ($i = 1; $i <= 9; $i++) {
+                $skillName = 'skill' . $i;
+                echo '<textarea type="text" name="' . $skillName . '" id="' . $skillName . '" value="" placeholder="add fa fa link">' . $skills[$i - 1]['skill_icon'] . '</textarea>';
+            }
+            ?>
+            <input class="right" type="submit">
+          </form>
+          </div>
         </div>
         <div class="admin-panel-item" id="projects" >
           <p>checkdate</p>
