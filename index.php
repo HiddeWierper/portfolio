@@ -15,7 +15,7 @@
   
 </head>
 <body>
-<?php include 'subpages/header.php'; ?>
+<?php// include 'subpages/header.php'; ?>
 
 <div class="socials">
   <a href="https://github.com/HiddeWierper" class="fa-brands fa-github"></a>
