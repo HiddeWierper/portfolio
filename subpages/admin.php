@@ -159,6 +159,7 @@ try {
                 echo '<textarea type="text" name="' . $skillName . '" id="' . $skillName . '" value="" placeholder="add fa fa link">' . $skills[$i - 1]['skill_icon'] . '</textarea>';
             }
             ?>
+            
             <input class="right" type="submit">
           </form>
           </div>
