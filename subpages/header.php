@@ -1,5 +1,5 @@
 <header>
-  <span class="me"><img src="/portfolio/img/me.jpeg" alt=""><h2>Hidde Wierper</h2></span>
+  <span class="me"><img class="me" src="/portfolio/img/me.jpeg" alt=""><h2>Hidde Wierper</h2></span>
   <span class="nav">
   <ul>
     <a href="/portfolio/index.php"><li>HOME</li></a>

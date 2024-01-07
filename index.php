@@ -28,6 +28,7 @@
   <h1 class="text">𝗛𝗜, 𝗜'𝗠 <strong>𝗛𝗜𝗗𝗗𝗘 𝗪𝗜𝗘𝗥𝗣𝗘𝗥<strong></h1>
   <p>I'm a 16 year old student from The Netherlands. 
     I am currently studying in Almere to become a software developer</p>
+    <input type="button" value="𝗣𝗿𝗼𝗷𝗲𝗰𝘁𝘀" onclick="goToElement('projects')">
 </div>
 
 <div class="skills ">
@@ -100,9 +101,29 @@
  </section>
 </div>
 
+<div class="projects" id="projects">
+  <h1>𝗠𝗬 𝗣𝗥𝗢𝗝𝗘𝗖𝗧𝗦</h1>
+  <p>Explore a comprehensive overview of my diverse portfolio,
+     showcasing projects <br> developed in various programming languages.</p>
+
+  <section class="project">
+    <img src="img/we.png" alt="weformconsultancy">
+  </section>
+
 
 
 <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
 <script src="script.js"></script>
 </body>
 </html>
+
+<?php
+    // $dbname = "portfolio";
+
+    // $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // if ($conn->connect_error) {
+    //     die("Connection failed: " . $conn->connect_error);
+    // }
+
+    // ?>

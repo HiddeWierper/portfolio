@@ -125,5 +125,12 @@ termText.addEventListener("mouseout", function(){
   term.style.boxShadow = "";
 });
 
+function goToElement(elementId) {
+  // Scroll to the element with the specified ID
+  var element = document.getElementById(elementId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 
 
