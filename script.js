@@ -126,13 +126,7 @@ termText.addEventListener("mouseout", function(){
   term.style.transform = "";
   term.style.boxShadow = "";
 });
-function goToElement(elementId) {
-  // Scroll to the element with the specified ID
-  var element = document.getElementById(elementId);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-}
+
 
 function switchImage(id) {
   var Image_Id = document.getElementById(id);
@@ -157,10 +151,21 @@ function switchImage(id) {
       Image_Id.style.transform = "scaleX(-1)";
       Image_Id.style.transition = "all 0.5s ease-in-out";
   }
-
-
-
 }
+
+
+function goToElement(elementId) {
+  console.log('Function called with elementId:', elementId);
+  var element = document.getElementById(elementId);
+  console.log('Found element:', element);
+
+  if (element) {
+    var rect = element.getBoundingClientRect();
+    var offsetTop = rect.top - (window.innerHeight * 0.1);
+    element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest', offset: offsetTop });
+  }
+}
+
 
 
 

@@ -3,8 +3,8 @@
   <span class="nav">
   <ul>
     <a href="/portfolio/index.php"><li>HOME</li></a>
-    <a href=""><li>ABOUT</li></a>
-    <a href=""><li>PROJECTS</li></a>
+    <a href="#skills"><li>SKILLS</li></a>
+    <a href="#projects"><li>PROJECTS</li></a>
     <a href=""><li>CONTACT</li></a>
     <a href="/portfolio/subpages/login.php" ><li>LOGIN</li></a>
   </ul>

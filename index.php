@@ -31,7 +31,7 @@
     <input type="button" value="𝗣𝗿𝗼𝗷𝗲𝗰𝘁𝘀" onclick="goToElement('projects')">
 </div>
 
-<div class="skills ">
+<div class="skills">
   <h1>𝗠𝗬 𝗦𝗞𝗜𝗟𝗟𝗦</h1>
   <section class="all">
   <?php
@@ -89,7 +89,7 @@
     if ($result->num_rows > 0) {
   
         while ($row = $result->fetch_assoc()) {
-          echo '<div class="skill ' . $row['skill_note'] . '">';
+          echo '<div id="skills" class="skill ' . $row['skill_note'] . '">';
           echo $row[$kolomnaam];
           echo '</div>';
       }
@@ -113,12 +113,12 @@
     <div class="project-info">
       <h2><a href="https://github.com/HiddeW2007/weform-master" target="_blank" class="fa-brands fa-github gitIcon"></a>WeFormConsultancy</h2>
       <p>Creating a website for my manager, though not purchased, became a pivotal learning curve in HTML and CSS. Despite the project not leading to a sale, the process honed my web development skills, providing hands-on experience and confidence for future endeavors in the dynamic digital landscape.</p>
-      <a style="color: #7843e9" href="https://onzin12345.online" target="_blank">Visit website</a>
       <ul>
-        <li>PHP</li>
-        <li>CSS</li>
+        <li><abbr title="Hypertext Markup Language">HTML</abbr></li>
+        <li><abbr title="Cascading Style Sheet">CSS</abbr></li>
         <li>Javascript</li>
       </ul>
+      <a style="color: #7843e9" href="https://onzin12345.online" target="_blank">Visit website</a>
   </section>
   <hr>
   <section class="project">
@@ -128,12 +128,12 @@
     <div class="project-info">
       <h2><a href="https://github.com/HiddeWierper/htmlroc" target="_blank" class="fa-brands fa-github gitIcon"></a>Cat Site</h2>
       <p>I've crafted a captivating cat website for my final project using HTML and CSS. This feline haven features charming cat profiles, insightful articles on cat care, and a playful design. Dive into a world of whiskers and purrs as you explore the diverse and delightful content on this unique cat-centric website.</p>
-      <a style="color: #7843e9" href="https://katschool.netlify.app/" target="_blank">Visit website</a>
       <ul>
-        <li>PHP</li>
-        <li>CSS</li>
+        <li><abbr title="Hypertext Preprocessor">PHP</abbr></li>
+        <li><abbr title="Cascading Style Sheet">CSS</abbr></li>
         <li>Javascript</li>
       </ul>
+      <a style="color: #7843e9; padding: 0;" href="https://katschool.netlify.app/" target="_blank">Visit website</a>
   </section>
 <hr>
   <section class="project">
@@ -143,12 +143,12 @@
     <div class="project-info">
       <h2><a href="https://github.com/nhuijser/no-escape" target="_blank" class="fa-brands fa-github gitIcon"></a>No-Escape</h2>
       <p>Embark on a terror-filled journey within our horror game, a result of a gripping game jam with friends. Confront hair-raising mazes, engage in heart-pounding race challenges, survive the ominous Chrome Dino game, and test your wits with a bone-chilling quiz. This collaborative creation promises a diverse blend of fear-inducing gameplay, showcasing our shared passion for horror and game development.</p>
-      <a style="color: #7843e9" href="http://localhost/no-escape" target="_blank">Visit website</a>
       <ul>
-        <li>PHP</li>
-        <li>CSS</li>
+        <li><abbr title="Hypertext Preprocessor">PHP</abbr></li>
+        <li><abbr title="Cascading Style Sheet">CSS</abbr></li>
         <li>Javascript</li>
       </ul>
+      <a style="color: #7843e9" href="http://localhost/no-escape" target="_blank">Visit website</a>
   </section>
 </div>  
 
