@@ -106,11 +106,22 @@
   <p>Explore a comprehensive overview of my diverse portfolio,
      showcasing projects <br> developed in various programming languages.</p>
 
-  <section class="project">
-    <img src="img/we.png" alt="weformconsultancy">
+  <section class="project"> 
+    <img src="img/weform-pc.png" alt="weformconsultancy">
+    <div class="project-info">
+      <h2><a href="https://github.com/HiddeW2007/weform-master" target="_blank" class="fa-brands fa-github gitIcon"></a>WeFormConsultancy</h2>
+      <p>Creating a website for my manager, though not purchased, became a pivotal learning curve in HTML and CSS. Despite the project not leading to a sale, the process honed my web development skills, providing hands-on experience and confidence for future endeavors in the dynamic digital landscape.</p>
+      <a style="color: #7843e9" href="https://onzin12345.online" target="_blank">Visit website</a>
   </section>
 
-
+  <section class="project">
+    <img style="-webkit-transform: scaleX(-1); transform: scaleX(-1);" src="img/kattenfotos-pc-spiegeld.png" alt="">
+    <div class="project-info">
+      <h2><a href="https://github.com/HiddeWierper/htmlroc" target="_blank" class="fa-brands fa-github gitIcon"></a>Cat Site</h2>
+      <p>I've crafted a captivating cat website for my final project using HTML and CSS. This feline haven features charming cat profiles, insightful articles on cat care, and a playful design. Dive into a world of whiskers and purrs as you explore the diverse and delightful content on this unique cat-centric website.</p>
+      <a style="color: #7843e9" href="https://katschool.netlify.app/" target="_blank">Visit website</a>
+  </section>
+</div>
 
 <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
 <script src="script.js"></script>

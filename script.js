@@ -29,6 +29,7 @@ var git = document.querySelector(".git");
 var java = document.querySelector(".java");
 var github = document.querySelector(".github");
 var term = document.querySelector(".terminal");
+var gitIcon = document.querySelector(".gitIcon");
 
 
 //add var for every skill text
@@ -41,6 +42,7 @@ var gitText = document.getElementById("gitText");
 var javaText = document.getElementById("javaText");
 var githubText = document.getElementById("githubText");
 var termText = document.getElementById("termText");
+var section = document.getElementById("section");
 
 
 
@@ -124,7 +126,6 @@ termText.addEventListener("mouseout", function(){
   term.style.transform = "";
   term.style.boxShadow = "";
 });
-
 function goToElement(elementId) {
   // Scroll to the element with the specified ID
   var element = document.getElementById(elementId);

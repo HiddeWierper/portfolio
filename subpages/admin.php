@@ -137,7 +137,7 @@ try {
         <a href="#skills" id="skill" onclick="active('skill')" ><li>SKILLS</li></a>
         <a href="#projects" id="project" onclick="active('project')" ><li>PROJECTS</li></a>
         <a href="#contact" id="contac" onclick="active('contac')" ><li>CONTACT</li></a>
-        <a href="?logout=1"><li>LOGOUT</li></a>
+        <a href="?logout=1"><li>LOGOUT</li></a> 
       </ul>
     </span>
   </header>
