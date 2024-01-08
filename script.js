@@ -134,4 +134,33 @@ function goToElement(elementId) {
   }
 }
 
+function switchImage(id) {
+  var Image_Id = document.getElementById(id);
+  if (Image_Id.src.match("img/weform-pc.png")) {
+      Image_Id.src = "img/weform-mobile.png";
+      Image_Id.style.transform = "scaleX(-1)";
+      Image_Id.style.transition = "all 0.5s ease-in-out";
+  }
+  else if (Image_Id.src.match("img/weform-mobile.png")) {
+      Image_Id.src = "img/weform-pc.png";
+      Image_Id.style.transform = "scaleX(1)";
+      Image_Id.style.transition = "all 0.5s ease-in-out";
+  }
+
+  if (Image_Id.src.match("img/kat-pc.png")) {
+    Image_Id.src = "img/kat-mobile.png";
+    Image_Id.style.transform = "scaleX(1)";
+    Image_Id.style.transition = "all 0.5s ease-in-out";
+  }
+  else if (Image_Id.src.match("img/kat-mobile.png")) {
+      Image_Id.src = "img/kat-pc.png";
+      Image_Id.style.transform = "scaleX(-1)";
+      Image_Id.style.transition = "all 0.5s ease-in-out";
+  }
+
+
+
+}
+
+
 

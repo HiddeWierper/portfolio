@@ -21,6 +21,7 @@ body{
   transition: 0.3s;
   outline: none;
   cursor: auto;
+ 
 }
 
 .greetings input{
@@ -695,16 +696,29 @@ input[type=submit]:active {
   background-color: #F5F5F5;
 }
 
-.project:nth-child(even){
+.project:nth-of-type(even):not(hr){
   display: flex;
   flex-direction: row-reverse;
 }
 
-.projects img{
-  filter: drop-shadow(6px 30px 20px grey);
+.projects .imgContainer{
   width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-left: 5%;
   margin-right: 5%;
+}
+
+.projects img{
+  filter: drop-shadow(6px 30px 20px grey);
+  width: 100%;
+  padding: 0;
+}
+
+.projects img:hover{
+  filter: drop-shadow(6px 40px 20px grey);
 }
 
 .projects h1 {
@@ -722,12 +736,17 @@ input[type=submit]:active {
   font-weight: 300;
   color: grey;
   text-align: center;
+  
 }
 
 section.project{
   margin-top:5%;
   display: flex;
   flex-direction: row;
+  padding-bottom: 5%;
+  box-sizing: border-box;
+  height: 50vh;
+
 }
 
 section.project .project-info{
@@ -778,6 +797,8 @@ section.project .project-info  .fa-github:hover{
   transform: scale(1.2);
   padding: 0.5rem;
 }
+
+section.pr
 
 
 
