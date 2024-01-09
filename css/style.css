@@ -21,6 +21,7 @@ body{
   transition: 0.3s;
   outline: none;
   cursor: auto;
+  
  
 }
 
@@ -81,6 +82,7 @@ li{
   display: inline;
   text-align: right;
   padding: 2%;
+  cursor: pointer;
     
 }
 ul{
@@ -160,6 +162,7 @@ a:hover{
   margin: 15%;
   transition: all 0.3s ease-in-out;
   padding: 3%;
+  
 }
 
 .socials .fa-brands:hover {
@@ -814,6 +817,7 @@ section.project .project-info li{
   margin-right: 4%;
   font-weight: 700;
   letter-spacing: 1px;
+ 
 }
 
 section.project .project-info abbr{
@@ -821,6 +825,50 @@ section.project .project-info abbr{
   cursor: pointer;
 }
 
+.fly-in-left{
+  animation: slideInFromLeft 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.fly-in-right{
+  animation: slideInFromRight 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.rotate-image{
+  animation: rotate-image 0.5s ease-in-out;
+}
+
+@keyframes rotate-image {
+  0% {
+    transform: rotate(180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 1;
+  }
+
+}
+
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-30%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
 
 
 

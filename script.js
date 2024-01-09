@@ -127,6 +127,13 @@ termText.addEventListener("mouseout", function(){
   term.style.boxShadow = "";
 });
 
+function goToElement(elementId) {
+  // Scroll to the element with the specified ID
+  var element = document.getElementById(elementId);
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 
 function switchImage(id) {
   var Image_Id = document.getElementById(id);
@@ -134,11 +141,13 @@ function switchImage(id) {
       Image_Id.src = "img/weform-mobile.png";
       Image_Id.style.transform = "scaleX(-1)";
       Image_Id.style.transition = "all 0.5s ease-in-out";
+      insight.classList.add('fly-in-right');
   }
   else if (Image_Id.src.match("img/weform-mobile.png")) {
       Image_Id.src = "img/weform-pc.png";
       Image_Id.style.transform = "scaleX(1)";
       Image_Id.style.transition = "all 0.5s ease-in-out";
+      insight.classList.remove('fly-in-right');
   }
 
   if (Image_Id.src.match("img/kat-pc.png")) {
@@ -154,18 +163,80 @@ function switchImage(id) {
 }
 
 
-function goToElement(elementId) {
-  console.log('Function called with elementId:', elementId);
-  var element = document.getElementById(elementId);
-  console.log('Found element:', element);
 
-  if (element) {
-    var rect = element.getBoundingClientRect();
-    var offsetTop = rect.top - (window.innerHeight * 0.1);
-    element.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest', offset: offsetTop });
-  }
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll('a[href^="#"], input[type="button"]').forEach(element => {
+    element.addEventListener('click', function (e) {
+      e.preventDefault();
+
+      let targetId;
+      if (this.tagName === 'A') {
+        targetId = this.getAttribute('href').substring(1);
+      } else if (this.tagName === 'INPUT' && this.type === 'button') {
+        targetId = this.getAttribute('data-target');
+      }
+
+      const targetElement = document.getElementById(targetId);
+
+      if (targetElement) {
+        const offset = targetElement.getBoundingClientRect().top + window.scrollY;
+
+        // Additional actions and scrolling based on target ID
+        if (targetId === 'skills') {
+          console.log('Scrolling to section1 with custom action');
+          window.scrollTo({
+            top: offset - window.innerHeight + 0.45 * window.innerHeight, 
+            behavior: 'smooth'
+          });
+          // Add your specific code for 'section1' here
+        } else if (targetId === 'projects') {
+          console.log('Scrolling to section2 with custom action');
+          window.scrollTo({
+            top: offset - window.innerHeight + 0.9 * window.innerHeight,
+            behavior: 'smooth'
+          });
+          // Add your specific code for 'section2' here
+        } else {
+          console.log('Scrolling to default section');
+          window.scrollTo({
+            top: offset - window.innerHeight + 0 * window.innerHeight,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  });
+});
+
+
+
+function createObserver(targetSelector, childSelector, className) {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const insight = entry.target.querySelector(childSelector);
+
+      if (entry.isIntersecting) {
+        insight.classList.add(className);
+        return; // if we added the class, exit the function
+      }
+
+      // We're not intersecting, so remove the class!
+      insight.classList.remove(className);
+    });
+  });
+
+  observer.observe(document.querySelector(targetSelector));
 }
 
+// Observer 1
+createObserver('.project:nth-of-type(odd):not(hr)', '.odd', 'fly-in-right');
 
+// Observer 2
+createObserver('.project', '.imgContainer', 'rotate-image');
 
+// Observer 3
+createObserver('.project:nth-of-type(even):not(hr)', '.even', 'fly-in-left');
+
+// Add more observers and if statements for different animation classes as needed
 
