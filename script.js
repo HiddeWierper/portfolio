@@ -222,7 +222,7 @@ function createObserver(targetSelector, childSelector, className) {
       }
 
       // We're not intersecting, so remove the class!
-      insight.classList.remove(className);
+      // insight.classList.remove(className);
     });
   });
 
@@ -230,13 +230,46 @@ function createObserver(targetSelector, childSelector, className) {
 }
 
 // Observer 1
-createObserver('.project:nth-of-type(odd):not(hr)', '.odd', 'fly-in-right');
+createObserver('.project:nth-of-type(1):not(hr)', '.odd', 'fly-in-right');
+createObserver('.project:nth-of-type(1):not(hr)', '.imgContainer', 'rotate-image-clockwise');
 
 // Observer 2
-createObserver('.project', '.imgContainer', 'rotate-image');
+createObserver('.project:nth-of-type(2):not(hr)', '.even', 'fly-in-left');
+createObserver('.project:nth-of-type(2):not(hr)', '.imgContainer', 'rotate-image-counter-clockwise');
 
 // Observer 3
-createObserver('.project:nth-of-type(even):not(hr)', '.even', 'fly-in-left');
+createObserver('.project:nth-of-type(3):not(hr)', '.odd', 'fly-in-right');
+createObserver('.project:nth-of-type(3):not(hr)', '.imgContainer', 'rotate-image-clockwise');
+
+// Observer 4
+createObserver('.project:nth-of-type(4):not(hr)', '.odd', 'fly-in-left');
+createObserver('.project:nth-of-type(4):not(hr)', '.imgContainer', 'rotate-image-counter-clockwise');
+
+// Observer 5
+createObserver('.project:nth-of-type(5):not(hr)', '.odd', 'fly-in-right');
+createObserver('.project:nth-of-type(5):not(hr)', '.imgContainer', 'rotate-image-clockwise');
+
+// Observer 6
+createObserver('.project:nth-of-type(6):not(hr)', '.odd', 'fly-in-left');
+createObserver('.project:nth-of-type(6):not(hr)', '.imgContainer', 'rotate-image-counter-clockwise');
 
 // Add more observers and if statements for different animation classes as needed
 
+function previousEdit(id){
+  var current = document.getElementById(id);
+  var cat = document.getElementById("catSubmit");
+  var weform = document.getElementById("weformSubmit");
+  var no_escape = document.getElementById("no-escapeSubmit");
+  if (id == "weformSubmit"){
+    current.style.display = "none";
+    cat.style.display = "grid";
+  }
+  else if (id == "catSubmit"){
+    current.style.display = "none";
+    weform.style.display = "grid";
+  }
+  else if (id == "no-escapeSubmit"){
+    current.style.display = "none";
+    weform.style.display = "grid";
+  }
+}

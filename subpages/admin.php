@@ -70,7 +70,8 @@ try {
         header("location: /portfolio/subpages/admin.php#skills");
     }
 } catch (PDOException $e) {
-    echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+    // echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+    header("location: /portfolio/subpages/admin.php#skills");
 }
 try {
   $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
@@ -103,7 +104,57 @@ try {
   }
 } catch (PDOException $e) {
   echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+  header("location: /portfolio/subpages/admin.php#skills");
 }
+try{
+  $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $id = 1;
+  // Retrieve content from the database
+  $sql = "SELECT * FROM projects WHERE id = $id";
+  $stmt = $dbh->query($sql);
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+  $projectIconContent = $row['IconLink'];
+  $projectNameContent = $row['projectName'];
+  $projectInfoContent = $row['projectInfo'];
+  $projectLangContent = $row['projectLanguages'];
+  $projectWebLink = $row['projectWebsiteLink'];
+  $projectImg = $row['imgDir'];
+
+  // Update content if the form is submitted
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $newProjectIconContent = $_POST['projectIconContent'];
+      $newProjectNameContent = $_POST['projectNameContent'];
+      $newProjectInfoContent = $_POST['projectInfoContent'];
+      $newProjectLangContent = $_POST['projectLangContent'];
+      $newProjectWebLink = $_POST['projectWebLink'];
+      $newProjectImg = $_POST['projectImg'];
+      $updateSql = "UPDATE projects SET IconLink = :newProjectIconContent, projectName = :newProjectNameContent, projectInfo = :newProjectInfoContent, projectLanguages = :newProjectLangContent, projectWebsiteLink = :newProjectWebLink, imgDir = :newProjectImg WHERE id = $id";
+      $updateStmt = $dbh->prepare($updateSql);
+      $updateStmt->bindParam(':newProjectIconContent', $newProjectIconContent);
+      $updateStmt->bindParam(':newProjectNameContent', $newProjectNameContent);
+      $updateStmt->bindParam(':newProjectInfoContent', $newProjectInfoContent);
+      $updateStmt->bindParam(':newProjectLangContent', $newProjectLangContent);
+      $updateStmt->bindParam(':newProjectWebLink', $newProjectWebLink);
+      $updateStmt->bindParam(':newProjectImg', $newProjectImg);
+      $updateStmt->execute();
+
+      // Update the content variable to reflect the changes
+      $projectIconContent = $newProjectIconContent;
+      $projectNameContent = $newProjectNameContent;
+      $projectInfoContent = $newProjectInfoContent;
+      $projectLangContent = $newProjectLangContent;
+      $projectWebLink = $newProjectWebLink;
+      $projectImg = $newProjectImg;
+      
+      header("location: /portfolio/subpages/admin.php#projects");
+}
+}
+catch(PDOException $e){
+  echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+ 
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -140,15 +191,15 @@ try {
         <a href="?logout=1"><li>LOGOUT</li></a> 
       </ul>
     </span>
-  </header>
+</header>
 
   <section class="admin">
     <div class="adminPanel">
       <span><h2>Admin Panel</h2><p><?php echo"$specialMessage" ?></p></span>
       <div class="admin-panel">
         <div class="admin-panel-item" id="skills">
-          <div class="skillsEdit">
-          <form class="informationEdit" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+        <div class="skillsEdit">
+          <form class="skillsInformationEdit" action="<?php $_SERVER['PHP_SELF'];?>" method="post">
             <textarea name="content" id="s" cols="30" rows="10"><?php echo $content; ?></textarea>
             <input class="left" type="submit">
           </form>
@@ -163,16 +214,64 @@ try {
           </form>
           </div>
         </div>
-        <div class="admin-panel-item" id="projects" >
-          <p>checkdate</p>
-        </div>
+          <div class="admin-panel-item" id="projects" >
+            <div class="projectEdit">
+            <form id="weformSubmit" action="<?php echo $_SERVER['PHP_SELF'];?>" class="projectInformationEdit" method="post">
+               <span>
+                 <label for="edit">Icon</label>
+                 <textarea name="projectIconContent" id="" cols="30" rows="10"><?php echo "$projectIconContent"?></textarea>
+               </span>
+               <span>
+                 <label id="labelEditName" for="edit">Name</label>
+                 <textarea name="projectNameContent" id="editName" cols="30" rows="10"><?php echo "$projectNameContent"?></textarea>
+               </span>
+               <span>
+                 <label for="edit">Info</label>
+                 <textarea name="projectInfoContent" id="" cols="30" rows="10"><?php echo "$projectInfoContent"?></textarea>
+               </span>
+               <span>
+                 <label for="edit">Languages</label>
+                 <textarea name="projectLangContent" id="" cols="30" rows="10"><?php echo "$projectLangContent"?></textarea>
+               </span>
+               <span>
+                 <label for="edit">Website Link</label>
+                 <textarea name="projectWebLink" id="" cols="30" rows="10"><?php echo "$projectWebLink"?></textarea>
+               </span>
+               <span>
+                 <label for="edit">Image Path</label>
+                 <textarea name="projectImg" id="" cols="30" rows="10"><?php echo "$projectImg"?></textarea>
+               </span>
+               <span class="arrow">
+                 <i class="fa-solid fa-arrow-left" onclick="changeId()"></i>
+               </span>
+               <input name="weformSubmit" type="submit">
+               <span class="arrow">
+                 <i class="fa-solid fa-arrow-right" ></i>
+               </span>
+             </form>
+            </div>
+          </div>
         <div class="admin-panel-item" id="contact">
          <p>df</p>
         </div>
       </div>
     </div>
   </section>
-
+  <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
   <script src="/portfolio/script.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+function changeId() {
+  $.ajax({
+    url: "submit.php", 
+    type: "POST",
+    data: { newId: "id + 1" }, // replace "new value" with the actual new value for $id
+    success: function(result){
+      // Do something with the result if necessary
+    }
+  });
+}
+</script> -->
+</script>
 </body>
 </html>

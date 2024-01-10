@@ -1,3 +1,81 @@
+<?php
+ 
+if($_SERVER['SERVER_NAME'] == 'localhost') {
+  $host = 'localhost';
+  $pass = 'root';
+  $user = 'root';
+}else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+  $host = 'thuis.wierper.net';
+  $pass = 'NOescape!';
+  $user = 'gamer';
+  
+}
+    $port = 3306;
+    $db = 'portfolio';
+try {
+    $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Retrieve content from the database
+    $sql = "SELECT * FROM projects WHERE id = 1";
+    $stmt = $dbh->query($sql);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $weformLink = $row['IconLink'];
+    $weformName = $row['projectName'];
+    $weformInfo = $row['projectInfo'];
+    $weformLang = $row['projectLanguages'];
+    $weformWebLink = $row['projectWebsiteLink'];
+    $weformImgDir = $row['imgDir'];
+
+    // Update content if the form is submitted
+    } catch (PDOException $e) {
+          echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+    }
+
+
+try {
+    $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Retrieve content from the database
+    $sql = "SELECT * FROM projects WHERE id = 2";
+    $stmt = $dbh->query($sql);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $catLink = $row['IconLink'];
+    $catName = $row['projectName'];
+    $catInfo = $row['projectInfo'];
+    $catLang = $row['projectLanguages'];
+    $catWebLink = $row['projectWebsiteLink'];
+    $catImgDir = $row['imgDir'];
+
+    // Update content if the form is submitted
+    } catch (PDOException $e) {
+          echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+    }
+
+    // make also one for no-escape with random id between 000 and 999
+    try {
+      $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+      $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  
+      // Retrieve content from the database
+      $sql = "SELECT * FROM projects WHERE id = 3";
+      $stmt = $dbh->query($sql);
+      $row = $stmt->fetch(PDO::FETCH_ASSOC);
+      $noEscapeLink = $row['IconLink'];
+      $noEscapeName = $row['projectName'];
+      $noEscapeInfo = $row['projectInfo'];
+      $noEscapeLang = $row['projectLanguages'];
+      $noEscapeWebLink = $row['projectWebsiteLink'];
+      $noEscapeImgDir = $row['imgDir'];
+  
+      // Update content if the form is submitted
+      } catch (PDOException $e) {
+            echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+      }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +92,7 @@
   <link rel="icon" href="img/favicon.png" type="image/x-icon">
   
 </head>
-<body>
+<body id="home">
 <?php include 'subpages/header.php'; ?>
 
 <div class="socials">
@@ -108,47 +186,41 @@
 
   <section class="project 1 "> 
     <div class="imgContainer">
-      <img id="switchWeform" onclick="switchImage('switchWeform')" src="img/weform-pc.png" alt="weformconsultancy">
+      <img id="switchWeform" onclick="switchImage('switchWeform')" src='<?php echo"$weformImgDir"?>' alt="weformconsultancy">
     </div>
     <div class="project-info odd">
-      <h2><a href="https://github.com/HiddeW2007/weform-master" target="_blank" class="fa-brands fa-github gitIcon"></a>WeFormConsultancy</h2>
-      <p>Creating a website for my manager, though not purchased, became a pivotal learning curve in HTML and CSS. Despite the project not leading to a sale, the process honed my web development skills, providing hands-on experience and confidence for future endeavors in the dynamic digital landscape.</p>
+      <h2><a href="<?php echo"$weformLink" ?>" target="_blank" class="fa-brands fa-github gitIcon"></a><?php echo"$weformName"?></h2>
+      <p><?php echo"$weformInfo" ?></p>
       <ul>
-        <li><abbr title="Hypertext Markup Language">HTML</abbr></li>
-        <li><abbr title="Cascading Style Sheet">CSS</abbr></li>
-        <li>Javascript</li>
+        <?php echo"$weformLang" ?>
       </ul>
-      <a style="color: #7843e9" href="https://onzin12345.online" target="_blank">Visit website</a>
+      <a style="color: #7843e9" href='<?php echo"$weformWebLink"?>' target="_blank">Visit website</a>
   </section>
   <hr>
   <section class="project 2">
     <div class="imgContainer">
-      <img id="switchKat" onclick="switchImage('switchKat')" style="-webkit-transform: scaleX(-1); transform: scaleX(-1);" src="img/kat-pc.png" alt="">
+      <img id="switchKat" onclick="switchImage('switchKat')" style="-webkit-transform: scaleX(-1); transform: scaleX(-1);" src='<?php echo"$catImgDir"?>' alt="">
     </div>
     <div class="project-info even">
-      <h2><a href="https://github.com/HiddeWierper/htmlroc" target="_blank" class="fa-brands fa-github gitIcon"></a>Cat Site</h2>
-      <p>I've crafted a captivating cat website for my final project using HTML and CSS. This feline haven features charming cat profiles, insightful articles on cat care, and a playful design. Dive into a world of whiskers and purrs as you explore the diverse and delightful content on this unique cat-centric website.</p>
+    <h2><a href="<?php echo"$catLink" ?>" target="_blank" class="fa-brands fa-github gitIcon"></a><?php echo"$catName"?></h2>
+      <p><?php echo"$catInfo" ?></p>
       <ul>
-        <li><abbr title="Hypertext Preprocessor">PHP</abbr></li>
-        <li><abbr title="Cascading Style Sheet">CSS</abbr></li>
-        <li>Javascript</li>
+        <?php echo"$catLang" ?>
       </ul>
-      <a style="color: #7843e9; padding: 0;" href="https://katschool.netlify.app/" target="_blank">Visit website</a>
+      <a style="color: #7843e9" href='<?php echo"$catWebLink"?>' target="_blank">Visit website</a>
   </section>
 <hr>
-  <section class="project">
+  <section class="project 1">
     <div class="imgContainer">
-      <img id="no-escape" src="img/no-escape-pc.png" alt="">
+      <img id="no-escape" src="<?php echo"$noEscapeImgDir"?>" alt="">
     </div>    
     <div class="project-info odd">
-      <h2><a href="https://github.com/nhuijser/no-escape" target="_blank" class="fa-brands fa-github gitIcon"></a>No-Escape</h2>
-      <p>Embark on a terror-filled journey within our horror game, a result of a gripping game jam with friends. Confront hair-raising mazes, engage in heart-pounding race challenges, survive the ominous Chrome Dino game, and test your wits with a bone-chilling quiz. This collaborative creation promises a diverse blend of fear-inducing gameplay, showcasing our shared passion for horror and game development.</p>
+      <h2><a href="<?php echo"$noEscapeLink" ?>" target="_blank" class="fa-brands fa-github gitIcon"></a><?php echo"$noEscapeName"?></h2>
+      <p><?php echo"$noEscapeInfo" ?></p>
       <ul>
-        <li><abbr title="Hypertext Preprocessor">PHP</abbr></li>
-        <li><abbr title="Cascading Style Sheet">CSS</abbr></li>
-        <li>Javascript</li>
+        <?php echo"$noEscapeLang" ?>
       </ul>
-      <a style="color: #7843e9" href="http://localhost/no-escape" target="_blank">Visit website</a>
+      <a style="color: #7843e9" href='<?php echo"$noEscapeWebLink"?>' target="_blank">Visit website</a>
   </section>
 </div>  
 
@@ -157,13 +229,3 @@
 </body>
 </html>
 
-<?php
-    // $dbname = "portfolio";
-
-    // $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // if ($conn->connect_error) {
-    //     die("Connection failed: " . $conn->connect_error);
-    // }
-
-    // ?>

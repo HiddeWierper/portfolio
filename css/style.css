@@ -1,5 +1,6 @@
 html{
   scroll-behavior: smooth;
+  
 }
 
 body{
@@ -11,6 +12,7 @@ body{
   font-family: 'Roboto', sans-serif;
   background-attachment: fixed;
   box-sizing: border-box;
+  overflow-x: hidden;
   
 }
 
@@ -313,6 +315,7 @@ body.login{
 
 body.admin-body{
   background-color: rgb(175, 173, 173);
+  overflow-y: hidden !important;
 }
 
 header.login{
@@ -479,10 +482,6 @@ section.admin{
   animation: typing 1s steps(20, end), blink 1s 1 normal forwards;
 }
 
-.admin-body{
-  overflow: hidden;
-}
-
 .adminPanel{
   width: 70%;
   display: flex;
@@ -563,7 +562,7 @@ form{
 }
 
 
-.informationEdit{
+.skillsInformationEdit{
   display: flex;
   flex-direction: column;
 }
@@ -576,6 +575,10 @@ form{
   padding: 0;
   margin: 2%;
   width: 27vw;
+}
+
+textarea{
+  font-family: 'Rethink Sans', sans-serif;
 }
 
 .skillIconEdit textarea {
@@ -741,7 +744,6 @@ input[type=submit]:active {
   text-align: center;
   
 }
-
 section.project{
   margin-top:5%;
   display: flex;
@@ -755,7 +757,7 @@ section.project{
 section.project .project-info{
   width: 50%;
   padding: 1% 5%;
-  height: 100%;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -804,14 +806,16 @@ section.project .project-info  .fa-github:hover{
   padding: 0.5rem;
 }
 
-
+/* rgba(0, 0, 0, 0.171) */
 section.project .project-info li{
   display: inline-block;
   font-size: 1rem;
   padding:0.5rem 1rem;
-  background: rgba(0, 0, 0, 0.171);
-  backdrop-filter: blur(10px);
+  background: rgb(0,151,255);
+background: linear-gradient(286deg, rgba(0, 153, 255, 0.363) 3%, rgba(143, 13, 236, 0.315) 75%);
+backdrop-filter: blur(4px);
   border-radius: 20px;
+  background-size: 9rem 6rem;
   text-align: center;
   margin-bottom: 1rem;
   margin-right: 4%;
@@ -835,11 +839,15 @@ section.project .project-info abbr{
   animation-fill-mode: forwards;
 }
 
-.rotate-image{
-  animation: rotate-image 0.5s ease-in-out;
+.rotate-image-clockwise{
+  animation: rotate-image-clockwise 0.5s ease-in-out;
 }
 
-@keyframes rotate-image {
+.rotate-image-counter-clockwise{
+  animation: rotate-image-counter-clokwise 0.5s ease-in-out;
+}
+
+@keyframes rotate-image-clockwise {
   0% {
     transform: rotate(180deg);
     opacity: 0;
@@ -851,6 +859,17 @@ section.project .project-info abbr{
 
 }
 
+@keyframes rotate-image-counter-clokwise {
+  0% {
+    transform: rotate(180deg);
+    opacity: 0;
+  }
+  100% {
+    transform: rotate(0);
+    opacity: 1;
+  }
+
+}
 
 @keyframes slideInFromLeft {
   0% {
@@ -871,5 +890,110 @@ section.project .project-info abbr{
 }
 
 
+.projectEdit{
+  width: 90%;
+  height: 70%;
+  display: flex;
+  flex-direction: row;
+  align-items: left ;
+  justify-content: center;
+  margin: auto;
+  background-color: #7843e988;
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 5%;
+}
 
+.projectInformationEdit{
+  display: grid;
+  grid-template-rows: repeat(2, 40%);
+  grid-template-columns: repeat(3, 33%);
+  grid-gap: 20px;
+}
+
+
+.projectEdit textarea{
+  width: 100%;
+  height: 70%;
+  margin: 0;
+  resize: none;
+  border-radius: 16px;
+  padding: 3%;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: none;
+  background-color: white;
+  color:black;
+
+}
+
+.projectEdit label{
+  width: 100%;
+  font-size: 1.5rem;
+  display: flex;
+  text-align: center;
+}
+
+.projectEdit span{
+  width: 100%;
+  height: 100%;
+}
+
+.projectEdit input[type=submit] {
+  width: 50%;
+  height: 100%;
+  background-color: transparent;
+  color: white;
+  border: none;
+  place-self: center;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  padding: 3%;
+  margin: 3%;
   
+}
+
+#editName{
+  background: none;
+  border: none;
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+#labelEditName{
+  justify-content: center;
+}
+
+
+.arrow{
+  font-size: 4rem;
+  stroke: white;
+  color: white;
+  text-align: center;
+  place-self: center;
+}
+
+.fa-solid{
+  stroke: white;
+  color: white;
+  transition: all 0.5s ease-in-out;
+}
+
+.fa-solid:hover{
+  stroke: white;
+  transition: all 0.5s ease-in-out;
+  color: black;
+}
+
+#catSubmit{
+  display: none;
+}
+
+#no_escapeSubmit{
+  display: none;
+}
+
+
