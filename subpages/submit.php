@@ -18,14 +18,21 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
 
 $dsn = "mysql:host=$host;dbname=$db;port=$port";
 $dbh = new PDO($dsn, $user, $pass);
+session_start();
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  if ($_POST['action'] == 'newId') {
-    $id = 
-  
+  if ($_POST['action'] == 'changeId') {
+    $id = $_POST['newId'];
+
+    $newId = $id + 1;
+echo "jevader";
+    $_SESSION['id'] = $newId;
+
+    // Doe iets met $id indien nodig
   }
 }
+
 
 
 

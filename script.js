@@ -1,5 +1,5 @@
 
-
+var id;
 var activeLink = null;
 
 function active(id){
@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log("DOM fully loaded and parsed");
   active('skill');  
 });
-
 
 
 //add var for every skill icon
@@ -272,4 +271,24 @@ function previousEdit(id){
     current.style.display = "none";
     weform.style.display = "grid";
   }
+}
+
+function showLoader(){
+  var loader = document.getElementById("container");
+  loader.style.display = "flex";
+}
+
+function hideLoader(){
+  var loader = document.getElementById("container");
+  loader.style.display = "none";
+}
+
+function hideWarningTrigger(){
+setTimeout(function hideWarning() {
+  document.getElementById('warning').style.display = 'none';
+}, 2000);
+}
+function hideWarning(){
+  var warning = document.getElementById("warning");
+  warning.style.display = "none";
 }

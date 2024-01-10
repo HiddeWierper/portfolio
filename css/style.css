@@ -670,7 +670,7 @@ input.right[type=submit] {
 
 
 
-input[type=submit] {
+input[type=submit], input[type=button] {
   --c:  #7843e9; /* the color*/
   
   box-shadow: 0 0 0 .1em inset var(--c); 
@@ -685,12 +685,12 @@ input[type=submit] {
   outline-offset: .1em;
   transition: background-size .4s, background-position 0s .4s;
 }
-input[type=submit]:hover {
+input[type=submit]:hover, input[type=button]:hover {
   --_p: 100%;
   color: white;
   transition: background-position .4s, background-size 0s;
 }
-input[type=submit]:active {
+input[type=submit]:active input[type=button]:active {
   box-shadow: 0 0 9e9q inset #0009; 
   background-color: var(--c);
   color: #fff;
@@ -901,7 +901,7 @@ section.project .project-info abbr{
   background-color: #7843e988;
   backdrop-filter: blur(10px);
   border-radius: 16px;
-  padding: 5%;
+  padding: 2%;
 }
 
 .projectInformationEdit{
@@ -913,7 +913,7 @@ section.project .project-info abbr{
 
 
 .projectEdit textarea{
-  width: 100%;
+  width: 90%;
   height: 70%;
   margin: 0;
   resize: none;
@@ -938,6 +938,7 @@ section.project .project-info abbr{
 .projectEdit span{
   width: 100%;
   height: 100%;
+  place-content: center;
 }
 
 .projectEdit input[type=submit] {
@@ -968,12 +969,31 @@ section.project .project-info abbr{
 }
 
 
-.arrow{
+span.arrow{
+  position: relative;
   font-size: 4rem;
   stroke: white;
   color: white;
   text-align: center;
-  place-self: center;
+  width: 10%;
+  padding: 1%;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+span input{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+}
+span form{
+  width: 100%;
+  margin: 0;
+  padding: 0;
+ 
 }
 
 .fa-solid{
@@ -996,4 +1016,83 @@ section.project .project-info abbr{
   display: none;
 }
 
+.container{
+  display: none;
+  width: 100%;
+  height: 100vh;
+  z-index: 10001;
+  position: fixed;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.404);
+  backdrop-filter: blur(10px);
+}
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  padding-bottom: 5px;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  overflow: hidden;
+  color: #0000;
+  text-shadow: 0 0 0 #000,10ch 0 0 #000;
+  background: linear-gradient(#000 0 0) bottom left/0% 3px no-repeat;
+  animation: l14 1.5s infinite;
+}
+.loader:before {
+  content: "Loading...";
+}
+@keyframes l14 {
+    80%  {text-shadow:    0  0 0 #000,10ch 0 0 #000;background-size:100% 3px}
+    100% {text-shadow: -10ch 0 0 #000,0    0 0 #000}
+}
 
+span#delete{
+  grid-row: 3;
+  grid-column: 3;
+}
+
+input.delete{
+  
+  --c:  red;
+}
+
+#warning{
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  z-index: 10001;
+  position: fixed;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  top: 0;
+  right: 0;
+  color: red;
+  background-color: rgba(0, 0, 0, 0.404);
+  backdrop-filter: blur(10px);
+
+}
+
+#warning input{
+  width: 10%;
+  background-color: transparent;
+  color: white;
+  border: none;
+  place-self: center;
+  border-radius: 16px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  padding: 3%;
+  margin: 3%;
+  --c: blue;
+}
+
+input.add{
+  --c: rgb(0, 255, 0);
+}

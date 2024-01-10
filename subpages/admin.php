@@ -1,6 +1,61 @@
 <?php
 session_start();
 
+$id = isset($_SESSION['id']) ? $_SESSION['id'] : 1; // haal de waarde van $id op uit de sessievariabele als deze is ingesteld, anders is het 1
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (isset($_POST['up'])) {
+    sleep(1);
+    $id++;
+    $_SESSION['id'] = $id; // sla de nieuwe waarde van $id op in een sessievariabele
+  }
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (isset($_POST['down'])) {
+    sleep(1);
+    if ($id > 1) {
+      
+      $id--;
+      $_SESSION['id'] = $id; // sla de nieuwe waarde van $id op in een sessievariabele
+      header("location: /portfolio/subpages/admin.php#projects"); 
+    }else{
+    }
+    
+  }
+}
+$mysqli = new mysqli('localhost', 'root', 'root', 'portfolio');
+
+if ($mysqli->connect_error) {
+  die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
+}
+
+// Controleer of er een rij bestaat met de gegeven $id
+$query = "SELECT * FROM projects WHERE id = ?";
+$stmt = $mysqli->prepare($query);
+$stmt->bind_param('i', $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+  // Als er geen rij is, voeg dan een nieuwe rij in
+  
+  echo "<div id='warning'>
+  <h1>No more projects found! <br>
+  new project added!</h1>
+  <input type='button' value='Close' onclick='hideWarning();'>
+</div>";
+$query = "INSERT INTO projects (id) VALUES (?)";
+$stmt = $mysqli->prepare($query);
+$stmt->bind_param('i', $id);
+$stmt->execute();
+
+}
+
+$stmt->close();
+$mysqli->close();
+
+
 // Check if the user is not logged in, then redirect to the login page
 if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     header("location: /portfolio/subpages/login.php");
@@ -57,6 +112,7 @@ try {
 
     // Update content if the form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      if (isset($_POST['skillsInfo'])) {
         $newContent = $_POST['content'];
         $updateSql = "UPDATE skills_explanation SET skills_explanation = :newContent WHERE id = 5";
         $updateStmt = $dbh->prepare($updateSql);
@@ -68,6 +124,7 @@ try {
 
         echo "Record updated successfully";
         header("location: /portfolio/subpages/admin.php#skills");
+      }
     }
 } catch (PDOException $e) {
     // echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
@@ -84,6 +141,7 @@ try {
   
   // Update content if the form is submitted
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['skillsIcon'])) {
       for ($i = 1; $i <= 9; $i++) {
           $skillName = 'skill' . $i;
           $newSkill = $_POST[$skillName];
@@ -96,11 +154,13 @@ try {
 
           // Update the content variable to reflect the changes
           $skills[$i - 1]['skill_icon'] = $newSkill;
+        
       }
-
       $specialMessage = "Records updated successfully";
       sleep(1);
       header("location: /portfolio/subpages/admin.php#skills");
+
+    }
   }
 } catch (PDOException $e) {
   echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
@@ -109,7 +169,7 @@ try {
 try{
   $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $id = 1;
+  
   // Retrieve content from the database
   $sql = "SELECT * FROM projects WHERE id = $id";
   $stmt = $dbh->query($sql);
@@ -121,8 +181,10 @@ try{
   $projectWebLink = $row['projectWebsiteLink'];
   $projectImg = $row['imgDir'];
 
+  
   // Update content if the form is submitted
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['submitProjects'])) {
       $newProjectIconContent = $_POST['projectIconContent'];
       $newProjectNameContent = $_POST['projectNameContent'];
       $newProjectInfoContent = $_POST['projectInfoContent'];
@@ -150,10 +212,33 @@ try{
       header("location: /portfolio/subpages/admin.php#projects");
 }
 }
+}
 catch(PDOException $e){
   echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
  
 }
+
+try {
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['delete'])) {
+      // Use the current $id to delete the correct row
+      $deleteSql = "DELETE FROM projects WHERE id = ?";
+      $deleteStmt = $dbh->prepare($deleteSql);
+      $deleteStmt->bindParam(1, $id, PDO::PARAM_INT);
+      $deleteStmt->execute();
+
+      // Reset $id to 1 after deletion
+      $id--;
+      $_SESSION['id'] = $id;
+
+      header("location: /portfolio/subpages/admin.php#projects");
+      exit;
+    }
+  }
+} catch(PDOException $e) {
+  echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+}
+
 
 ?>
 <!DOCTYPE html>
@@ -199,26 +284,33 @@ catch(PDOException $e){
       <div class="admin-panel">
         <div class="admin-panel-item" id="skills">
         <div class="skillsEdit">
-          <form class="skillsInformationEdit" action="<?php $_SERVER['PHP_SELF'];?>" method="post">
+          <form class="skillsInformationEdit" name="skillsInfo" action="<?php $_SERVER['PHP_SELF'];?>" method="post">
             <textarea name="content" id="s" cols="30" rows="10"><?php echo $content; ?></textarea>
-            <input class="left" type="submit">
+            <input class="left" name="skillsInfo" type="submit">
           </form>
-          <form class="skillIconEdit" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+          <form class="skillIconEdit" name="skillsIcon" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
           <?php
             for ($i = 1; $i <= 9; $i++) {
                 $skillName = 'skill' . $i;
                 echo '<textarea type="text" name="' . $skillName . '" id="' . $skillName . '" value="" placeholder="add fa fa link">' . $skills[$i - 1]['skill_icon'] . '</textarea>';
             }
             ?>
-            <input class="right" type="submit">
+            <input class="right" name="skillsIcon" type="submit">
           </form>
           </div>
         </div>
           <div class="admin-panel-item" id="projects" >
             <div class="projectEdit">
-            <form id="weformSubmit" action="<?php echo $_SERVER['PHP_SELF'];?>" class="projectInformationEdit" method="post">
+            <span class="arrow">
+                
+                <form method="post" name="previous">
+                 <input type="hidden" name="down" value="1">
+                 <input onclick="showLoader();" type="submit" value="<">
+               </form>
+         </span>
+            <form id="submitProjects" action="<?php echo $_SERVER['PHP_SELF'];?>" class="projectInformationEdit" method="post">
                <span>
-                 <label for="edit">Icon</label>
+                 <label for="edit">Repository Website Link</label>
                  <textarea name="projectIconContent" id="" cols="30" rows="10"><?php echo "$projectIconContent"?></textarea>
                </span>
                <span>
@@ -241,14 +333,23 @@ catch(PDOException $e){
                  <label for="edit">Image Path</label>
                  <textarea name="projectImg" id="" cols="30" rows="10"><?php echo "$projectImg"?></textarea>
                </span>
-               <span class="arrow">
-                 <i class="fa-solid fa-arrow-left" onclick="changeId()"></i>
+               <span>
+                <input name="submitProjects" type="submit">
                </span>
-               <input name="weformSubmit" type="submit">
-               <span class="arrow">
-                 <i class="fa-solid fa-arrow-right" ></i>
+               <span id="delete">
+                <input class="delete" name="delete" type="submit" value="Delete">
                </span>
-             </form>
+               <span id="add">
+                <input class="add" name="add" type="submit" value="Add">
+               </span>
+              </form>
+            <span class="arrow">
+              <form method="post" name="next">
+                <input type="hidden" name="up" value="1">
+                <input type="submit" onclick="showLoader();" value=">">
+              </form> 
+            </span>
+
             </div>
           </div>
         <div class="admin-panel-item" id="contact">
@@ -259,19 +360,24 @@ catch(PDOException $e){
   </section>
   <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
   <script src="/portfolio/script.js"></script>
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <div id="container" class="container">
+    <div class="loader"></div>
+  </div>
+  
+    
 <script>
 function changeId() {
   $.ajax({
-    url: "submit.php", 
+    url: "admin.php", 
     type: "POST",
-    data: { newId: "id + 1" }, // replace "new value" with the actual new value for $id
+    data: { action: "changeId" }, // vervang "nieuwe waarde" met de daadwerkelijke nieuwe waarde voor $id
     success: function(result){
-      // Do something with the result if necessary
+      // Doe iets met het resultaat indien nodig
     }
   });
 }
-</script> -->
+</script>
 </script>
 </body>
 </html>
