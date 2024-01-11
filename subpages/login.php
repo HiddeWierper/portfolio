@@ -48,7 +48,7 @@
 
 session_start();
 if ($_SESSION["loggedin"] === true) {
-    header("location: /portfolio/subpages/admin.php#skills");
+    header("location: /portfolio/subpages/admin.php");
     exit;
 }
 
@@ -95,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (count($result) > 0) {
                 $_SESSION["loggedin"] = true;
                 $_SESSION["username"] = $username;
-                header("location: /portfolio/subpages/admin.php#skills");
+                header("location: /portfolio/subpages/admin.php");
                 exit;
             } else {
                 echo "<script>alert('Incorrect username or password')</script>";

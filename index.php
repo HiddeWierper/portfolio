@@ -15,64 +15,11 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
 try {
     $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
-    // Retrieve content from the database
-    $sql = "SELECT * FROM projects WHERE id = 1";
-    $stmt = $dbh->query($sql);
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $weformLink = $row['IconLink'];
-    $weformName = $row['projectName'];
-    $weformInfo = $row['projectInfo'];
-    $weformLang = $row['projectLanguages'];
-    $weformWebLink = $row['projectWebsiteLink'];
-    $weformImgDir = $row['imgDir'];
-
-    // Update content if the form is submitted
-    } catch (PDOException $e) {
-          echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
-    }
-
-
-try {
-    $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Retrieve content from the database
-    $sql = "SELECT * FROM projects WHERE id = 2";
-    $stmt = $dbh->query($sql);
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    $catLink = $row['IconLink'];
-    $catName = $row['projectName'];
-    $catInfo = $row['projectInfo'];
-    $catLang = $row['projectLanguages'];
-    $catWebLink = $row['projectWebsiteLink'];
-    $catImgDir = $row['imgDir'];
-
-    // Update content if the form is submitted
-    } catch (PDOException $e) {
-          echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
-    }
-
-    // make also one for no-escape with random id between 000 and 999
-    try {
-      $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
-      $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  
-      // Retrieve content from the database
-      $sql = "SELECT * FROM projects WHERE id = 3";
-      $stmt = $dbh->query($sql);
-      $row = $stmt->fetch(PDO::FETCH_ASSOC);
-      $noEscapeLink = $row['IconLink'];
-      $noEscapeName = $row['projectName'];
-      $noEscapeInfo = $row['projectInfo'];
-      $noEscapeLang = $row['projectLanguages'];
-      $noEscapeWebLink = $row['projectWebsiteLink'];
-      $noEscapeImgDir = $row['imgDir'];
-  
-      // Update content if the form is submitted
-      } catch (PDOException $e) {
-            echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
-      }
+} catch(PDOException $e) {
+    echo 'ERROR: ' . $e->getMessage();
+}
 
 ?>
 

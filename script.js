@@ -283,12 +283,10 @@ function hideLoader(){
   loader.style.display = "none";
 }
 
-function hideWarningTrigger(){
-setTimeout(function hideWarning() {
-  document.getElementById('warning').style.display = 'none';
-}, 2000);
-}
 function hideWarning(){
   var warning = document.getElementById("warning");
   warning.style.display = "none";
+
 }
+
+

@@ -1,13 +1,36 @@
 <?php
 session_start();
-
 $id = isset($_SESSION['id']) ? $_SESSION['id'] : 1; // haal de waarde van $id op uit de sessievariabele als deze is ingesteld, anders is het 1
+
+if ($id == 0){
+  $id = 1;
+  $_SESSION['id'] = $id; // sla de nieuwe waarde van $id op in een sessievariabele
+}
+
+$mysqli = new mysqli('localhost', 'root', 'root', 'portfolio'); // initialize $mysqli
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST['up'])) {
     sleep(1);
     $id++;
     $_SESSION['id'] = $id; // sla de nieuwe waarde van $id op in een sessievariabele
+
+    // Voer een SQL-query uit om te controleren of er een rij is met het gegeven $id
+    $query = "SELECT * FROM projects WHERE id = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+      // If there is no row with the given $id, display a warning
+      echo "<div id='warning'>
+      <h1>No row exists with id $id!<br>
+      </h1>
+      <input type='button' value='Close' onclick='hideWarning();'>
+    </div>";
+    $id--;
+    }
   }
 }
 
@@ -18,42 +41,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       
       $id--;
       $_SESSION['id'] = $id; // sla de nieuwe waarde van $id op in een sessievariabele
-      header("location: /portfolio/subpages/admin.php#projects"); 
+      // header("location: /portfolio/subpages/admin.php#projects"); 
     }else{
     }
     
   }
 }
-$mysqli = new mysqli('localhost', 'root', 'root', 'portfolio');
 
+try{
+$mysqli = new mysqli('localhost', 'root', 'root', 'portfolio');
 if ($mysqli->connect_error) {
   die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
 
-// Controleer of er een rij bestaat met de gegeven $id
-$query = "SELECT * FROM projects WHERE id = ?";
-$stmt = $mysqli->prepare($query);
-$stmt->bind_param('i', $id);
-$stmt->execute();
-$result = $stmt->get_result();
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (isset($_POST['add'])) {
+    sleep(1);
 
-if ($result->num_rows === 0) {
-  // Als er geen rij is, voeg dan een nieuwe rij in
-  
-  echo "<div id='warning'>
-  <h1>No more projects found! <br>
-  new project added!</h1>
-  <input type='button' value='Close' onclick='hideWarning();'>
-</div>";
-$query = "INSERT INTO projects (id) VALUES (?)";
-$stmt = $mysqli->prepare($query);
-$stmt->bind_param('i', $id);
-$stmt->execute();
+    // Vind het hoogste id in de tabel
+    $query = "SELECT MAX(id) AS max_id FROM projects";
+    $result = $mysqli->query($query);
+    $row = $result->fetch_assoc();
+    $max_id = $row['max_id'];
 
+    // Voeg 1 toe aan het hoogste id om het nieuwe id te krijgen
+    $id = $max_id + 1;
+    $_SESSION['id'] = $id; // sla de nieuwe waarde van $id op in een sessievariabele
+
+    $query = "SELECT * FROM projects WHERE id = ?";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {
+      // Als er geen rij is, voeg dan een nieuwe rij in
+      echo "<div id='warning'>
+      <h1>Succesfully added! <br>
+      </h1>
+      <input type='button' value='Close' onclick='hideWarning();'>
+    </div>";
+    $query = "INSERT INTO projects (id) VALUES (?)";
+    $stmt = $mysqli->prepare($query);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+    }
+
+    $stmt->close();
+  }
 }
 
-$stmt->close();
 $mysqli->close();
+
+} catch(PDOException $e){
+  echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
+ 
+}
 
 
 // Check if the user is not logged in, then redirect to the login page
@@ -123,12 +166,12 @@ try {
         $content = $newContent;
 
         echo "Record updated successfully";
-        header("location: /portfolio/subpages/admin.php#skills");
+        // header("location: /portfolio/subpages/admin.php");
       }
     }
 } catch (PDOException $e) {
     // echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
-    header("location: /portfolio/subpages/admin.php#skills");
+    // header("location: /portfolio/subpages/admin.php");
 }
 try {
   $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
@@ -158,13 +201,13 @@ try {
       }
       $specialMessage = "Records updated successfully";
       sleep(1);
-      header("location: /portfolio/subpages/admin.php#skills");
+      // header("location: /portfolio/subpages/admin.php");
 
     }
   }
 } catch (PDOException $e) {
   echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
-  header("location: /portfolio/subpages/admin.php#skills");
+  // header("location: /portfolio/subpages/admin.php");
 }
 try{
   $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
@@ -209,7 +252,7 @@ try{
       $projectWebLink = $newProjectWebLink;
       $projectImg = $newProjectImg;
       
-      header("location: /portfolio/subpages/admin.php#projects");
+      // header("location: /portfolio/subpages/admin.php#projects");
 }
 }
 }
@@ -220,19 +263,55 @@ catch(PDOException $e){
 
 try {
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['delete'])) {
+    if (isset($_POST['hide'])) {
+      sleep(1);
       // Use the current $id to delete the correct row
-      $deleteSql = "DELETE FROM projects WHERE id = ?";
+      $deleteSql = "UPDATE projects set deleted = 1 where id = ?";
       $deleteStmt = $dbh->prepare($deleteSql);
       $deleteStmt->bindParam(1, $id, PDO::PARAM_INT);
       $deleteStmt->execute();
-
-      // Reset $id to 1 after deletion
-      $id--;
-      $_SESSION['id'] = $id;
-
-      header("location: /portfolio/subpages/admin.php#projects");
-      exit;
+  
+      $affectedRows = $deleteStmt->rowCount();
+         if ($affectedRows > 0) {
+        echo "<div id='warning'>
+        <h1>Succesfully deleted! <br>
+        </h1>
+        <input type='button' value='Close' onclick='hideWarning();'>
+      </div>";
+        $id--;
+        $_SESSION['id'] = $id;
+      }elseif ($affectRows == 0){
+        echo "<div id='warning'>
+        <h1>Nothing to delete! <br>
+        </h1>
+        <input type='button' value='Close' onclick='hideWarning();'>
+        </div>";
+        
+      }
+    }
+    else if(isset($_POST['show'])){
+      sleep(1);
+      // Use the current $id to delete the correct row
+      $deleteSql = "UPDATE projects set deleted = 0 where id = ?";
+      $deleteStmt = $dbh->prepare($deleteSql);
+      $deleteStmt->bindParam(1, $id, PDO::PARAM_INT);
+      $deleteStmt->execute();
+ 
+      $affectedRows = $deleteStmt->rowCount();
+      if ($affectedRows > 0) {
+        echo "<div id='warning'>
+        <h1>Succesfully Added Back! <br>
+        </h1>
+        <input type='button' value='Close' onclick='hideWarning();'>
+    </div>";
+      }
+      else if ($affectedRows == 0){
+        echo "<div id='warning'>
+        <h1>Already Visible On Website! <br>
+        </h1>
+        <input type='button' value='Close' onclick='hideWarning();'>
+    </div>";
+      }
     }
   }
 } catch(PDOException $e) {
@@ -270,7 +349,7 @@ try {
     </span>
     <span class="nav">
       <ul>
-        <a href="#skills" id="skill" onclick="active('skill')" ><li>SKILLS</li></a>
+        <a href="admin.php" id="skill" onclick="active('skill')" ><li>SKILLS</li></a>
         <a href="#projects" id="project" onclick="active('project')" ><li>PROJECTS</li></a>
         <a href="#contact" id="contac" onclick="active('contac')" ><li>CONTACT</li></a>
         <a href="?logout=1"><li>LOGOUT</li></a> 
@@ -280,7 +359,7 @@ try {
 
   <section class="admin">
     <div class="adminPanel">
-      <span><h2>Admin Panel</h2><p><?php echo"$specialMessage" ?></p></span>
+      <span class="header"><h2>Admin Panel</h2><p><?php echo"$specialMessage" ?></p></span>
       <div class="admin-panel">
         <div class="admin-panel-item" id="skills">
         <div class="skillsEdit">
@@ -337,7 +416,8 @@ try {
                 <input name="submitProjects" type="submit">
                </span>
                <span id="delete">
-                <input class="delete" name="delete" type="submit" value="Delete">
+                <input class="delete" name="hide" type="submit" value="Delete">
+                <input type="submit" class="show" name="show" value="Bring Back">
                </span>
                <span id="add">
                 <input class="add" name="add" type="submit" value="Add">
