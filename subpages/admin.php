@@ -429,7 +429,7 @@ try {
             <div class="projectEdit">
             <span class="arrow">
                 
-                <form method="post" name="previous">
+                <form method="post" action="action.php" name="previous">
                  <input type="hidden" name="down" value="1">
                  <input <?php echo $inputDisabled?> onclick="showLoader();" type="submit" value="<">
                </form>

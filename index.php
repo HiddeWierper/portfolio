@@ -151,7 +151,7 @@ try {
 
     echo '<section id="project-' . $project['id'] . '" class="project ' . $project['id'] . '">';
     echo '<div class="imgContainer">';
-    echo '<img id="switch' . $projectNameContent . '" onclick="switchImage(\'switch' . $projectNameContent . '\')"  transform: scaleX(-1);" src="' . $projectImg . '" alt="">';
+    echo '<img id="switch' . $projectNameContent . '" onclick="switchImage(\'switch' . $projectNameContent . '\')"  style="' . ($project['id'] % 2 == 0 ? 'transform: scaleX(-1);' : '') . '" src="' . $projectImg . '" alt="">';
     echo '</div>';
     echo '<div class="project-info ' . ($project['id'] % 2 == 0 ? 'even' : 'odd') . '">';
     echo '<h2><a href="' . $projectIconContent . '" target="_blank" class="fa-brands fa-github gitIcon"></a>' . $projectNameContent . '</h2>';

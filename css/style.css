@@ -88,7 +88,8 @@ li{
     
 }
 ul{
-  width: 60%;
+  width: 100%;
+  text-align: right;
 }
 img.me{
   width: 7%;
@@ -107,7 +108,7 @@ span.nav{
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  width: 60%;
+  width: 100%;
 }
 
 a {
@@ -1116,5 +1117,9 @@ input.delete{
 
 input.add{
   --c: rgb(0, 255, 0);
+}
+
+.project-info ul{
+  text-align: left;
 }
 
