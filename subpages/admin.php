@@ -252,12 +252,27 @@ try{
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['submitProjects'])) {
       sleep(1); 
+
+      $uploadDir = '../img/'; // specify your upload directory
+      $uploadFile = $uploadDir . basename($_FILES['projectImg']['name']);
+
+      if (move_uploaded_file($_FILES['projectImg']['tmp_name'], $uploadFile)) {
+          // File uploaded successfully
+          $newProjectImg = $uploadFile;
+          $projectImg = basename($newProjectImg);
+      } else {
+          // File upload failed
+          echo "Error uploading file.";
+          exit;
+      }
+
+
       $newProjectIconContent = $_POST['projectIconContent'];
       $newProjectNameContent = $_POST['projectNameContent'];
       $newProjectInfoContent = $_POST['projectInfoContent'];
       $newProjectLangContent = $_POST['projectLangContent'];
       $newProjectWebLink = $_POST['projectWebLink'];
-      $newProjectImg = $_POST['projectImg'];
+      $newProjectImg = basename($newProjectImg);
       $updateSql = "UPDATE projects SET IconLink = :newProjectIconContent, projectName = :newProjectNameContent, projectInfo = :newProjectInfoContent, projectLanguages = :newProjectLangContent, projectWebsiteLink = :newProjectWebLink, imgDir = :newProjectImg WHERE id = $id";
       $updateStmt = $dbh->prepare($updateSql);
       $updateStmt->bindParam(':newProjectIconContent', $newProjectIconContent);
@@ -267,6 +282,7 @@ try{
       $updateStmt->bindParam(':newProjectWebLink', $newProjectWebLink);
       $updateStmt->bindParam(':newProjectImg', $newProjectImg);
       $updateStmt->execute();
+
 
       // Update the content variable to reflect the changes
       $projectIconContent = $newProjectIconContent;
@@ -429,12 +445,12 @@ try {
             <div class="projectEdit">
             <span class="arrow">
                 
-                <form method="post" action="action.php" name="previous">
+                <form method="post" name="previous">
                  <input type="hidden" name="down" value="1">
-                 <input <?php echo $inputDisabled?> onclick="showLoader();" type="submit" value="<">
+                 <input <?php echo $inputDisabled?>  onclick="showLoader();" type="submit" value="<">
                </form>
          </span>
-            <form id="submitProjects" action="<?php echo $_SERVER['PHP_SELF'];?>" class="projectInformationEdit" method="post">
+         <form id="submitProjects" action="<?php echo $_SERVER['PHP_SELF'];?>" class="projectInformationEdit" method="post" enctype="multipart/form-data">
                <span>
                  <label for="edit">Repository Website Link</label>
                  <textarea <?php echo $readonly ?> name="projectIconContent" id="" cols="30" rows="10"><?php echo "$projectIconContent"?></textarea>
@@ -456,10 +472,11 @@ try {
                  <textarea <?php echo $readonly ?> name="projectWebLink" id="" cols="30" rows="10"><?php echo "$projectWebLink"?></textarea>
                </span>
                <span id="imgId">
-                 <label for="edit">Image Path</label>
-                 <textarea <?php echo $readonly ?> name="projectImg" id="" cols="30" rows="10"><?php echo "$projectImg"?></textarea>
-                 <label for="edit">Order Number</label>
-                 <textarea readonly name="projectId" id="" cols="30" rows="10"><?php echo "$id"?></textarea>
+               <label for="edit">Image Path</label>
+                <input type="file" name="projectImg" id="projectImg">
+                <textarea readonly name="imgDir"><?php echo $projectImg ?></textarea>
+                <label for="edit">Order Number</label>
+                <textarea readonly name="projectId" id="" cols="30" rows="10"><?php echo $id; ?></textarea>
                </span>
                <span id="submit">
                 <input <?php echo $inputDisabled?> name="submitProjects" type="submit">
