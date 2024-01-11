@@ -1,5 +1,5 @@
 <?php
- 
+session_start();
 if($_SERVER['SERVER_NAME'] == 'localhost') {
   $host = 'localhost';
   $pass = 'root';
@@ -130,45 +130,47 @@ try {
   <h1>𝗠𝗬 𝗣𝗥𝗢𝗝𝗘𝗖𝗧𝗦</h1>
   <p>Explore a comprehensive overview of my diverse portfolio,
      showcasing projects <br> developed in various programming languages.</p>
+<?php
+try {
+  $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+  $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-  <section class="project 1 "> 
-    <div class="imgContainer">
-      <img id="switchWeform" onclick="switchImage('switchWeform')" src='<?php echo"$weformImgDir"?>' alt="weformconsultancy">
-    </div>
-    <div class="project-info odd">
-      <h2><a href="<?php echo"$weformLink" ?>" target="_blank" class="fa-brands fa-github gitIcon"></a><?php echo"$weformName"?></h2>
-      <p><?php echo"$weformInfo" ?></p>
-      <ul>
-        <?php echo"$weformLang" ?>
-      </ul>
-      <a style="color: #7843e9" href='<?php echo"$weformWebLink"?>' target="_blank">Visit website</a>
-  </section>
-  <hr>
-  <section class="project 2">
-    <div class="imgContainer">
-      <img id="switchKat" onclick="switchImage('switchKat')" style="-webkit-transform: scaleX(-1); transform: scaleX(-1);" src='<?php echo"$catImgDir"?>' alt="">
-    </div>
-    <div class="project-info even">
-    <h2><a href="<?php echo"$catLink" ?>" target="_blank" class="fa-brands fa-github gitIcon"></a><?php echo"$catName"?></h2>
-      <p><?php echo"$catInfo" ?></p>
-      <ul>
-        <?php echo"$catLang" ?>
-      </ul>
-      <a style="color: #7843e9" href='<?php echo"$catWebLink"?>' target="_blank">Visit website</a>
-  </section>
-<hr>
-  <section class="project 1">
-    <div class="imgContainer">
-      <img id="no-escape" src="<?php echo"$noEscapeImgDir"?>" alt="">
-    </div>    
-    <div class="project-info odd">
-      <h2><a href="<?php echo"$noEscapeLink" ?>" target="_blank" class="fa-brands fa-github gitIcon"></a><?php echo"$noEscapeName"?></h2>
-      <p><?php echo"$noEscapeInfo" ?></p>
-      <ul>
-        <?php echo"$noEscapeLang" ?>
-      </ul>
-      <a style="color: #7843e9" href='<?php echo"$noEscapeWebLink"?>' target="_blank">Visit website</a>
-  </section>
+  $stmt = $dbh->prepare("SELECT * FROM projects WHERE deleted = 0 ORDER BY id;");
+  $stmt->execute();
+
+  $projects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  foreach ($projects as $project) {
+    $projectIconContent = $project['IconLink'];
+    $projectNameContent = $project['projectName'];
+    $projectInfoContent = $project['projectInfo'];
+    $projectLangContent = $project['projectLanguages'];
+    $projectWebLink = $project['projectWebsiteLink'];
+    $projectImg = $project['imgDir'];
+    $projectId = $project['id'];
+
+    echo '<section id="project-' . $project['id'] . '" class="project ' . $project['id'] . '">';
+    echo '<div class="imgContainer">';
+    echo '<img id="switch' . $projectNameContent . '" onclick="switchImage(\'switch' . $projectNameContent . '\')"  transform: scaleX(-1);" src="' . $projectImg . '" alt="">';
+    echo '</div>';
+    echo '<div class="project-info ' . ($project['id'] % 2 == 0 ? 'even' : 'odd') . '">';
+    echo '<h2><a href="' . $projectIconContent . '" target="_blank" class="fa-brands fa-github gitIcon"></a>' . $projectNameContent . '</h2>';
+    echo '<p>' . $projectInfoContent . '</p>';
+    echo '<ul>';
+    echo  $projectLangContent;
+    echo '</ul>';
+    echo '<a style="color: #7843e9" href="' . $projectWebLink . '" target="_blank">Visit website</a>';
+    echo '</div>';
+    echo '</section>';
+    echo '<hr>';
+}
+
+} catch(PDOException $e) {
+  echo 'ERROR: ' . $e->getMessage();
+}
+?>
+  
+  
 </div>  
 
 <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>

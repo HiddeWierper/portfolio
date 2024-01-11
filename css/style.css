@@ -973,11 +973,17 @@ section.project .project-info abbr{
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
+  place-content: center;
+
 }
 
-#labelEditName{
+/* #labelEditName{
+  display: flex;
+  width: 95%;
   justify-content: center;
-}
+  place-self: center;
+  
+} */
 
 
 span.arrow{
@@ -1062,11 +1068,12 @@ span form{
     100% {text-shadow: -10ch 0 0 #000,0    0 0 #000}
 }
 
-span#delete{
+span#delete, span#add, span#submit{
   display: flex;
-  grid-row: 3;
-  grid-column: 3;
   flex-direction: row;
+}
+span#imgId{
+  height: 37%;
 }
 
 input.delete{

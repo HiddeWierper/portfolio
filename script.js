@@ -136,29 +136,28 @@ function goToElement(elementId) {
 
 function switchImage(id) {
   var Image_Id = document.getElementById(id);
-  if (Image_Id.src.match("img/weform-pc.png")) {
-      Image_Id.src = "img/weform-mobile.png";
-      Image_Id.style.transform = "scaleX(-1)";
-      Image_Id.style.transition = "all 0.5s ease-in-out";
-      insight.classList.add('fly-in-right');
-  }
-  else if (Image_Id.src.match("img/weform-mobile.png")) {
-      Image_Id.src = "img/weform-pc.png";
-      Image_Id.style.transform = "scaleX(1)";
-      Image_Id.style.transition = "all 0.5s ease-in-out";
-      insight.classList.remove('fly-in-right');
-  }
+  Image_Id.style.transition = "all 0.5s ease-in-out";
+  Image_Id.style.transform = "rotateY(-180deg)";
 
-  if (Image_Id.src.match("img/kat-pc.png")) {
-    Image_Id.src = "img/kat-mobile.png";
-    Image_Id.style.transform = "scaleX(1)";
-    Image_Id.style.transition = "all 0.5s ease-in-out";
-  }
-  else if (Image_Id.src.match("img/kat-mobile.png")) {
-      Image_Id.src = "img/kat-pc.png";
-      Image_Id.style.transform = "scaleX(-1)";
-      Image_Id.style.transition = "all 0.5s ease-in-out";
-  }
+  setTimeout(function() {
+    if (Image_Id.src.match("img/weform-pc.png")) {
+        Image_Id.src = "img/weform-mobile.png";
+        Image_Id.style.transform = "scaleX(-1)";
+    }
+    else if (Image_Id.src.match("img/weform-mobile.png")) {
+        Image_Id.src = "img/weform-pc.png";
+        Image_Id.style.transform = "scaleX(1)";
+    }
+
+    if (Image_Id.src.match("img/kat-pc.png")) {
+      Image_Id.src = "img/kat-mobile.png";
+      Image_Id.style.transform = "scaleX(1)";
+    }
+    else if (Image_Id.src.match("img/kat-mobile.png")) {
+        Image_Id.src = "img/kat-pc.png";
+        Image_Id.style.transform = "scaleX(1)";
+    }
+  }, 450); // Wait for the rotation to finish before changing the image
 }
 
 
@@ -286,6 +285,14 @@ function hideLoader(){
 function hideWarning(){
   var warning = document.getElementById("warning");
   warning.style.display = "none";
+  refresh();
+
+}
+
+function refresh(){
+  //go to specific link
+  window.location.href = "http://localhost/portfolio/subpages/admin.php";
+
 
 }
 

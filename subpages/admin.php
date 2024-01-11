@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 $id = isset($_SESSION['id']) ? $_SESSION['id'] : 1; // haal de waarde van $id op uit de sessievariabele als deze is ingesteld, anders is het 1
 
 if ($id == 0){
@@ -7,6 +8,22 @@ if ($id == 0){
   $_SESSION['id'] = $id; // sla de nieuwe waarde van $id op in een sessievariabele
 }
 
+if (isset($_GET["logout"])) {
+  // Unset all session variables
+  $_SESSION = array();
+
+  // Destroy the session
+  session_destroy();
+
+  // Expire the session cookie
+  setcookie(session_name(), '', time() - 3600, '/');
+
+  // Redirect to the login page
+  header("location: /portfolio/");
+  exit;
+}
+
+if ($_SESSION["username"] === "HiddeW2007"){
 $mysqli = new mysqli('localhost', 'root', 'root', 'portfolio'); // initialize $mysqli
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -25,11 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows === 0) {
       // If there is no row with the given $id, display a warning
       echo "<div id='warning'>
-      <h1>No row exists with id $id!<br>
+      <h1>No more rows to edit!<br>
       </h1>
       <input type='button' value='Close' onclick='hideWarning();'>
     </div>";
     $id--;
+    $_SESSION['id'] = $id;
+ 
     }
   }
 }
@@ -105,26 +124,20 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
-// Logout logic
-if (isset($_GET["logout"])) {
-    // Unset all session variables
-    $_SESSION = array();
-
-    // Destroy the session
-    session_destroy();
-
-    // Expire the session cookie
-    setcookie(session_name(), '', time() - 3600, '/');
-
-    // Redirect to the login page
-    header("location: /portfolio/subpages/login.php");
-    exit;
+if ($_SESSION["username"] !== "HiddeW2007") {
+    $readonly = "readonly='true'";
+    $inputDisabled = "disabled='true'"; 
+} else {
+    $readonly = "";
+    $inputDisabled = "";
 }
 
-$specialMessage = ($_SESSION["username"] === "root")
+// Logout logic
+
+
+$specialMessage = ($_SESSION["username"] === "HiddeW2007")
     ? "You are logged in as root. Special actions can be performed."
     : "You are logged in as a regular user. No special actions can be performed";
-
 // Database connection details
 
 $port = '3306';
@@ -155,6 +168,7 @@ try {
 
     // Update content if the form is submitted
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+     
       if (isset($_POST['skillsInfo'])) {
         $newContent = $_POST['content'];
         $updateSql = "UPDATE skills_explanation SET skills_explanation = :newContent WHERE id = 5";
@@ -223,11 +237,21 @@ try{
   $projectLangContent = $row['projectLanguages'];
   $projectWebLink = $row['projectWebsiteLink'];
   $projectImg = $row['imgDir'];
+  $vissibilty = $row['deleted'];
+  
+  if ($vissibilty == 1){
+    //project = hidden
+    $vissibilty = "show";
+  }else{
+    //project = visible
+    $vissibilty = "hide";
+  }
 
   
   // Update content if the form is submitted
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['submitProjects'])) {
+      sleep(1); 
       $newProjectIconContent = $_POST['projectIconContent'];
       $newProjectNameContent = $_POST['projectNameContent'];
       $newProjectInfoContent = $_POST['projectInfoContent'];
@@ -252,6 +276,22 @@ try{
       $projectWebLink = $newProjectWebLink;
       $projectImg = $newProjectImg;
       
+      $affectedRows = $updateStmt->rowCount();
+      if ($affectedRows > 0) {
+        echo "<div id='warning'>
+        <h1>Succesfully updated! <br>
+        </h1>
+        <input type='button' value='Close' onclick='hideWarning();'>
+      </div>";
+      }
+      else if ($affectedRows == 0){
+        echo "<div id='warning'>
+        <h1>Nothing to update!<br>
+        </h1>
+        <input type='button' value='Close' onclick='hideWarning();'>
+      </div>";
+      }
+
       // header("location: /portfolio/subpages/admin.php#projects");
 }
 }
@@ -263,6 +303,7 @@ catch(PDOException $e){
 
 try {
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
     if (isset($_POST['hide'])) {
       sleep(1);
       // Use the current $id to delete the correct row
@@ -274,20 +315,23 @@ try {
       $affectedRows = $deleteStmt->rowCount();
          if ($affectedRows > 0) {
         echo "<div id='warning'>
-        <h1>Succesfully deleted! <br>
+        <h1>Succesfully Hided! <br>
         </h1>
         <input type='button' value='Close' onclick='hideWarning();'>
       </div>";
+     
         $id--;
         $_SESSION['id'] = $id;
       }elseif ($affectRows == 0){
         echo "<div id='warning'>
-        <h1>Nothing to delete! <br>
+        <h1>Something Went Wrong!<br>
         </h1>
         <input type='button' value='Close' onclick='hideWarning();'>
         </div>";
         
+        
       }
+     
     }
     else if(isset($_POST['show'])){
       sleep(1);
@@ -312,12 +356,15 @@ try {
         <input type='button' value='Close' onclick='hideWarning();'>
     </div>";
       }
-    }
+    
+   
+  }
+    
   }
 } catch(PDOException $e) {
   echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
 }
-
+}
 
 ?>
 <!DOCTYPE html>
@@ -364,17 +411,17 @@ try {
         <div class="admin-panel-item" id="skills">
         <div class="skillsEdit">
           <form class="skillsInformationEdit" name="skillsInfo" action="<?php $_SERVER['PHP_SELF'];?>" method="post">
-            <textarea name="content" id="s" cols="30" rows="10"><?php echo $content; ?></textarea>
-            <input class="left" name="skillsInfo" type="submit">
+            <textarea <?php echo $readonly ?> name="content" id="s" cols="30" rows="10"><?php echo $content; ?></textarea>
+            <input <?php echo $inputDisabled?> class="left" name="skillsInfo" type="submit">
           </form>
           <form class="skillIconEdit" name="skillsIcon" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
           <?php
             for ($i = 1; $i <= 9; $i++) {
                 $skillName = 'skill' . $i;
-                echo '<textarea type="text" name="' . $skillName . '" id="' . $skillName . '" value="" placeholder="add fa fa link">' . $skills[$i - 1]['skill_icon'] . '</textarea>';
+                echo '<textarea '. $readonly .' type="text" name="' . $skillName . '" id="' . $skillName . '" value="" placeholder="add fa fa link">' . $skills[$i - 1]['skill_icon'] . '</textarea>';
             }
             ?>
-            <input class="right" name="skillsIcon" type="submit">
+            <input <?php echo $inputDisabled?> class="right" name="skillsIcon" type="submit">
           </form>
           </div>
         </div>
@@ -384,49 +431,52 @@ try {
                 
                 <form method="post" name="previous">
                  <input type="hidden" name="down" value="1">
-                 <input onclick="showLoader();" type="submit" value="<">
+                 <input <?php echo $inputDisabled?> onclick="showLoader();" type="submit" value="<">
                </form>
          </span>
             <form id="submitProjects" action="<?php echo $_SERVER['PHP_SELF'];?>" class="projectInformationEdit" method="post">
                <span>
                  <label for="edit">Repository Website Link</label>
-                 <textarea name="projectIconContent" id="" cols="30" rows="10"><?php echo "$projectIconContent"?></textarea>
+                 <textarea <?php echo $readonly ?> name="projectIconContent" id="" cols="30" rows="10"><?php echo "$projectIconContent"?></textarea>
                </span>
                <span>
                  <label id="labelEditName" for="edit">Name</label>
-                 <textarea name="projectNameContent" id="editName" cols="30" rows="10"><?php echo "$projectNameContent"?></textarea>
+                 <textarea <?php echo $readonly ?> name="projectNameContent" id="editName" cols="30" rows="10"><?php echo "$projectNameContent"?></textarea>
                </span>
                <span>
                  <label for="edit">Info</label>
-                 <textarea name="projectInfoContent" id="" cols="30" rows="10"><?php echo "$projectInfoContent"?></textarea>
+                 <textarea <?php echo $readonly ?> name="projectInfoContent" id="" cols="30" rows="10"><?php echo "$projectInfoContent"?></textarea>
                </span>
                <span>
                  <label for="edit">Languages</label>
-                 <textarea name="projectLangContent" id="" cols="30" rows="10"><?php echo "$projectLangContent"?></textarea>
+                 <textarea <?php echo $readonly ?> name="projectLangContent" id="" cols="30" rows="10"><?php echo "$projectLangContent"?></textarea>
                </span>
                <span>
                  <label for="edit">Website Link</label>
-                 <textarea name="projectWebLink" id="" cols="30" rows="10"><?php echo "$projectWebLink"?></textarea>
+                 <textarea <?php echo $readonly ?> name="projectWebLink" id="" cols="30" rows="10"><?php echo "$projectWebLink"?></textarea>
                </span>
-               <span>
+               <span id="imgId">
                  <label for="edit">Image Path</label>
-                 <textarea name="projectImg" id="" cols="30" rows="10"><?php echo "$projectImg"?></textarea>
+                 <textarea <?php echo $readonly ?> name="projectImg" id="" cols="30" rows="10"><?php echo "$projectImg"?></textarea>
+                 <label for="edit">Order Number</label>
+                 <textarea readonly name="projectId" id="" cols="30" rows="10"><?php echo "$id"?></textarea>
                </span>
-               <span>
-                <input name="submitProjects" type="submit">
-               </span>
-               <span id="delete">
-                <input class="delete" name="hide" type="submit" value="Delete">
-                <input type="submit" class="show" name="show" value="Bring Back">
+               <span id="submit">
+                <input <?php echo $inputDisabled?> name="submitProjects" type="submit">
                </span>
                <span id="add">
-                <input class="add" name="add" type="submit" value="Add">
+                <input <?php echo $inputDisabled?> class="add" name="add" type="submit" value="Add">
                </span>
+               <span id="delete">
+               <input <?php echo $inputDisabled?> class="delete" name="<?php echo $vissibilty?>" type="submit" value='<?php echo $vissibilty; ?>'>
+                <!-- <input type="submit" class="show" name="show" value="Bring Back"> -->
+               </span>
+               
               </form>
             <span class="arrow">
               <form method="post" name="next">
                 <input type="hidden" name="up" value="1">
-                <input type="submit" onclick="showLoader();" value=">">
+                <input <?php echo $inputDisabled?> type="submit" onclick="showLoader();" value=">">
               </form> 
             </span>
 
