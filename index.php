@@ -6,8 +6,8 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
   $user = 'root';
 }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
   $host = 'thuis.wierper.net';
-  $pass = 'NOescape!';
-  $user = 'gamer';
+  $pass = 'Wierper1411';
+  $user = 'root';
   
 }
     $port = 3306;
