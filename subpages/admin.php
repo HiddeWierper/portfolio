@@ -251,20 +251,26 @@ try{
   // Update content if the form is submitted
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['submitProjects'])) {
-      sleep(1); 
+        sleep(1); 
 
-      $uploadDir = '../img/'; // specify your upload directory
-      $uploadFile = $uploadDir . basename($_FILES['projectImg']['name']);
+        $currentImageSql = "SELECT imgDir FROM projects WHERE id = $id";
+        $currentImageStmt = $dbh->prepare($currentImageSql);
+        $currentImageStmt->execute();
+        $currentImageRow = $currentImageStmt->fetch(PDO::FETCH_ASSOC);
+        $currentImageFromDatabase = $currentImageRow['imgDir'];
+        $uploadDir = '../img/'; // specify your upload directory
+        $uploadFile = $uploadDir . basename($_FILES['projectImg']['name']);
 
-      if (move_uploaded_file($_FILES['projectImg']['tmp_name'], $uploadFile)) {
-          // File uploaded successfully
-          $newProjectImg = $uploadFile;
-          $projectImg = basename($newProjectImg);
-      } else {
-          // File upload failed
-          echo "Error uploading file.";
-          exit;
-      }
+        if (isset($_FILES['projectImg']['name']) && $_FILES['projectImg']['name'] != '') {
+            // A file was uploaded
+            if (move_uploaded_file($_FILES['projectImg']['tmp_name'], $uploadFile)) {
+                // File uploaded successfully
+                $newProjectImg = basename($uploadFile);
+            }
+        } else {
+            // No file was uploaded, use the current image from the database
+            $newProjectImg = $currentImageFromDatabase;
+        }
 
 
       $newProjectIconContent = $_POST['projectIconContent'];
@@ -472,17 +478,21 @@ try {
                  <textarea <?php echo $readonly ?> name="projectWebLink" id="" cols="30" rows="10"><?php echo "$projectWebLink"?></textarea>
                </span>
                <span id="imgId">
-               <label for="edit">Image Path</label>
-                <input type="file" name="projectImg" id="projectImg">
-                <textarea readonly name="imgDir"><?php echo $projectImg ?></textarea>
-                <label for="edit">Order Number</label>
-                <textarea readonly name="projectId" id="" cols="30" rows="10"><?php echo $id; ?></textarea>
+                <label for="edit">Image Path</label>
+                  <label for="projectImg" class="fileUpload">
+                    <i class="fa fa-cloud-upload"></i> Custom Upload
+                    <input type="file" name="projectImg" id="projectImg">
+                  </label>
+                  <label for="">Current Image</label>
+                  <textarea class="projectImg" readonly name="imgDir"><?php echo $projectImg ?></textarea>
+                  <label for="edit">Order Number</label>
+                  <textarea name="projectId" id="" cols="30" rows="10"><?php echo $id; ?></textarea>
                </span>
                <span id="submit">
-                <input <?php echo $inputDisabled?> name="submitProjects" type="submit">
+                <input <?php echo $inputDisabled?> name="submitProjects" type="submit" value="Update">
                </span>
                <span id="add">
-                <input <?php echo $inputDisabled?> class="add" name="add" type="submit" value="Add">
+                <input <?php echo $inputDisabled?> class="add" name="add" type="submit" value="Add New">
                </span>
                <span id="delete">
                <input <?php echo $inputDisabled?> class="delete" name="<?php echo $vissibilty?>" type="submit" value='<?php echo $vissibilty; ?>'>

@@ -978,15 +978,6 @@ section.project .project-info abbr{
 
 }
 
-/* #labelEditName{
-  display: flex;
-  width: 95%;
-  justify-content: center;
-  place-self: center;
-  
-} */
-
-
 span.arrow{
   position: relative;
   font-size: 4rem;
@@ -1074,7 +1065,37 @@ span#delete, span#add, span#submit{
   flex-direction: row;
 }
 span#imgId{
-  height: 37%;
+  height: 25%;
+
+}
+span input[type=file]{
+  width: 100%;
+  height: 20%;
+  margin: 0;
+  padding: 0;
+  display: none;
+  background: white;
+  color: black;
+}
+
+span#imgId label.fileUpload{
+  max-width: 90%;
+  height: fit-content ;
+  margin-bottom: 1%;
+  padding: 2%;
+  display: flex;
+  font-size: 1rem;
+  align-items: center;
+  font-weight: 600;
+  justify-content: center;
+  background: white;
+  color: black;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+textarea.projectImg{
+  margin: 0;
 }
 
 input.delete{
