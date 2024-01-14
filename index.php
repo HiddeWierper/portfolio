@@ -141,6 +141,8 @@ try {
     $password = 'Wierper1411';
     $username = 'root';
   } 
+
+  var_dump($hostname, $username, $password);
   $port = 3306;
   $database = 'portfolio';
   
