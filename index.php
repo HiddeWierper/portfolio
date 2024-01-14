@@ -10,9 +10,6 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
   $user = 'root';
   
 }
-
-
-
     $port = 3306;
     $db = 'portfolio';
 try {
@@ -72,7 +69,7 @@ try {
     $password = 'root';
     $username = 'root';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-    $servername = 'thuis.wierper.net';
+    $hostname = 'thuis.wierper.net';
     $password = 'Wierper1411';
     $username = 'root';
   }
