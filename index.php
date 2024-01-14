@@ -10,6 +10,8 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
   $username = 'root';
   
 }
+
+var_dump($hostname, $username, $password);
     $port = 3306;
     $database = 'portfolio';
 try {
@@ -142,7 +144,7 @@ try {
     $username = 'root';
   } 
 
-  var_dump($hostname, $username, $password);
+
   $port = 3306;
   $database = 'portfolio';
   
