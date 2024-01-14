@@ -10,6 +10,17 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
   $user = 'root';
   
 }
+
+if($_SERVER['SERVER_NAME'] == 'localhost') {
+  $servername = 'localhost';
+  $password = 'root';
+  $username = 'root';
+}else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+  $servername = 'thuis.wierper.net';
+  $password = 'Wierper1411';
+  $username = 'root';
+}
+
     $port = 3306;
     $db = 'portfolio';
 try {
@@ -69,7 +80,7 @@ try {
     $password = 'root';
     $username = 'root';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-    $hostname = 'thuis.wierper.net';
+    $servername = 'thuis.wierper.net';
     $password = 'Wierper1411';
     $username = 'root';
   }
