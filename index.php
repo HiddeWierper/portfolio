@@ -59,7 +59,69 @@ try {
 <div class="skills">
   <h1>𝗠𝗬 𝗦𝗞𝗜𝗟𝗟𝗦</h1>
   <section class="all">
+  <?php
+  // Maak verbinding met de database
 
+
+
+  if($_SERVER['SERVER_NAME'] == 'localhost') {
+    $hostname = 'localhost';
+    $password = 'root';
+    $username = 'root';
+  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+    $hostname = 'thuis.wierper.net';
+    $password = 'Wierper1411';
+    $username = 'root';
+  }
+
+  $conn = new mysqli($hostname, $username, $password, $database);
+
+  // Controleer de verbinding
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
+
+  // Voer de query uit
+  $sql = "SELECT skills_explanation FROM skills_explanation";
+  $result = $conn->query($sql);
+
+  // Verwerk en druk de resultaten af
+  if ($result->num_rows > 0) {
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+      echo $row["skills_explanation"];
+    }
+  } else {
+    echo "0 results";
+  }
+ 
+
+  echo '<section class="languages">';
+
+
+
+    $conn = new mysqli($hostname, $username, $password, $database);
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $kolomnaam = "skill_icon";
+
+    $sql = "SELECT skill_icon, skill_note FROM skills ORDER BY order_number";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+  
+        while ($row = $result->fetch_assoc()) {
+          echo '<div id="skills" class="skill ' . $row['skill_note'] . '">';
+          echo $row[$kolomnaam];
+          echo '</div>';
+      }
+  } else {
+      echo "Something went wrong, please try again later";  
+  }
+    ?>
   </section>
  </section>
 </div>

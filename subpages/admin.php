@@ -25,11 +25,11 @@ if (isset($_GET["logout"])) {
 
 if ($_SESSION["username"] === "HiddeW2007"){
 if($_SERVER['SERVER_NAME'] == 'localhost') {
-    $servername = 'localhost';
+    $hostname = 'localhost';
     $password = 'root';
     $username = 'root';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-    $servername = 'thuis.wierper.net';
+    $hostname = 'thuis.wierper.net';
     $password = 'Wierper1411';
     $username = 'root';
   }   
