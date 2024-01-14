@@ -54,23 +54,23 @@ if ($_SESSION["loggedin"] === true) {
 
 try {
 //   when on server remove //
-  // $host = 'thuis.wierper.net';
-  // $pass = 'Wierper1411';
+  // $hostname = 'thuis.wierper.net';
+  // $password = 'Wierper1411';
 
 
   if($_SERVER['SERVER_NAME'] == 'localhost') {
-    $host = 'localhost';
-    $pass = 'root';
-    $user = 'root';
+    $hostname = 'localhost';
+    $password = 'root';
+    $username = 'root';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-    $host = 'thuis.wierper.net';
-    $pass = 'Wierper1411';
-    $user = 'root';
+    $hostname = 'thuis.wierper.net';
+    $password = 'Wierper1411';
+    $username = 'root';
   }
   
-  $db= 'login';
-  $dbh = new PDO('mysql: host=' . $host.'; dbname='.$db
-                .'; port=' . $port, $user, $pass);
+  $database= 'login';
+  $dbh = new PDO('mysql: host=' . $hostname.'; dbname='.$database
+                .'; port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   } catch (PDOException $e) {
       echo "Database Connection failed: " . $e->getMessage() . "<br><br>";

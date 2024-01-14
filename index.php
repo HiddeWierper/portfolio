@@ -1,19 +1,19 @@
 <?php
 session_start();
 if($_SERVER['SERVER_NAME'] == 'localhost') {
-  $host = 'localhost';
-  $pass = 'root';
-  $user = 'root';
+  $hostname = 'localhost';
+  $password = 'root';
+  $username = 'root';
 }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-  $host = 'thuis.wierper.net';
-  $pass = 'Wierper1411';
-  $user = 'root';
+  $hostname = 'thuis.wierper.net';
+  $password = 'Wierper1411';
+  $username = 'root';
   
 }
     $port = 3306;
-    $db = 'portfolio';
+    $database = 'portfolio';
 try {
-    $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+    $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
 
@@ -132,7 +132,7 @@ try {
      showcasing projects <br> developed in various programming languages.</p>
 <?php
 try {
-  $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+  $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   $stmt = $dbh->prepare("SELECT * FROM projects WHERE deleted = 0 ORDER BY id;");

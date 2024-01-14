@@ -148,23 +148,23 @@ $specialMessage = ($_SESSION["username"] === "HiddeW2007")
 // Database connection details
 
 $port = '3306';
-$db = 'portfolio';
+$database = 'portfolio';
 
 
 
 if($_SERVER['SERVER_NAME'] == 'localhost') {
-  $host = 'localhost';
-  $pass = 'root';
-  $user = 'root';
+  $hostname = 'localhost';
+  $password = 'root';
+  $username = 'root';
 }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-  $host = 'thuis.wierper.net';
-  $pass = 'Wierper1411';
-  $user = 'root';
+  $hostname = 'thuis.wierper.net';
+  $password = 'Wierper1411';
+  $username = 'root';
   
 }
 
 try {
-    $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+    $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Retrieve content from the database
@@ -195,7 +195,7 @@ try {
     // header("location: /portfolio/subpages/admin.php");
 }
 try {
-  $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+  $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
   // Retrieve content from the database
@@ -231,7 +231,7 @@ try {
   // header("location: /portfolio/subpages/admin.php");
 }
 try{
-  $dbh = new PDO('mysql:host=' . $host . ';dbname=' . $db . ';port=' . $port, $user, $pass);
+  $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   
   // Retrieve content from the database
