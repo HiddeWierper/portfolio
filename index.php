@@ -3,16 +3,12 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
 
-if ($_SERVER['SERVER_NAME'] == 'localhost') {
+
     $hostname = 'localhost';
     $password = 'root';
     $username = 'root';
-} else if ($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-    $hostname = 'thuis.wierper.net';
-    $password = 'Wierper1411';
-    $username = 'root';
     $port = 3306;
-}
+
 
 echo $hostname, $username, $password;
 
