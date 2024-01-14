@@ -62,7 +62,7 @@ try {
   <?php
   // Maak verbinding met de database
 
-  $dbname = "portfolio";
+  $database = "portfolio";
 
   if($_SERVER['SERVER_NAME'] == 'localhost') {
     $servername = 'localhost';
@@ -74,7 +74,7 @@ try {
     $username = 'root';
   }
 
-  $conn = new mysqli($servername, $username, $password, $dbname);
+  $conn = new mysqli($servername, $username, $password, $database);
 
   // Controleer de verbinding
   if ($conn->connect_error) {
@@ -98,9 +98,9 @@ try {
 
   echo '<section class="languages">';
 
-    $dbname = "portfolio";
+    $database = "portfolio";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $conn = new mysqli($servername, $username, $password, $database);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
