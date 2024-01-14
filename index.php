@@ -4,8 +4,8 @@ ini_set('display_errors', 1);
 session_start();
 
 
-    $hostname = 'localhost';
-    $password = 'Wierper1411';
+    $hostname = 'thuis.wierper.net';
+    $password = 'W13rp3r1411JD';
     $username = 'root';
     $port = 3306;
 
