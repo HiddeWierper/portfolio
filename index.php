@@ -9,6 +9,7 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
   $hostname = 'thuis.wierper.net';
   $password = 'Wierper1411';
   $username = 'root';
+  $port = 3306;
 }
 
 echo $hostname, $username, $password;
@@ -62,12 +63,8 @@ try {
   <h1>𝗠𝗬 𝗦𝗞𝗜𝗟𝗟𝗦</h1>
   <section class="all">
   <?php
-  // Maak verbinding met de database
-
-
-
-
-  $conn = new mysqli($hostname, $username, $password, $database);
+  
+  $conn = new mysqli($hostname, $username, $password, $database, $port);
 
   // Controleer de verbinding
   if ($conn->connect_error) {
