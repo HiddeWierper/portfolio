@@ -62,7 +62,7 @@ try {
   <?php
   // Maak verbinding met de database
 
-  $database = "portfolio";
+
 
   if($_SERVER['SERVER_NAME'] == 'localhost') {
     $servername = 'localhost';
@@ -98,7 +98,7 @@ try {
 
   echo '<section class="languages">';
 
-    $database = "portfolio";
+
 
     $conn = new mysqli($servername, $username, $password, $database);
 
