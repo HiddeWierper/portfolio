@@ -5,7 +5,7 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
   $password = 'root';
   $username = 'root';
 }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-  $hostname = 'thuis.wierper.net';
+  $hostname = 'localhost';
   $password = 'Wierper1411';
   $username = 'root';
   
