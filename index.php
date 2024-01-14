@@ -5,10 +5,9 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
   $password = 'root';
   $username = 'root';
 }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-  $hostname = 'thuis.wierper.net';
+  $hostname = '192.168.1.111';
   $password = 'Wierper1411';
   $username = 'root';
-  
 }
 
 echo $hostname, $username, $password;
@@ -66,15 +65,6 @@ try {
 
 
 
-  if($_SERVER['SERVER_NAME'] == 'localhost') {
-    $hostname = 'localhost';
-    $password = 'root';
-    $username = 'root';
-  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-    $hostname = 'thuis.wierper.net';
-    $password = 'Wierper1411';
-    $username = 'root';
-  }
 
   $conn = new mysqli($hostname, $username, $password, $database);
 
@@ -134,15 +124,7 @@ try {
      showcasing projects <br> developed in various programming languages.</p>
 <?php
 try {
-  if($_SERVER['SERVER_NAME'] == 'localhost') {
-    $hostname = 'localhost';
-    $password = 'root';
-    $username = 'root';
-  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-    $hostname = 'thuis.wierper.net';
-    $password = 'Wierper1411';
-    $username = 'root';
-  } 
+ 
 
 
   $port = 3306;
