@@ -24,7 +24,7 @@ if (isset($_GET["logout"])) {
 }
 
 if ($_SESSION["username"] === "HiddeW2007"){
-  if($_SERVER['SERVER_NAME'] == 'localhost') {
+if($_SERVER['SERVER_NAME'] == 'localhost') {
     $servername = 'localhost';
     $password = 'root';
     $username = 'root';
@@ -32,7 +32,7 @@ if ($_SESSION["username"] === "HiddeW2007"){
     $servername = 'thuis.wierper.net';
     $password = 'Wierper1411';
     $username = 'root';
-  }
+  }   
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST['up'])) {
     sleep(1);
