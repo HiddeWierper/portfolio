@@ -1,26 +1,31 @@
   <?php
-  error_reporting(E_ALL);  ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
-if($_SERVER['SERVER_NAME'] == 'localhost') {
-  $hostname = 'localhost';
-  $password = 'root';
-  $username = 'root';
-}else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-  $hostname = 'thuis.wierper.net';
-  $password = 'Wierper1411';
-  $username = 'root';
-  $port = 3306;
+
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    $hostname = 'localhost';
+    $password = 'root';
+    $username = 'root';
+} else if ($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+    $hostname = 'thuis.wierper.net';
+    $password = 'Wierper1411';
+    $username = 'root';
+    $port = 3306;
 }
 
 echo $hostname, $username, $password;
-    $port = 3306;
-    $database = 'portfolio';
+
+$port = 3306;
+$database = 'portfolio';
+
 try {
     $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
 
-} catch(PDOException $e) {
+    // Rest van je code hier...
+
+} catch (PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }
 
@@ -90,7 +95,7 @@ try {
 
 
 
-    $conn = new mysqli($hostname, $username, $password, $database);
+    $conn = new mysqli($hostname, $username, $password, $database, $port);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
