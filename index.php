@@ -132,6 +132,19 @@ try {
      showcasing projects <br> developed in various programming languages.</p>
 <?php
 try {
+  if($_SERVER['SERVER_NAME'] == 'localhost') {
+    $hostname = 'localhost';
+    $password = 'root';
+    $username = 'root';
+  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+    $hostname = 'thuis.wierper.net';
+    $password = 'Wierper1411';
+    $username = 'root';
+  } 
+  $port = 3306;
+  $database = 'portfolio';
+  
+
   $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
