@@ -7,7 +7,7 @@ session_start();
     $hostname = 'thuis.wierper.net';
     $password = 'W13rp3r1411JD';
     $username = 'root';
-    $port = 3306;
+    $port = '3306';
 
 
 echo $hostname, $username, $password;
@@ -64,7 +64,8 @@ try {
   <h1>𝗠𝗬 𝗦𝗞𝗜𝗟𝗟𝗦</h1>
   <section class="all">
   <?php
-  
+
+  echo $hostname . " . " . $username . " . " . $password . " . " . $database . " . " . $port;
   $conn = new mysqli($hostname, $username, $password, $database, $port);
 
   // Controleer de verbinding
@@ -91,7 +92,7 @@ try {
 
 
 
-    $conn = new mysqli($hostname, $username, $password, $database, $port);
+  $conn = new mysqli($hostname, $username, $password, $database, $port);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -170,7 +171,7 @@ try {
   
 </div>  
 
-<script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></scrip>
 <script src="script.js"></script>
 </body>
 </html>
