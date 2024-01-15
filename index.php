@@ -13,7 +13,7 @@ session_start();
 echo $hostname, $username, $password;
 
 $port = 3306;
-$database = 'portfolio';
+$database = 'login';
 
 try {
     $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
