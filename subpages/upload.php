@@ -1,7 +1,7 @@
 <?php 
 $hostname = 'thuis.wierper.net';
-$username = 'root';
 $password = 'W13rp3r1411JD';
+$username = 'root';
 $database = 'portfolio';
 $port = '3306';
 
