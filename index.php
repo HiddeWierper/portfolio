@@ -128,7 +128,7 @@ try {
 
 
   $port = 3306;
-  $database = 'portfolio';
+  $database = 'login';
   
 
   $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
