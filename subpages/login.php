@@ -58,13 +58,17 @@ try {
   // $password = 'Wierper1411';
 
 
-    $hostname = 'thuis.wierper.net';
-    $password = 'W13rp3r1411JD';
+  if($_SERVER['SERVER_NAME'] == 'localhost') {
+    $hostname = 'localhost';
+    $password = 'root';
     $username = 'root';
-  
+  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+    $hostname = 'thuis.wierper.net';
+    $password = 'Wierper1411';
+    $username = 'root';
+  }
   
   $database= 'login';
-  $port = '3306';
   $dbh = new PDO('mysql: host=' . $hostname.'; dbname='.$database
                 .'; port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

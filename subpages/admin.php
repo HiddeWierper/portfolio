@@ -164,6 +164,7 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
 }
 
 try {
+  sleep(1);
     $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -186,8 +187,7 @@ try {
         // Update the content variable to reflect the changes
         $content = $newContent;
 
-        echo "Record updated successfully";
-        // header("location: /portfolio/subpages/admin.php");
+           // header("location: /portfolio/subpages/admin.php");
       }
     }
 } catch (PDOException $e) {
@@ -195,6 +195,7 @@ try {
     // header("location: /portfolio/subpages/admin.php");
 }
 try {
+  sleep(1);
   $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -220,8 +221,8 @@ try {
           $skills[$i - 1]['skill_icon'] = $newSkill;
         
       }
-      $specialMessage = "Records updated successfully";
-      sleep(1);
+      $specialMessage = "Record updated successfully";
+
       // header("location: /portfolio/subpages/admin.php");
 
     }
@@ -230,6 +231,7 @@ try {
   echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
   // header("location: /portfolio/subpages/admin.php");
 }
+
 try{
   $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -441,7 +443,7 @@ try {
         <div class="skillsEdit">
           <form class="skillsInformationEdit" name="skillsInfo" action="<?php $_SERVER['PHP_SELF'];?>" method="post">
             <textarea <?php echo $readonly ?> name="content" id="s" cols="30" rows="10"><?php echo $content; ?></textarea>
-            <input <?php echo $inputDisabled?> class="left" name="skillsInfo" type="submit">
+            <input <?php echo $inputDisabled?> onclick="showLoader();" class="left" name="skillsInfo" type="submit">
           </form>
           <form class="skillIconEdit" name="skillsIcon" action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
           <?php
@@ -450,7 +452,7 @@ try {
                 echo '<textarea '. $readonly .' type="text" name="' . $skillName . '" id="' . $skillName . '" value="" placeholder="add fa fa link">' . $skills[$i - 1]['skill_icon'] . '</textarea>';
             }
             ?>
-            <input <?php echo $inputDisabled?> class="right" name="skillsIcon" type="submit">
+            <input <?php echo $inputDisabled?> class="right" onclick="showLoader();" name="skillsIcon" type="submit">
           </form>
           </div>
         </div>

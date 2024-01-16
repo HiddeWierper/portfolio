@@ -1,27 +1,23 @@
-  <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+<?php
 session_start();
-
-
-    $hostname = 'thuis.wierper.net';
-    $password = 'W13rp3r1411JD';
-    $username = 'root';
-    $port = '3306';
-
-
-echo $hostname, $username, $password;
-
-$port = 3306;
-$database = 'login';
-
+if($_SERVER['SERVER_NAME'] == 'localhost') {
+  $hostname = 'localhost';
+  $password = 'root';
+  $username = 'root';
+}else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+  $hostname = 'thuis.wierper.net';
+  $password = 'Wierper1411';
+  $username = 'root';
+  
+}
+    $port = 3306;
+    $database = 'portfolio';
 try {
     $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
 
-    // Rest van je code hier...
-
-} catch (PDOException $e) {
+} catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }
 
@@ -64,9 +60,21 @@ try {
   <h1>𝗠𝗬 𝗦𝗞𝗜𝗟𝗟𝗦</h1>
   <section class="all">
   <?php
+  // Maak verbinding met de database
 
-  echo $hostname . " . " . $username . " . " . $password . " . " . $database . " . " . $port;
-  $conn = new mysqli($hostname, $username, $password, $database, $port);
+
+
+  if($_SERVER['SERVER_NAME'] == 'localhost') {
+    $hostname = 'localhost';
+    $password = 'root';
+    $username = 'root';
+  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+    $hostname = 'thuis.wierper.net';
+    $password = 'Wierper1411';
+    $username = 'root';
+  }
+
+  $conn = new mysqli($hostname, $username, $password, $database);
 
   // Controleer de verbinding
   if ($conn->connect_error) {
@@ -92,7 +100,7 @@ try {
 
 
 
-  $conn = new mysqli($hostname, $username, $password, $database, $port);
+    $conn = new mysqli($hostname, $username, $password, $database);
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -124,11 +132,17 @@ try {
      showcasing projects <br> developed in various programming languages.</p>
 <?php
 try {
- 
-
-
+  if($_SERVER['SERVER_NAME'] == 'localhost') {
+    $hostname = 'localhost';
+    $password = 'root';
+    $username = 'root';
+  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+    $hostname = 'thuis.wierper.net';
+    $password = 'Wierper1411';
+    $username = 'root';
+  } 
   $port = 3306;
- 
+  $database = 'portfolio';
   
 
   $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
@@ -167,12 +181,264 @@ try {
   echo 'ERROR: ' . $e->getMessage();
 }
 ?>
-  
-  
 </div>  
+<?php 
+$errors = [];
+$errorMessage = '';
 
-<script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></scrip>
+if (!empty($_POST)) {
+   $name = $_POST['name'];
+   $email = $_POST['email'];
+   $message = $_POST['message'];
+   $phone = $_POST['phone']; 
+   $subject = $_POST['subject'];
+
+   if (empty($name)) {
+       $errors[] = 'Name is empty';
+   }
+
+   if (empty($email)) {
+       $errors[] = 'Email is empty';
+   } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+       $errors[] = 'Email is invalid';
+   }
+
+   if (empty($message)) {
+       $errors[] = 'Message is empty';
+   }$headers = "Reply-To: $email\r\n";
+
+   if (empty($errors)) {
+      
+       
+       $emailMessage = '
+       <!DOCTYPE html>
+       <html lang="en">
+       <head>
+         <meta charset="UTF-8">
+         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <title>Document</title>
+         <style>
+           .information{
+             display: flex;
+             flex-direction: column;
+             width: 50%;
+             justify-content: center;
+             margin: auto;
+             margin-top: 5%;
+           }
+           label{
+             font-size: 20px;
+             font-weight: bold;
+             
+           }
+       
+           input, textarea{
+             width: 100%;
+             height: fit-content;
+             margin-bottom: 10px;
+             border-radius: 5px;
+         
+             border: 1px solid #ccc;
+             padding: 2%;
+            
+       
+           }
+       
+         </style>
+       </head>
+       <body>
+         <div class="container">
+           <marquee behavior="alternate" direction="right">NEW MESSAGE!</marquee>
+           <div class="information">
+             <label for="">Name</label>
+             <input readonly type="text" value='.$name.' name="name" id="name">
+             <label for="">Email</label>
+             <input readonly type="email" value='.$email.' name="email" id="email">
+             <label for="">Phone</label>
+             <input readonly type="text" value='.$phone.' name="phone" id="phone">
+             <label for="">Subject</label>
+             <input readonly type="text" value='.$subject.' name="subject" id="subject">
+             <label for="">Message</label>
+             <textarea readonly name="message" id="message">'.$message.'</textarea>
+              
+           </div>
+         </div>
+       </body>
+       </html>
+       ';
+       $toEmail = 'hmrwierper@gmail.com';
+       $emailSubject = 'New email: ' . $subject;
+       $headers = "Reply-To: $toEmail\r\n";
+       $headers .= "Content-type: text/html; charset=utf-8\r\n"; 
+
+      mail($toEmail, $emailSubject, $emailMessage, $headers);
+
+      sleep(3);
+      $headersCustomer = "From: hmrwierper@gmail.com\r\n";
+      $headersCustomer .= "Content-type: text/html; charset=utf-8\r\n";
+      $emailSubjectCustomer = "Confirmation";
+      $messageCustomer = '
+      <!DOCTYPE html>
+      <html lang="nl">
+      
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
+          <style>
+              body {
+                  margin: 0;
+                  padding: 0;
+                  height: 100%;
+                  color: #7843e9;
+                  text-align: center;
+                  padding: 50px;
+              }
+              .container{
+                  margin: 0;
+                  padding: 0;
+                  font-family: Arial, sans-serif;
+                 
+                  color: #7843e9;
+                  text-align: center;
+              
+                  width: 100%;
+                  height: 100%;
+              }
+      
+              h1 {
+                  color: #7843e9;
+              }
+      
+              p {
+                  color: #7843e9;
+                  margin-bottom: 20px;
+              }
+      
+              a {
+                  display: inline-block;
+                  padding: 10px 20px;
+                  margin-top: 20px;
+                  text-decoration: none;
+                  color: #fff;
+                  background-color: #7843e9;
+                  border-radius: 5px;
+              }
+      
+              .links{
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  right: 0;
+                  top: 0;
+                  width: fit-content;
+                  margin: auto;
+                  height: fit-content;
+                  margin-bottom: 5%;
+                  font-size: 40px;
+                  display: grid;
+                  grid-template-columns: repeat(4, 1fr);
+                  gap: 2rem;
+                  place-self: center;
+              }
+              img{
+                  width: 50px;
+                  height: 50px;
+                  margin: 0 10px;
+              }
+              section{
+                  height: 100%;
+                  width: 100%;
+                  background: repeating-conic-gradient(from 30deg, rgba(0, 0, 0, 0) 0 120deg, rgba(138, 138, 138, 0.1) 0 180deg)
+                          200px 115.39999999999999px,
+                      repeating-conic-gradient(from 30deg, rgba(240, 240, 240, 0.1) 0 60deg, rgba(189, 189, 189, 0.1) 0 120deg,
+                          rgba(138, 138, 138, 0.1) 0 180deg);
+                  background-size: 400px 231px;
+                  position: absolute;
+                  /* display: flex;
+                  justify-content: center;
+                  align-items: center;
+                   */
+              }
+              @media screen and (max-width: 600px) {
+          .links {
+              grid-template-columns: repeat(2, 1fr);
+              grid-template-rows: repeat(2, 1fr);
+          }
+      }
+          </style>
+      </head>
+      
+      <body>
+          <section>
+      <div class="container">
+              <h1>Thanks for your message!</h1>
+              <p>We\'ve received your message and we will get back to you soon.</p>
+              <a href="https://localhost/portfolio">Return to the website</a>
+              <br>
+              <div class="links">
+                  <a href="https://github.com/hiddewierper" ><img src="https://i.imgur.com/w4UNd79.png" alt=""></a>
+                  <a href="https://twitter.com/hidde_wierper" ><img src="https://i.imgur.com/Xa5wrMJ.png" alt=""></a>
+                  <a href="https://instagram.com/hiddewierper" ><img src="https://i.imgur.com/MN2nR26.png" alt=""></a>
+                  <a href="https://open.spotify.com/user/213ang5atptpcmibq5zug3w4q?si=c9ce2137287e4ebb" ><img src="https://i.imgur.com/QX1PFcW.png" alt=""></a>
+              </div>
+             
+              
+          </div>
+          </section>
+      </body>
+      
+      </html>
+      
+';
+     
+
+      mail($email, $emailSubjectCustomer, $messageCustomer, $headersCustomer);
+       
+
+   } else {
+
+       $allErrors = join('<br/>', $errors);
+       $errorMessage = "<p style='color: red;'>{$allErrors}</p>";
+   }
+}
+
+?>
+
+<section class="contact" id="contact">
+  <div class="contactHeader">
+    <h1>𝗖𝗢𝗡𝗧𝗔𝗖𝗧</h1>
+    <p>Feel free to contact me if you have any <br> or if you want to work together.</p>
+  </div>
+      <form class="contactForm" name="contact" action="<?php $_SERVER['PHP_SELF'];?>" method="post">
+      <span>
+        <label for="name">name</label>
+        <input type="text" name="name" id="name" placeholder="name" required>
+      </span>
+      <span>
+        <label for="email">email</label>
+        <input type="email" name="email" id="email" placeholder="email" required>
+      </span>
+      <span>
+        <label for="phone">phone</label>
+        <input type="text" name="phone" id="phone" placeholder="phone" required>
+      </span>
+      <span>
+        <label for="subject">subject</label>
+        <input type="text" name="subject" id="subject" placeholder="subject" required>
+      </span>
+      <span>
+        <label for="message">message</label>
+        <textarea name="message" id="message" cols="30" rows="10" placeholder="message" required></textarea>
+        </span>
+        <button type="submit" name="submit" >Send</button>
+      </form>
+</section>
+
+
+<script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
 <script src="script.js"></script>
 </body>
 </html>
-
+<?php
+// Multiple recipients

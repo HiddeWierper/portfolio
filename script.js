@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
           console.log('Scrolling to default section');
           window.scrollTo({
-            top: offset - window.innerHeight + 0 * window.innerHeight,
+            top: offset - window.innerHeight + 1.4 * window.innerHeight,
             behavior: 'smooth'
           });
         }
