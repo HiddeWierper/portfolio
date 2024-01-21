@@ -4,11 +4,15 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
   $hostname = 'localhost';
   $password = 'root';
   $username = 'root';
-}else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-  $hostname = 'thuis.wierper.net';
-  $password = 'Wierper1411';
+}else if($_SERVER['SERVER_NAME'] == '192.168.1.33') {
+  $hostname = '192.168.1.33';
+  $password = 'root';
   $username = 'root';
-  
+}
+else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+  $hostname = 'thuis.wierper.net';
+  $password = 'W13rp3r1411JD';
+  $username = 'root';
 }
     $port = 3306;
     $database = 'portfolio';
@@ -30,6 +34,7 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hidde Wierper</title>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/mobileStyle.css">  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -51,7 +56,7 @@ try {
 
 <div class="greetings">
   <h1 class="text">𝗛𝗜, 𝗜'𝗠 <strong>𝗛𝗜𝗗𝗗𝗘 𝗪𝗜𝗘𝗥𝗣𝗘𝗥<strong></h1>
-  <p>I'm a 16 year old student from The Netherlands. 
+  <p>I'm a 16 year old student from The Netherlands.
     I am currently studying in Almere to become a software developer</p>
     <input data-target="projects" type="button" value="𝗣𝗿𝗼𝗷𝗲𝗰𝘁𝘀">
 </div>

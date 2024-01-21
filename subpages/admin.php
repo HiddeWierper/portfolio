@@ -25,14 +25,22 @@ if (isset($_GET["logout"])) {
 
 if ($_SESSION["username"] === "HiddeW2007"){
 if($_SERVER['SERVER_NAME'] == 'localhost') {
-    $hostname = 'localhost';
-    $password = 'root';
-    $username = 'root';
-  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-    $hostname = 'thuis.wierper.net';
-    $password = 'Wierper1411';
-    $username = 'root';
-  }   
+  $hostname = 'localhost';
+  $password = 'root';
+  $username = 'root';
+}else if($_SERVER['SERVER_NAME'] == '192.168.1.33') {
+  $hostname = '192.168.1.33';
+  $password = 'root';
+  $username = 'root';
+  
+}  
+
+else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+  $hostname = 'thuis.wierper.net';
+  $password = 'W13rp3r1411JD';
+  $username = 'root';
+}
+   
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST['up'])) {
     sleep(1);
@@ -404,6 +412,7 @@ try {
 <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/portfolio/css/style.css">
+  <link rel="stylesheet" href="/portfolio/css/mobileStyle.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -421,11 +430,12 @@ try {
 <body class="admin-body">
 
 <header class="login admin">
-    <img src="/portfolio/img/me.jpeg" alt="">
+    <img src="/portfolio/img/me.jpeg" id="admin" alt="">
     <span class="me admin">
-      <h2>Welcome, <strong id="typed-username"><?php echo $_SESSION["username"]; ?>!</strong></h2>
+      <h2>Welcome, <strong id="typed-username"><br><?php echo $_SESSION["username"]; ?>!</strong></h2>
     </span>
     <span class="nav">
+    <a class="hamburger" href="?logout=1"><i style="transform: scaleX(-1); color: #7843e9" class="fa-solid fa-arrow-right-from-bracket"></i></a>
       <ul>
         <a href="admin.php" id="skill" onclick="active('skill')" ><li>SKILLS</li></a>
         <a href="#projects" id="project" onclick="active('project')" ><li>PROJECTS</li></a>
@@ -482,9 +492,9 @@ try {
                  <label for="edit">Languages</label>
                  <textarea <?php echo $readonly ?> name="projectLangContent" id="" cols="30" rows="10"><?php echo "$projectLangContent"?></textarea>
                </span>
-               <span>
+               <span id="editLink" >
                  <label for="edit">Website Link</label>
-                 <textarea <?php echo $readonly ?> name="projectWebLink" id="" cols="30" rows="10"><?php echo "$projectWebLink"?></textarea>
+                 <textarea <?php echo $readonly ?> name="projectWebLink" cols="30" rows="10"><?php echo "$projectWebLink"?></textarea>
                </span>
                <span id="imgId">
                 <label for="edit">Image Path</label>
@@ -544,6 +554,6 @@ function changeId() {
   });
 }
 </script>
-</script>
+
 </body>
 </html>

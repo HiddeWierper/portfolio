@@ -1,0 +1,300 @@
+@media screen and (max-width: 900px) {
+  
+  /* body{
+  background-color: black;
+  } */
+
+  html{
+    box-sizing: border-box;
+  }
+  header{
+    height: fit-content;
+    font-size: 1rem;
+    width: 100vw;
+    transition: 0.5s;
+    box-sizing: border-box;
+
+  }
+  header .me{
+    width: 50%;
+  }
+  .nav{
+    margin: 0;
+    display: block;
+    flex-direction: row;
+    margin-left: 45%;
+    font-size: 1.4rem;
+  }
+
+ 
+  .nav ul {
+    display: none;
+    font-size: 1.4rem;
+  }
+
+  .me.admin{
+    width: fit-content;
+    font-size: 0.4rem;
+  }
+
+  .hamburger {
+      display: block;
+      font-size: 4rem;
+      text-align: right;
+      color: #7843e9;
+  }
+
+  .greetings h1.text {
+    font-size: 3rem;
+  }
+
+  .greetings p{
+    font-size: 1.3rem;
+  }
+  .greetings input{
+    width: 100%;
+  }
+
+  .socials{
+    width: fit-content;
+    padding: 2%;
+  }
+
+  .skills{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  section.all{
+    flex-direction: column;
+  }
+
+  section.explanation{
+    width: 100%;
+    column-count: initial;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  section.explanation p{
+    font-size: 1.2rem;
+    padding: 2%;
+  }
+
+  section.languages{
+    width: 100%;    
+  }
+  .skill{
+    width: 100%;
+    margin-bottom: 2%;
+    padding: 5%;
+    margin-bottom: 2%;
+  }
+  section.project{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    margin-top: 20%;
+    height: fit-content;
+    margin-bottom: 10%;
+  }
+  hr{
+    width: 90%;
+  }
+
+  section.project{
+    width: 100%;
+  }
+
+  .projects .imgContainer{
+    width: 70%;
+    margin-bottom: 5%;
+  }
+
+  section.project .project-info{
+    font-size: 1.2rem;
+    width: 90%;
+    padding: 4%;
+  }
+  .project:nth-of-type(even):not(hr){
+    flex-direction: column;
+  }
+  section#contact{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    width: 100%; 
+  }
+
+  section#contact input{
+    width: 100%;
+  }
+
+  section.contact form{
+    width: 80%;
+
+  }
+
+  header img.me{
+    display: none;
+  }
+
+  header img#login{
+    width: 10%;
+    display: none;
+    margin-right: 4%;
+    border-radius: 50%;
+  }
+
+  .form-container{
+    top: 50%;
+    width: 70%;
+    height: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .form-container form input{
+    width: 100%;
+    height: 90%;
+    font-size: 0.8rem;
+    padding: 5%;
+  }
+  body.admin-body{
+    overflow-y: auto !important;
+  }
+  header img#admin{
+    width: 10%;
+    margin-right: 4%;
+    border-radius: 50%;
+  }
+  header.login, header.admin{
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    font-size: 1rem;
+    width: 100vw;
+    transition: 0.5s;
+    box-sizing: border-box;
+  }
+
+  header.login li{
+    display: initial;
+    text-align: initial;
+    align-items: initial;
+    justify-content: initial;
+    font-size: initial;
+    padding-bottom: initial;
+  }
+  
+  header.login ul{
+    position: initial;
+    display: none;
+    width: initial;
+    bottom: initial;
+    left: initial;
+    transform: initial;
+  }
+
+  #skills{
+    margin-bottom: 100%;
+  }
+
+  .adminPanel span.header {
+    position: relative;
+    margin-top: 14vh;
+    text-align: center;
+    top: initial;
+    height: fit-content;
+  }
+  .adminPanel{
+    width: 100vw;
+  }
+  .skillsEdit{
+    margin-right: auto;
+    padding: initial;
+
+    padding-right: 7%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
+  form textarea#s{
+    min-width: 40vw;
+
+  }
+  .skillIconEdit{
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+  }
+  
+
+  .skillIconEdit textarea {
+    min-width: 15vw;
+    font-size: 0.7rem;
+  }
+  input.left[type=submit] {
+    min-width: 15vw;
+    margin: auto;
+    margin-left: auto;
+  }
+  .projectEdit{
+    height: 80%;
+  }
+
+  .projectEdit span{
+    margin-bottom: 10%;
+  }
+  .projectInformationEdit{
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: repeat( 2, 50%);
+    grid-gap: initial;
+    height: 50%;
+  }
+
+
+
+  .projectInformationEdit span{
+    display: relative;
+    height: 100%;
+  }
+
+  form#submitProjects span textarea{
+    height: 100%;
+    max-height: 70%;
+    min-height: initial;
+    font-size: 1rem;
+    margin-bottom: 5% ;
+  }
+
+  form#submitProjects span textarea#editName{
+    font-size: 1.4rem;
+  }
+  form#submitProjects span label{
+    font-size: 0.9rem;
+  }
+
+  form#submitProjects span input[type=submit]{
+    font-size: 1rem;
+    width: 80%;
+    margin-top: 2%;
+  }
+
+  .projectEdit{
+    height: fit-content; 
+  }
+  
+  .adminPanel span p {
+    font-size: 1rem;
+  }
+  
+} 

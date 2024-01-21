@@ -293,4 +293,21 @@ function refresh(){
 
 }
 
+function openMenu(){
+  
+  var navUl = document.querySelector('.nav ul');
+  var nav = document.querySelector('.nav');
+  var hamburger = document.querySelector('.hamburger');
+
+  if(navUl.style.display == "block"){
+    navUl.style.display = "none";
+    nav.style.flexDirection = "row";
+    hamburger.style.fontSize = "";
+  } else {
+    navUl.style.display = "block";
+    nav.style.flexDirection = "column";
+    hamburger.style.fontSize = "2rem";
+  }
+}
+
 

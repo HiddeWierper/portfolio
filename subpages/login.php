@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="/portfolio/css/style.css">
+  <link rel="stylesheet" href="/portfolio/css/mobileStyle.css">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
@@ -17,11 +19,14 @@
   <link rel="icon" href="/portfolio/img/favicon.png" type="image/x-icon">
   
 </head>
+
+<body class="login">
 <header class="login">
-  <img src="/portfolio/img/me.jpeg" alt="">
+  <img src="/portfolio/img/me.jpeg"  id="login"alt="">
   <span class="me"><h2>Hidde Wierper</h2></span>
   <span class="nav">
-  <ul>
+  <a class="hamburger" onclick="openMenu()">&equiv;</a>
+  <ul class="">
     <a href="/portfolio/index.php"><li>HOME</li></a>
     <a href=""><li>ABOUT</li></a>
     <a href=""><li>PROJECTS</li></a>
@@ -29,8 +34,6 @@
   </ul>
   </span>
 </header>
-<body class="login">
-
 <div class="form-container">
   <h1>Login</h1>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -57,16 +60,22 @@ try {
   // $hostname = 'thuis.wierper.net';
   // $password = 'Wierper1411';
 
-
   if($_SERVER['SERVER_NAME'] == 'localhost') {
     $hostname = 'localhost';
     $password = 'root';
     $username = 'root';
-  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
+  }else if($_SERVER['SERVER_NAME'] == '192.168.1.33') {
+    $hostname = '192.168.1.33';
+    $password = 'root';
+    $username = 'root';
+    
+  }
+  else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
     $hostname = 'thuis.wierper.net';
-    $password = 'Wierper1411';
+    $password = 'W13rp3r1411JD';
     $username = 'root';
   }
+  $port = 3306;  
   
   $database= 'login';
   $dbh = new PDO('mysql: host=' . $hostname.'; dbname='.$database
@@ -111,5 +120,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
   <script src="/portfolio/script.js"></script>
+  <script>
+    window.addEventListener('resize', function() {
+  var header = document.querySelector('header');
+  if (window.innerWidth <= 900) {
+    header.classList.remove('login');
+
+  } else {
+    header.classList.add('login');
+  }
+});
+  </script>
 </body>
 </html>

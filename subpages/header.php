@@ -1,7 +1,8 @@
 <header>
   <span class="me"><img class="me" src="/portfolio/img/me.jpeg" alt=""><h2>Hidde Wierper</h2></span>
   <span class="nav">
-  <ul>
+  <a class="hamburger" onclick="openMenu()">&equiv;</a>
+  <ul class="">
     <a href="#home"><li>HOME</li></a>
     <a href="#skills"><li>SKILLS</li></a>
     <a href="#projects"><li>PROJECTS</li></a>
