@@ -15,7 +15,7 @@ else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
   $username = 'Dushi';
 }
     $port = 3306;
-    $database = 'portfolio';
+    $database = 'login';
 try {
     $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
