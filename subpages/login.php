@@ -77,7 +77,7 @@ try {
   }
   $port = 3306;  
   
-  $database= 'mysql';
+  $database= 'login';
   $dbh = new PDO('mysql: host=' . $hostname.'; dbname='.$database
                 .'; port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
