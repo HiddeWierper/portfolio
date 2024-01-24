@@ -34,37 +34,43 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
   $username = 'root';
   
 }  
+$database = 'portfolio';
+$port = '3306';
 
-else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-  $hostname = 'thuis.wierper.net';
-  $password = 'EwaDushi';
-  $username = 'Dushi';
-}
+
    
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST['up'])) {
     sleep(1);
-    $id++;
-    $_SESSION['id'] = $id; // sla de nieuwe waarde van $id op in een sessievariabele
+    $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Voer een SQL-query uit om te controleren of er een rij is met het gegeven $id
-    $query = "SELECT * FROM projects WHERE id = ?";
-    $stmt = $mysqli->prepare($query);
-    $stmt->bind_param('i', $id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Retrieve content from the database
+    $sql = "SELECT * FROM projects WHERE id = ?";
+    $stmt = $dbh->prepare($sql);
+    
+    // Execute the statement with $id + 1
+    $stmt->execute([$id + 1]);
+    
+    // Fetch the result
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // If a row was returned, increment $id
+    if ($result) {
+      $id++;
+    }
 
-    if ($result->num_rows === 0) {
+    if (!$result) {
       // If there is no row with the given $id, display a warning
       echo "<div id='warning'>
-      <h1>No more rows to edit!<br>
+      <h1>No more projects to edit!<br>
       </h1>
       <input type='button' value='Close' onclick='hideWarning();'>
     </div>";
-    $id--;
-    $_SESSION['id'] = $id;
+
  
     }
+    $_SESSION['id'] = $id;
   }
 }
 
@@ -400,9 +406,84 @@ try {
   }
     
   }
-} catch(PDOException $e) {
+    
+
+
+   
+  else if(isset($_POST['show'])){
+    sleep(1);
+    // Use the current $id to delete the correct row
+    $deleteSql = "UPDATE projects set deleted = 0 where id = ?";
+    $deleteStmt = $dbh->prepare($deleteSql);
+    $deleteStmt->bindParam(1, $id, PDO::PARAM_INT);
+    $deleteStmt->execute();
+
+    $affectedRows = $deleteStmt->rowCount();
+    if ($affectedRows > 0) {
+      echo "<div id='warning'>
+      <h1>Succesfully Added Back! <br>
+      </h1>
+      <input type='button' value='Close' onclick='hideWarning();'>
+  </div>";
+    }
+    else if ($affectedRows == 0){
+      echo "<div id='warning'>
+      <h1>Already Visible On Website! <br>
+      </h1>
+      <input type='button' value='Close' onclick='hideWarning();'>
+  </div>";
+    }
+  }
+ 
+}
+  
+
+
+catch(PDOException $e) {
   echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
 }
+
+
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if(isset($_POST['change-pass'])){
+   sleep(1);
+   
+   $currentPass = $_POST['currentPass'];
+   $newPass = $_POST['newPass'];
+   $username = $_SESSION['username'];
+ 
+   // Check if currentPass is the same as the password now
+   $checkSql = "SELECT password FROM inlog WHERE username = ?";
+   $checkStmt = $dbh->prepare($checkSql);
+   $checkStmt->bindParam(1, $username, PDO::PARAM_STR);
+   $checkStmt->execute();
+   $row = $checkStmt->fetch(PDO::FETCH_ASSOC);
+   $currentPassword = $row['password'];
+ 
+   if ($currentPass == $currentPassword) {
+     // Update the password
+     $updateSql = "UPDATE inlog SET password = ? WHERE username = ?";
+     $updateStmt = $dbh->prepare($updateSql);
+     $updateStmt->bindParam(1, $newPass, PDO::PARAM_STR);
+     $updateStmt->bindParam(2, $username, PDO::PARAM_STR);
+     $updateStmt->execute();
+ 
+     echo "<div id='warning'>
+       <h1>Password Successfully Changed! <br>
+       </h1>
+       <input type='button' value='Close' onclick='hideWarning();'>
+     </div>";
+     
+   } else {
+     echo "<div id='warning'>
+       <h1>Incorrect Current Password! <br>
+       </h1>
+       <input type='button' value='Close' onclick='hideWarning();'>
+     </div>";
+   }
+ }
 }
 
 ?>
@@ -435,11 +516,21 @@ try {
       <h2>Welcome, <strong id="typed-username"><br><?php echo $_SESSION["username"]; ?>!</strong></h2>
     </span>
     <span class="nav">
-    <a class="hamburger" href="?logout=1"><i style="transform: scaleX(-1); color: #7843e9" class="fa-solid fa-arrow-right-from-bracket"></i></a>
+    <svg class="ham hamRotate ham1 hamburger " viewBox="0 0 100 100" width="80" onclick="this.classList.toggle('active');openMenu();">
+  <path
+        class="line top"
+        d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+  <path
+        class="line middle"
+        d="m 30,50 h 40" />
+  <path
+        class="line bottom"
+        d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
+</svg>
       <ul>
         <a href="admin.php" id="skill" onclick="active('skill')" ><li>SKILLS</li></a>
         <a href="#projects" id="project" onclick="active('project')" ><li>PROJECTS</li></a>
-        <a href="#contact" id="contac" onclick="active('contac')" ><li>CONTACT</li></a>
+        <a href="#contact" id="contac" onclick="active('contac')" ><li>PASSWORD</li></a>
         <a href="?logout=1"><li>LOGOUT</li></a> 
       </ul>
     </span>
@@ -508,13 +599,13 @@ try {
                   <textarea name="projectId" id="" cols="30" rows="10"><?php echo $id; ?></textarea>
                </span>
                <span id="submit">
-                <input <?php echo $inputDisabled?> name="submitProjects" type="submit" value="Update">
+                <input <?php echo $inputDisabled?> onclick="showLoader()" name="submitProjects" type="submit" value="Update">
                </span>
                <span id="add">
-                <input <?php echo $inputDisabled?> class="add" name="add" type="submit" value="Add New">
+                <input <?php echo $inputDisabled?> class="add" name="add" onclick="showLoader()" type="submit" value="Add New">
                </span>
                <span id="delete">
-               <input <?php echo $inputDisabled?> class="delete" name="<?php echo $vissibilty?>" type="submit" value='<?php echo $vissibilty; ?>'>
+               <input <?php echo $inputDisabled?> class="delete" name="<?php echo $vissibilty?>" onclick="showLoader()" type="submit" value='<?php echo $vissibilty; ?>'>
                 <!-- <input type="submit" class="show" name="show" value="Bring Back"> -->
                </span>
                
@@ -528,10 +619,44 @@ try {
 
             </div>
           </div>
-        <div class="admin-panel-item" id="contact">
-         <p>df</p>
+          <div class="admin-panel-item" id="contact">
+            <div class="projectEdit">
+              <form class="changePass" action="<?php echo $_SERVER['PHP_SELF'];?>" method='post'>
+                <span>
+                  <label for="currentPass">Current Password</label>
+
+                  <label class="eye-toggle">
+                    <input type="checkbox" onclick="togglePass('currentPass', 'eyeIcon1')">
+                    <i id="eyeIcon1" class="fa-regular fa-eye"></i>
+                  </label>
+                  <input required type="text" name="currentPass" id="currentPass">
+                </span>
+                <span>
+                  <label for="newPass">New Password</label>
+                  <label class="eye-toggle">
+                    <input type="checkbox" onclick="togglePass('newPass', 'eyeIcon2')">
+                    <i id="eyeIcon2" class="fa-regular fa-eye"></i>
+                  </label>
+                  <input required type="password" name="newPass" id="newPass">
+                </span>
+                <span>
+                  <label for="confirmPass">Confirm Password</label>
+
+                  <label class="eye-toggle">
+                    <input type="checkbox" onclick="togglePass('confirmPass', 'eyeIcon3')">
+                    <i id="eyeIcon3" class="fa-regular fa-eye"></i>
+                  </label>
+                  <input required type="password" name="confirmPass" id="confirmPass">
+         
+                </span>
+                <span>
+                  <input  <?php echo $inputDisabled?> onclick="showLoader()" class="submitChangePass" type="submit" name="change-pass" value="Change Password">          
+                </span>
+              </form>
+            </div>
+          </div>
         </div>
-      </div>
+     </div> <!-- style="--c: white; width:90%; height:50%; margin-bottom: 20%; color:black;" -->
     </div>
   </section>
   <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>

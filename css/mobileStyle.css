@@ -1,5 +1,12 @@
 @media screen and (max-width: 900px) {
   
+
+
+@font-face {
+  font-family: wremenaR;
+  src: url(/fonts/WremenaRegular.otf);
+}
+
   /* body{
   background-color: black;
   } */
@@ -30,6 +37,35 @@
   .nav ul {
     display: none;
     font-size: 1.4rem;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+  }
+
+  .mobileNav.fadeOut {
+    animation: fadeOut 0.5s ease-in-out forwards;
+  }
+
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(+20px);
+    }
+    
   }
 
   .me.admin{
@@ -41,7 +77,14 @@
       display: block;
       font-size: 4rem;
       text-align: right;
+
       color: #7843e9;
+      z-index: 1001;
+      transition: all 0.4s;
+  }
+
+  header.login .hamburger{
+    z-index: 100000;
   }
 
   .greetings h1.text {
@@ -159,6 +202,7 @@
     height: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 1;
   }
   .form-container form input{
     width: 100%;
@@ -188,23 +232,20 @@
     box-sizing: border-box;
   }
 
-  header.login li{
-    display: initial;
-    text-align: initial;
-    align-items: initial;
-    justify-content: initial;
-    font-size: initial;
-    padding-bottom: initial;
-  }
+
   
   header.login ul{
-    position: initial;
+    font-size: 1.4rem;
+    animation: fadeIn 0.5s ease-in-out;
     display: none;
-    width: initial;
-    bottom: initial;
-    left: initial;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     transform: initial;
+    z-index: 10005;
   }
+
 
   #skills{
     margin-bottom: 100%;
@@ -296,5 +337,74 @@
   .adminPanel span p {
     font-size: 1rem;
   }
+
+  .mobileNav{
+    display: flex !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+     /* andere stijlen */
+  background: rgba(0, 0, 0, 0.397);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: translateZ(0);
+   color: white;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 7rem;
+    z-index: 1000;
+  }
+
+  .mobileNav li{
+    width: 100%;
+    padding: 0;
+    font-size: 2rem;
+    color: black;
+    letter-spacing: 3px;
+    font-family: wremenaR;
+    font-style: italic;
+  }
+
+  .ham {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 400ms;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .hamRotate.active {
+    transform: rotate(45deg);
+  }
+  .hamRotate180.active {
+    transform: rotate(180deg);
+  }
+  .line {
+    fill:none;
+    transition: stroke-dasharray 400ms, stroke-dashoffset 400ms;
+    stroke:#000;
+    stroke-width:5.5;
+    stroke-linecap:round;
+  }
+  .ham1 .top {
+    stroke-dasharray: 40 139;
+  }
+  .ham1 .bottom {
+    stroke-dasharray: 40 180;
+  }
+  .ham1.active .top {
+    stroke-dashoffset: -98px;
+  }
+  .ham1.active .bottom {
+    stroke-dashoffset: -138px;
+  }
+
+
   
 } 

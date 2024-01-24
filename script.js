@@ -282,32 +282,38 @@ function hideLoader(){
 function hideWarning(){
   var warning = document.getElementById("warning");
   warning.style.display = "none";
-  refresh();
+ 
 
 }
 
-function refresh(){
-  //go to specific link
-  window.location.href = "http://localhost/portfolio/subpages/admin.php";
-
-
-}
-
-function openMenu(){
-  
+function openMenu() {
   var navUl = document.querySelector('.nav ul');
-  var nav = document.querySelector('.nav');
-  var hamburger = document.querySelector('.hamburger');
 
-  if(navUl.style.display == "block"){
-    navUl.style.display = "none";
-    nav.style.flexDirection = "row";
-    hamburger.style.fontSize = "";
+  // If the 'mobileNav' class exists, add the 'fadeOut' class
+  if (navUl.classList.contains('mobileNav')) {
+    navUl.classList.add('fadeOut');
+    
+    // Wait for the animation to finish, then remove the classes
+    setTimeout(function() {
+      navUl.classList.remove('mobileNav');
+      navUl.classList.remove('fadeOut');
+    }, 500); // The duration of the animation in milliseconds
   } else {
-    navUl.style.display = "block";
-    nav.style.flexDirection = "column";
-    hamburger.style.fontSize = "2rem";
+    // Otherwise, just add the 'mobileNav' class
+    navUl.classList.add('mobileNav');
   }
 }
-
-
+function togglePass(id, eyeId) {
+  var x = document.getElementById(id);
+  var eyeIcon = document.querySelector('#' + eyeId); // Select the specific eye icon
+  
+  if (x.type === "password") {
+    x.type = "text";
+    eyeIcon.classList.remove('fa-eye'); // Remove the 'fa-eye' class
+    eyeIcon.classList.add('fa-eye-slash'); // Add the 'fa-eye-slash' class
+  } else {
+    x.type = "password";
+    eyeIcon.classList.remove('fa-eye-slash'); // Remove the 'fa-eye-slash' class
+    eyeIcon.classList.add('fa-eye'); // Add the 'fa-eye' class
+  }
+}
