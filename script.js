@@ -286,6 +286,10 @@ function hideWarning(){
 
 }
 
+function redirect(){
+  window.location.href = "http://localhost/portfolio/subpages/login.php";
+}
+
 function openMenu() {
   var navUl = document.querySelector('.nav ul');
 

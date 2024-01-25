@@ -199,9 +199,9 @@
   .form-container{
     top: 50%;
     width: 70%;
-    height: 60%;
+    height: 80%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -40%);
     z-index: 1;
   }
   .form-container form input{
@@ -405,6 +405,27 @@
     stroke-dashoffset: -138px;
   }
 
-
+  #changePasswordPanel{
+    height: 70%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -40%); 
+    margin: 0;
+  }
+  #changePasswordPanel form input[type=submit]{
+    font-size:0.7rem ;
+  }
+  #changePasswordPanel form input{
+    font-size:1rem ;
+  }
+  .eye-toggle i{
+    font-size: 1.5rem;
+    margin-left: 2%;
+  }
+  #changePassNoAuth{
+    height: 70%;
+    
+  }
   
 } 

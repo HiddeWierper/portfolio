@@ -54,7 +54,14 @@
       <input type="password" id="password" name="password" required placeholder="Enter your password">
 
       <input type="submit" onclick="showLoader()" value="Login">
+     
+ 
     </form>
+    <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
+    <label for="email">Forgot password?:</label>
+        <input type="email" required id="email" name="email" placeholder="Email">
+        <input type="submit" name="forgotPass" value="Update">
+      </form>
 </div>
 
 <?php
@@ -63,6 +70,138 @@ session_start();
 if ($_SESSION["loggedin"] === true) {
     header("location: /portfolio/subpages/admin.php");
     exit;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  if (isset($_POST['email'])) {
+    $_SESSION['email'] = $_POST['email'];
+
+$_SESSION['authCode'] = rand(100000, 999999);
+echo $_SESSION['authCode'];
+$emailMessage ='
+
+<!DOCTYPE html>
+    <html lang="nl">
+    
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                color: #7843e9;
+                text-align: center;
+                padding: 50px;
+            }
+            .container{
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+               
+                color: #7843e9;
+                text-align: center;
+            
+                width: 100%;
+                height: 100%;
+            }
+    
+            h1 {
+                color: #7843e9;
+            }
+    
+            p {
+                color: #7843e9;
+                margin-bottom: 20px;
+            }
+    
+            a {
+                display: inline-block;
+                padding: 10px 20px;
+                margin-top: 20px;
+                text-decoration: none;
+                color: #fff;
+                background-color: #7843e9;
+                border-radius: 5px;
+            }
+    
+            .links{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                top: 0;
+                width: fit-content;
+                margin: auto;
+                height: fit-content;
+                margin-bottom: 5%;
+                font-size: 40px;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+                place-self: center;
+            }
+            img{
+                width: 50px;
+                height: 50px;
+                margin: 0 10px;
+            }
+            section{
+                height: 100%;
+                width: 100%;
+                background: repeating-conic-gradient(from 30deg, rgba(0, 0, 0, 0) 0 120deg, rgba(138, 138, 138, 0.1) 0 180deg)
+                        200px 115.39999999999999px,
+                    repeating-conic-gradient(from 30deg, rgba(240, 240, 240, 0.1) 0 60deg, rgba(189, 189, 189, 0.1) 0 120deg,
+                        rgba(138, 138, 138, 0.1) 0 180deg);
+                background-size: 400px 231px;
+                position: absolute;
+                /* display: flex;
+                justify-content: center;
+                align-items: center;
+                 */
+            }
+            @media screen and (max-width: 600px) {
+        .links {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+        }
+    }
+        </style>
+    </head>
+    
+    <body>
+        <section>
+    <div class="container">
+            <h1>Password have been changed!</h1>
+            <p>if you have NOT changed your password, immediately contact our customer service</p>
+            <a href="https://localhost/portfolio/admin.php">change password</a>
+            <br>
+            <div class="links">
+                <a href="https://github.com/hiddewierper" ><img src="https://i.imgur.com/w4UNd79.png" alt=""></a>
+                <a href="https://twitter.com/hidde_wierper" ><img src="https://i.imgur.com/Xa5wrMJ.png" alt=""></a>
+                <a href="https://instagram.com/hiddewierper" ><img src="https://i.imgur.com/MN2nR26.png" alt=""></a>
+                <a href="https://open.spotify.com/user/213ang5atptpcmibq5zug3w4q?si=c9ce2137287e4ebb" ><img src="https://i.imgur.com/QX1PFcW.png" alt=""></a>
+            </div>
+           
+            
+        </div>
+        </section>
+    </body>
+    
+    </html>
+    
+';
+
+$emailSubject = 'Auth Code';
+$emailMessage = 'Your auth code is: ' . $_SESSION['authCode'];
+$headers = 'From: hmrwierper@gmail.com;' . "\r\n" .
+  'Reply-To: hmrwierper@gmail.com ' . "\r\n" .
+   mail($_SESSION['email'], $emailSubject, $emailMessage, $headers);
+
+    header("location: /portfolio/subpages/forgotPass.php");
+  }
 }
 
 try {
@@ -140,5 +279,6 @@ sleep(1);
   }
 });
   </script>
+  <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
 </body>
 </html>
