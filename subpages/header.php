@@ -1,5 +1,5 @@
 <header>
-  <span class="me"><img class="me" src="/portfolio/img/me.jpeg" alt=""><h2>Hidde Wierper</h2></span>
+  <span class="me"><img class="me" onclick="enlargeImg()" id="me" src="/portfolio/img/me.jpeg" alt=""><h2>Hidde Wierper</h2></span>
   <span class="nav">
   <svg class="ham hamRotate ham1 hamburger " viewBox="0 0 100 100" width="80" onclick="this.classList.toggle('active');openMenu();">
   <path
@@ -14,7 +14,7 @@
 </svg>
 
   <ul class="">
-    <a href="#home"><li>HOME</li></a>
+    <a href=""><li>HOME</li></a>
     <a href="#skills"><li>SKILLS</li></a>
     <a href="#projects"><li>PROJECTS</li></a>
     <a href="#contact"><li>CONTACT</li></a>
@@ -22,3 +22,9 @@
   </ul>
   </span>
 </header>
+
+<div id="imgModal">
+  <span class="close" onclick="closeImg()">&times;</span>
+  <img class="modal-content" class="me" src="/portfolio/img/me.jpeg" id="imgMe">
+  <div id="caption">Hidde Wierper</div>
+</div>

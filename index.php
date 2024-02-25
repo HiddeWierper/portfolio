@@ -25,8 +25,48 @@ try {
     echo 'ERROR: ' . $e->getMessage();
 }
 
+
+
 ?>
 
+
+<?php
+// Start de sessie
+session_start();
+
+try {
+    // Maak verbinding met de database
+    $db = new PDO('mysql:host=localhost;dbname=portfolio', 'root', 'root');
+
+    // Zet PDO error mode naar exception
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Bereid de SQL-query voor
+    $stmt = $db->prepare("SELECT * FROM inlog WHERE username = :username");
+
+    // Controleer of de sessievariabele bestaat
+    if (!isset($_SESSION['username'])) {
+        throw new Exception('Sessievariabele username is niet ingesteld');
+    }
+
+    // Bind de parameters
+    $stmt->bindParam(':username', $_SESSION['username']);
+
+    // Voer de query uit
+    $stmt->execute();
+
+    // Controleer of de gebruikersnaam bestaat in de tabel
+    if ($stmt->rowCount() > 0) {
+        $_SESSION['rights'] = true;
+    } else {
+        $_SESSION['rights'] = false;
+    }
+} catch (PDOException $e) {
+    echo "Database error: " . $e->getMessage();
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,7 +121,7 @@ try {
 
   $conn = new mysqli($hostname, $username, $password, $database);
 
-  // Controleer de verbinding
+
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
   }
@@ -89,7 +129,11 @@ try {
   // Voer de query uit
   $sql = "SELECT skills_explanation FROM skills_explanation";
   $result = $conn->query($sql);
-
+  if($_SESSION['rights'] == true){
+    echo "<div class='edit'>
+    <i class='fa-solid fa-pen-to-square' onclick></i>
+    </div>";
+  }
   // Verwerk en druk de resultaten af
   if ($result->num_rows > 0) {
     // Output data of each row
@@ -413,20 +457,20 @@ if (!empty($_POST)) {
 <section class="contact" id="contact">
   <div class="contactHeader">
     <h1>𝗖𝗢𝗡𝗧𝗔𝗖𝗧</h1>
-    <p>Feel free to contact me if you have any <br> or if you want to work together.</p>
+    <p>Feel free to contact me if you have any questions <br> or if you want to work together.</p>
   </div>
       <form class="contactForm" name="contact" action="<?php $_SERVER['PHP_SELF'];?>" method="post">
       <span>
         <label for="name">name</label>
-        <input type="text" name="name" id="name" placeholder="name" required>
+        <input type="text" name="name" id="name" placeholder="John Doe" required>
       </span>
       <span>
         <label for="email">email</label>
-        <input type="email" name="email" id="email" placeholder="email" required>
+        <input type="email" name="email" id="email" placeholder="johndoe@example.com" required>
       </span>
       <span>
         <label for="phone">phone</label>
-        <input type="text" name="phone" id="phone" placeholder="phone" required>
+        <input type="tel" name="phone"  inputmode="numeric" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="phone" placeholder="+31 123456789" onfocus="addValue(this, '+')" onblur="removeValue(this, '+')" required>
       </span>
       <span>
         <label for="subject">subject</label>

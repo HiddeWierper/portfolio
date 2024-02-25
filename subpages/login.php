@@ -38,9 +38,9 @@
 </svg>
   <ul class="">
     <a href="/portfolio/index.php"><li>HOME</li></a>
-    <a href=""><li>ABOUT</li></a>
-    <a href=""><li>PROJECTS</li></a>
-    <a href=""><li>CONTACT</li></a>
+    <a href="/portfolio/index.php#skills"><li>SKILLS</li></a>
+    <a href="/portfolio/index.php#projects"><li>PROJECTS</li></a>
+    <a href="/portfolio/index.php#contact"><li>CONTACT</li></a>
   </ul>
   </span>
 </header>
@@ -60,7 +60,8 @@
     <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
     <label for="email">Forgot password?:</label>
         <input type="email" required id="email" name="email" placeholder="Email">
-        <input type="submit" name="forgotPass" value="Update">
+        <input type="submit" name="forgotPass" value="Forgot">
+        <input type="submit" name="register" value="Register">
       </form>
 </div>
 
@@ -77,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['email'] = $_POST['email'];
 
 $_SESSION['authCode'] = rand(100000, 999999);
-echo $_SESSION['authCode'];
+
 $emailMessage ='
 
 <!DOCTYPE html>
@@ -199,8 +200,12 @@ $emailMessage = 'Your auth code is: ' . $_SESSION['authCode'];
 $headers = 'From: hmrwierper@gmail.com;' . "\r\n" .
   'Reply-To: hmrwierper@gmail.com ' . "\r\n" .
    mail($_SESSION['email'], $emailSubject, $emailMessage, $headers);
-
-    header("location: /portfolio/subpages/forgotPass.php");
+    if (isset($_POST['forgotPass'])) {
+      header("location: /portfolio/subpages/forgotPass.php");
+    }
+    if (isset($_POST['register'])) {
+      header("location: /portfolio/subpages/register.php");
+    }
   }
 }
 
@@ -237,7 +242,11 @@ sleep(1);
         $password = $_POST["password"];
 
         // Use prepared statements to prevent SQL injection
-        $sql = "SELECT * FROM inlog WHERE username = :username AND password = :password";
+        $sql = ("
+        (SELECT * FROM inlog WHERE username = :username AND password = :password)
+        UNION
+        (SELECT * FROM gast WHERE username = :username AND password = :password)
+    ");
         $stmt = $dbh->prepare($sql);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
@@ -252,8 +261,11 @@ sleep(1);
                 header("location: /portfolio/subpages/admin.php");
                 exit;
             } else {
-                echo "<script>alert('Incorrect username or password')</script>";
-            }
+              echo "<div id='warning'>
+              <h1>Wrong Username OR Password <br>
+              </h1>
+              <input type='button' value='Close' onclick='hideWarning();'>
+            </div>";            }
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }

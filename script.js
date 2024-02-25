@@ -282,6 +282,7 @@ function hideLoader(){
 function hideWarning(){
   var warning = document.getElementById("warning");
   warning.style.display = "none";
+
  
 
 }
@@ -319,5 +320,38 @@ function togglePass(id, eyeId) {
     x.type = "password";
     eyeIcon.classList.remove('fa-eye-slash'); // Remove the 'fa-eye-slash' class
     eyeIcon.classList.add('fa-eye'); // Add the 'fa-eye' class
+  }
+}
+
+function enlargeImg(){
+  var modal = document.getElementById("imgModal");
+  modal.style.display = "flex";
+  var body = document.querySelector("body");
+  body.style.overflow = "hidden";
+}
+
+function closeImg(){
+  var modal = document.getElementById("imgModal");
+  modal.style.display = "none";
+  var body = document.querySelector("body");
+  body.style.overflow = "auto";
+}
+
+
+function addValue(input, valueToAdd) {
+  if (input.value === '') {
+    input.value = valueToAdd;
+  }
+}
+
+function removeValue(input, valueToRemove) {
+  if (input.value === valueToRemove) {
+    input.value = '';
+  }
+}
+
+function inputControl(input, originalValue) {
+  if (input.value.indexOf(originalValue) !== 0) {
+    input.value = originalValue;
   }
 }

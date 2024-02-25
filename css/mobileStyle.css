@@ -127,13 +127,15 @@
   }
 
   section.languages{
-    width: 100%;    
+    width: 100%;  
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);  
   }
   .skill{
-    width: 100%;
-    margin-bottom: 2%;
+    width: 50%;
+    height: 50%;
     padding: 5%;
-    margin-bottom: 2%;
+    margin-bottom: 1%;
   }
   section.project{
     flex-direction: column;
@@ -182,7 +184,10 @@
 
   section.contact form{
     width: 80%;
-
+    display: grid;
+    grid-template-rows: repeat(fit-content, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1rem;
   }
 
   header img.me{
@@ -248,7 +253,8 @@
 
 
   #skills{
-    margin-bottom: 100%;
+    margin: auto;
+    padding: 20%;
   }
 
   .adminPanel span.header {
@@ -277,7 +283,7 @@
     display: grid;
     grid-template-columns: repeat(2, 50%);
   }
-  
+
 
   .skillIconEdit textarea {
     min-width: 15vw;
@@ -405,7 +411,7 @@
     stroke-dashoffset: -138px;
   }
 
-  #changePasswordPanel{
+  #changePasswordPanel, #registerPanel{
     height: 70%;
     position: absolute;
     left: 50%;
@@ -413,10 +419,10 @@
     transform: translate(-50%, -40%); 
     margin: 0;
   }
-  #changePasswordPanel form input[type=submit]{
+  #changePasswordPanel form input[type=submit] #registerPanel form input[type=submit]{
     font-size:0.7rem ;
   }
-  #changePasswordPanel form input{
+  #changePasswordPanel form input, #registerPanel form input{
     font-size:1rem ;
   }
   .eye-toggle i{
@@ -424,8 +430,15 @@
     margin-left: 2%;
   }
   #changePassNoAuth{
-    height: 70%;
-    
+    height: 100%;
+    margin-top: 70%;
   }
+  #changePassNoAuth .submitChangePass{
+    font-size: 0.7rem;
+  }
+  input[type=submit]{
+    font-size: 0.7rem !important;
+  }
+  
   
 } 

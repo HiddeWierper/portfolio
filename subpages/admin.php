@@ -23,7 +23,7 @@ if (isset($_GET["logout"])) {
   exit;
 }
 
-if ($_SESSION["username"] === "HiddeW2007"){
+
 if($_SERVER['SERVER_NAME'] == 'localhost') {
   $hostname = 'localhost';
   $password = 'root';
@@ -37,8 +37,14 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
 $database = 'portfolio';
 $port = '3306';
 
+if ($_SESSION["username"] !== "HiddeW2007") {
+  $readonly = "readonly='true'";
+  $inputDisabled = "disabled='true'"; 
+} else {
+    $readonly = "";
+    $inputDisabled = "";
 
-   
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST['up'])) {
     sleep(1);
@@ -145,13 +151,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     exit;
 }
 
-if ($_SESSION["username"] !== "HiddeW2007") {
-    $readonly = "readonly='true'";
-    $inputDisabled = "disabled='true'"; 
-} else {
-    $readonly = "";
-    $inputDisabled = "";
-}
+
 
 // Logout logic
 
@@ -443,8 +443,8 @@ catch(PDOException $e) {
   echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
 }
 
-
 }
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(isset($_POST['change-pass'])){
@@ -617,7 +617,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    }
  }
 }
-}
+} 
+
 
 ?>
 <!DOCTYPE html>
@@ -646,7 +647,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <header class="login admin">
     <img src="/portfolio/img/me.jpeg" id="admin" alt="">
     <span class="me admin">
-      <h2>Welcome, <strong id="typed-username"><br><?php echo $_SESSION["username"]; ?>!</strong></h2>
+      <h2>Welcome, <strong id="typed-username"><?php echo $_SESSION["username"]; ?>!</strong></h2>
     </span>
     <span class="nav">
     <svg class="ham hamRotate ham1 hamburger " viewBox="0 0 100 100" width="80" onclick="this.classList.toggle('active');openMenu();">
@@ -661,7 +662,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
 </svg>
       <ul>
-        <a href="admin.php" id="skill" onclick="active('skill')" ><li>SKILLS</li></a>
+        <a href="#" id="skill" onclick="active('skill')" ><li>SKILLS</li></a>
         <a href="#projects" id="project" onclick="active('project')" ><li>PROJECTS</li></a>
         <a href="#contact" id="contac" onclick="active('contac')" ><li>PASSWORD</li></a>
         <a href="?logout=1"><li>LOGOUT</li></a> 
@@ -724,7 +725,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="edit">Image Path</label>
                   <label for="projectImg" class="fileUpload">
                     <i class="fa fa-cloud-upload"></i> Custom Upload
-                    <input type="file" name="projectImg" id="projectImg">
+                    <input <?php echo $readonly ?> <?php echo $inputDisabled?> type="file" name="projectImg" id="projectImg">
                   </label>
                   <label for="">Current Image</label>
                   <textarea class="projectImg" readonly name="imgDir"><?php echo $projectImg ?></textarea>

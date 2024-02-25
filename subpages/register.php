@@ -1,4 +1,90 @@
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/portfolio/css/style.css">
+  <link rel="stylesheet" href="/portfolio/css/mobileStyle.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans&family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Afacad&display=swap" rel="stylesheet">
+  <link rel="icon" href="/portfolio/img/favicon.png" type="image/x-icon">
+  <script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
+  <script src="/portfolio/script.js"></script>
+  <title>Register</title>
+</head>
+<body class="register">
+<header>
+  <span class="me"><img class="me" src="/portfolio/img/me.jpeg" alt=""><h2>Hidde Wierper</h2></span>
+  <span class="nav">
+  <svg class="ham hamRotate ham1 hamburger " viewBox="0 0 100 100" width="80" onclick="this.classList.toggle('active');openMenu();">
+  <path
+        class="line top"
+        d="m 30,33 h 40 c 0,0 9.044436,-0.654587 9.044436,-8.508902 0,-7.854315 -8.024349,-11.958003 -14.89975,-10.85914 -6.875401,1.098863 -13.637059,4.171617 -13.637059,16.368042 v 40" />
+  <path
+        class="line middle"
+        d="m 30,50 h 40" />
+  <path
+        class="line bottom"
+        d="m 30,67 h 40 c 12.796276,0 15.357889,-11.717785 15.357889,-26.851538 0,-15.133752 -4.786586,-27.274118 -16.667516,-27.274118 -11.88093,0 -18.499247,6.994427 -18.435284,17.125656 l 0.252538,40" />
+</svg>
+
+  <ul class="">
+    <a href="/portfolio/index.php#home"><li>HOME</li></a>
+    <a href="/portfolio/index.php#skills"><li>SKILLS</li></a>
+    <a href="/portfolio/index.php#projects"><li>PROJECTS</li></a>
+    <a href="/portfolio/index.php#contact"><li>CONTACT</li></a>
+    <a href="/portfolio/subpages/login.php" ><li><?php echo isset($_SESSION["username"]) ? $_SESSION["username"] : "LOGIN"; ?></li></a>
+  </ul>
+  </span>
+</header>
+<div class="projectEdit" id="registerPanel">
+<form class="changePass" action="<?php echo $_SERVER['PHP_SELF'];?>" method='post'>
+  <span>
+    <label for="email">Email</label>
+    <input required type="email" name="email" id="email">
+  </span>
+  <span>
+    <label for="username">Username</label>
+    <input required type="text" name="username" id="username">
+  </span>
+  <span>
+    <label for="newPass">New Password</label>
+    <label class="eye-toggle">
+      <input type="checkbox" onclick="togglePass('newPass', 'eyeIcon2')">
+      <i id="eyeIcon2" class="fa-regular fa-eye"></i>
+    </label>
+    <input required type="password" name="newPass" id="newPass">
+  </span>
+  <span>
+    <label for="confirmPass">Confirm Password</label>
+    <label class="eye-toggle">
+      <input type="checkbox" onclick="togglePass('confirmPass', 'eyeIcon3')">
+      <i id="eyeIcon3" class="fa-regular fa-eye"></i>
+    </label>
+    <input required type="password" name="confirmPass" id="confirmPass">
+  </span>
+  <span>
+    <label for="authCode">Auth Code </label>
+    <input required type="text" name="authCode" id="authCode">
+  </span>
+ 
+  <span>
+    <input onclick="showLoader()" class="submitChangePass" type="submit" name="register" value="Register">          
+  </span>
+</form>
+</div>
+  
+</body>
+</html>
 <?php
 session_start();
 
@@ -15,7 +101,6 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
 $database = 'portfolio';
 $port = '3306';
 
-echo $_SESSION['authCode'];
 $postEmail = $_POST['email']; // The email entered by the user
 $sessionEmail = $_SESSION['email']; // The email stored in the session
 
@@ -23,27 +108,29 @@ $sessionEmail = $_SESSION['email']; // The email stored in the session
 try {
   $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  echo "Database connection successful";
+
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
     // Check if the entered auth code matches the stored auth code
-    if(isset($_POST['change-pass'])){
+    if(isset($_POST['register'])){
       sleep(1);
 
     $enteredAuthCode = $_POST['authCode'];
       if ($enteredAuthCode == $_SESSION['authCode']) {
 
-        $checkSql = "SELECT * FROM inlog WHERE email = ?";
+        $checkSql =  "SELECT * FROM inlog AS a
+        INNER JOIN gast AS g ON a.email = g.email
+        WHERE a.email = ?";
         $checkStmt = $dbh->prepare($checkSql);
         $checkStmt->bindParam(1, $sessionEmail, PDO::PARAM_STR);
         $checkStmt->execute();
         $row = $checkStmt->fetch(PDO::FETCH_ASSOC);
-        if ($checkStmt->rowCount() == 0) {
+        if ($checkStmt->rowCount() > 0) {
           // No rows with the session email
           echo "<div id='warning'>
-            <h1>No account exist with this Email!<br>
+            <h1>Already account registerd with this Email!<br>
             </h1>
             <input type='button' value='Close' onclick='hideWarning();'>
           </div>";
@@ -51,27 +138,45 @@ try {
         
         $newPass = $_POST['newPass'];
         $confirmPass = $_POST['confirmPass'];
-        $username = $_SESSION['username'];
+        $username = $_POST['username'];
         $postEmail = $_POST['email']; 
         $currentPassword = $row['password'];
+      
 
-
+        $usernameCheckSql = "SELECT * FROM inlog AS a
+        INNER JOIN gast AS g ON a.username = g.email
+        WHERE a.email = ?";
+        $usernameCheckStmt = $dbh->prepare($usernameCheckSql);
+        $usernameCheckStmt->bindParam(1, $username, PDO::PARAM_STR);
+        $usernameCheckStmt->execute();
+        
+        if ($usernameCheckStmt->rowCount() > 0) {
+          // Username already exists
+          echo "<div id='warning'>
+            <h1>Username already taken!<br>
+            </h1>
+            <input type='button' value='Close' onclick='hideWarning();'>
+          </div>";
+        } 
     
-        if ($newPass === $confirmPass && $checkStmt->rowCount() > 0 && $confirmPass !== $currentPassword) {
-          $updateSql = "UPDATE gast SET password = ? WHERE email = ?";
+        if ($newPass === $confirmPass && $checkStmt->rowCount() == 0) {
+          $updateSql = "INSERT INTO gast SET password = ?, username = ?, email = ?";
           $updateStmt = $dbh->prepare($updateSql);
           $updateStmt->bindParam(1, $newPass, PDO::PARAM_STR);
-          $updateStmt->bindParam(2, $sessionEmail, PDO::PARAM_STR); // Bind de nieuwe e-mail aan de query// Dit moet 3 zijn, niet 2
+          $updateStmt->bindParam(2, $username, PDO::PARAM_STR);
+          $updateStmt->bindParam(3, $sessionEmail, PDO::PARAM_STR); 
+           // Bind de nieuwe e-mail aan de query// Dit moet 3 zijn, niet 2
           
           $updateStmt->execute();
 
           echo "<div id='warning'>
-            <h1>Password Successfully Changed! <br>
+            <h1>Welcome to our website!<br>
             </h1>
             <input type='button' value='Close' onclick='hideWarning(); redirect();'>
           </div>";
+
           $toEmail = $postEmail;
-          $emailSubject = "Password Changed";
+          $emailSubject = "Welcome!";
           $headers = "Reply-To: $toEmail\r\n";
           $headers .= "Content-type: text/html; charset=utf-8\r\n"; 
           $emailMessage = '<!DOCTYPE html>
@@ -168,8 +273,8 @@ try {
           <body>
               <section>
           <div class="container">
-                  <h1>Password have been changed!</h1>
-                  <p>if you have NOT changed your password, immediately change your password</p>
+                  <h1>Welcome!</h1>
+                  <p>We extend a warm welcome to you on our website.</p>
                   <a href="https://localhost/portfolio/admin.php">change password</a>
                   <br>
                   <div class="links">
@@ -188,13 +293,6 @@ try {
           mail($toEmail, $emailSubject, $emailMessage, $headers);
           
         } 
-        if($confirmPass === $currentPassword) {
-          echo "<div id='warning'>
-            <h1>Can't use same password Twice!<br>
-            </h1>
-            <input type='button' value='Close' onclick='hideWarning();'>
-          </div>";
-        }
         if ($newPass !== $confirmPass) {
           echo "<div id='warning'>
             <h1>Passwords do not match!<br>
@@ -213,65 +311,8 @@ try {
     } 
   }
 } catch (PDOException $e) {
-  echo "Database connection failed: " . $e->getMessage() . "<br><br>";
+  echo "something went wrong  : " . $e->getMessage() . "<br><br>";
 }
 
 
-
 ?>
-
-
-<head>
-<meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Change Password</title>
-  <link rel="stylesheet" href="/portfolio/css/style.css">
-  <link rel="stylesheet" href="/portfolio/css/mobileStyle.css">
-  <script src="/portfolio/script.js"></script>
-</head>
-<body class="forgot">
-<?php include 'header.php'; ?>
-
-<div class="projectEdit" id="changePasswordPanel">
-<form class="changePass" action="<?php echo $_SERVER['PHP_SELF'];?>" method='post'>
-<span>
-    <label for="email">Email</label>
-    <input required type="email" name="email" id="email">
-  </span>
-  <span>
-    <label for="authCode">Auth Code </label>
-    <input required type="text" name="authCode" id="authCode">
-  </span>
-  <span>
-    <label for="newPass">New Password</label>
-    <label class="eye-toggle">
-      <input type="checkbox" onclick="togglePass('newPass', 'eyeIcon2')">
-      <i id="eyeIcon2" class="fa-regular fa-eye"></i>
-    </label>
-    <input required type="password" name="newPass" id="newPass">
-  </span>
-  <span>
-    <label for="confirmPass">Confirm Password</label>
-
-    <label class="eye-toggle">
-      <input type="checkbox" onclick="togglePass('confirmPass', 'eyeIcon3')">
-      <i id="eyeIcon3" class="fa-regular fa-eye"></i>
-    </label>
-    <input required type="password" name="confirmPass" id="confirmPass">
-
-  </span>
- 
-  <span>
-    <input onclick="showLoader()" class="submitChangePass" type="submit" name="change-pass" value="Change Password">          
-  </span>
-</form>
-</div>
-
-</body>
-
-<script>
-
-
-</script>
-<script src="https://kit.fontawesome.com/c6d023de9c.js" crossorigin="anonymous"></script>
-</html>
