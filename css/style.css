@@ -146,7 +146,7 @@ a:hover{
 
 
 .socials {
-  width: 4vw;
+  width: 6vw;
   height: fit-content;
   background:
   repeating-conic-gradient(from 30deg, rgba(0, 0, 0, 0.2) 0 120deg, rgba(138, 138, 138, 0.15) 0 180deg)
@@ -790,7 +790,7 @@ section.project{
 
 section.project .project-info{
   width: 50%;
-  padding: 1% 5%;
+  padding: 2% 1%;
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -1419,5 +1419,6 @@ span.close{
   font-size: 2rem;
   position: absolute;
   top: 6%;
+  
   right: 4%;
 }

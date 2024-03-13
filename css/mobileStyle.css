@@ -164,7 +164,7 @@
   section.project .project-info{
     font-size: 1.2rem;
     width: 90%;
-    padding: 4%;
+    padding: 6%;
   }
   .project:nth-of-type(even):not(hr){
     flex-direction: column;
@@ -442,3 +442,15 @@
   
   
 } 
+
+@media screen and (max-width: 1200px) {
+  section.languages{
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    margin-right: 0;
+  
+  }
+  section.explanation{
+    column-count: 1;
+  }
+}

@@ -71,6 +71,7 @@ try {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="/portfolio/img/favicon.png" type="image/x-icon">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hidde Wierper</title>
   <link rel="stylesheet" href="css/style.css">
@@ -81,7 +82,7 @@ try {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Rethink+Sans&family=Roboto:wght@300&display=swap" rel="stylesheet">
-  <link rel="icon" href="img/favicon.png" type="image/x-icon">
+  
   
 </head>
 <body id="home">
@@ -270,7 +271,7 @@ if (!empty($_POST)) {
            .information{
              display: flex;
              flex-direction: column;
-             width: 50%;
+             width: fit-content;
              justify-content: center;
              margin: auto;
              margin-top: 5%;
@@ -470,7 +471,7 @@ if (!empty($_POST)) {
       </span>
       <span>
         <label for="phone">phone</label>
-        <input type="tel" name="phone"  inputmode="numeric" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="phone" placeholder="+31 123456789" onfocus="addValue(this, '+')" onblur="removeValue(this, '+')" required>
+        <input type="tel" name="phone"  inputmode="numeric"  id="phone" placeholder="+31 123456789" onfocus="addValue(this, '+')" onblur="removeValue(this, '+')" required>
       </span>
       <span>
         <label for="subject">subject</label>
