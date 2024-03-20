@@ -39,7 +39,7 @@ session_start();
 
 try {
     // Maak verbinding met de database
-    $db = new PDO('mysql:host=localhost;dbname=portfolio', 'root', 'root');
+    $db = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
 
     // Zet PDO error mode naar exception
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
