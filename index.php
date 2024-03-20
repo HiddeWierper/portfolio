@@ -1,23 +1,23 @@
 <?php
 session_start();
 if($_SERVER['SERVER_NAME'] == 'localhost') {
-  $hostname = 'localhost';
-  $password = 'root';
-  $username = 'root';
+  $hostname = 'thuis.wierper.net';
+  $password = 'W13rp3r1411JD';
+  $username = 'user';
 }else if($_SERVER['SERVER_NAME'] == '192.168.1.33') {
   $hostname = '192.168.1.33';
-  $password = 'root';
-  $username = 'root';
+  $password = 'user';
+  $username = 'user';
 }
 else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
   $hostname = 'thuis.wierper.net';
   $password = 'W13rp3r1411JD';
-  $username = 'root';
+  $username = 'user';
 }
     $port = 3306;
     $database = 'portfolio';
 try {
-    $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $password, $username);
+    $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
 
@@ -115,12 +115,12 @@ try {
 
   if($_SERVER['SERVER_NAME'] == 'localhost') {
     $hostname = 'localhost';
-    $password = 'root';
-    $username = 'root';
+    $password = 'user';
+    $username = 'user';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
     $hostname = 'thuis.wierper.net';
     $password = 'W13rp3r1411JD';
-    $username = 'root';
+    $username = 'user';
   }
 
   $conn = new mysqli($hostname, $username, $password, $database);
@@ -187,12 +187,12 @@ try {
 try {
   if($_SERVER['SERVER_NAME'] == 'localhost') {
     $hostname = 'localhost';
-    $password = 'root';
-    $username = 'root';
+    $password = 'user';
+    $username = 'user';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
     $hostname = 'thuis.wierper.net';
     $password = 'W13rp3r1411JD';
-    $username = 'root';
+    $username = 'user';
   } 
   $port = 3306;
   $database = 'portfolio';
