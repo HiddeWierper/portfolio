@@ -14,7 +14,7 @@
 </svg>
 
   <ul class="">
-    <a href=""><li>HOME</li></a>
+    <a href="/portfolio/index.php"><li>HOME</li></a>
     <a href="#skills"><li>SKILLS</li></a>
     <a href="#projects"><li>PROJECTS</li></a>
     <a href="#contact"><li>CONTACT</li></a>
