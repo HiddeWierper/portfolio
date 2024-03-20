@@ -212,7 +212,7 @@ $headers = 'From: hmrwierper@gmail.com;' . "\r\n" .
 try {
 //   when on server remove //
   // $hostname = 'thuis.wierper.net';
-  // $password = 'Wierper1411';
+  // $password = 'W13rp3r1411JD';
 
   if($_SERVER['SERVER_NAME'] == 'localhost') {
     $hostname = 'localhost';

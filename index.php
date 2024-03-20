@@ -17,12 +17,12 @@ else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
     $port = 3306;
     $database = 'portfolio';
 try {
-    $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
+    $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $password, $username);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
 
 } catch(PDOException $e) {
-    echo 'ERROR: ' . $e->getMessage();
+    echo 'ERROR: 1' . $e->getMessage();
 }
 echo $username;
 echo $password;
@@ -119,7 +119,7 @@ try {
     $username = 'root';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
     $hostname = 'thuis.wierper.net';
-    $password = 'Wierper1411';
+    $password = 'W13rp3r1411JD';
     $username = 'root';
   }
 
@@ -191,7 +191,7 @@ try {
     $username = 'root';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
     $hostname = 'thuis.wierper.net';
-    $password = 'Wierper1411';
+    $password = 'W13rp3r1411JD';
     $username = 'root';
   } 
   $port = 3306;
