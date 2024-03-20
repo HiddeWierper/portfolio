@@ -1,9 +1,9 @@
 <?php
 session_start();
 if($_SERVER['SERVER_NAME'] == 'localhost') {
-  $hostname = 'thuis.wierper.net';
-  $password = 'W13rp3r1411JD';
-  $username = 'user';
+  $hostname = 'localhost';
+  $password = 'root';
+  $username = 'root';
 }else if($_SERVER['SERVER_NAME'] == '192.168.1.33') {
   $hostname = '192.168.1.33';
   $password = 'user';
@@ -115,8 +115,8 @@ try {
 
   if($_SERVER['SERVER_NAME'] == 'localhost') {
     $hostname = 'localhost';
-    $password = 'user';
-    $username = 'user';
+    $password = 'root';
+    $username = 'root';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
     $hostname = 'thuis.wierper.net';
     $password = 'W13rp3r1411JD';
@@ -187,12 +187,12 @@ try {
 try {
   if($_SERVER['SERVER_NAME'] == 'localhost') {
     $hostname = 'localhost';
-    $password = 'user';
-    $username = 'user';
+    $password = 'root';
+    $username = 'root';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
     $hostname = 'thuis.wierper.net';
     $password = 'W13rp3r1411JD';
-    $username = 'user';
+    $username = 'root';
   } 
   $port = 3306;
   $database = 'portfolio';
