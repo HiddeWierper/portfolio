@@ -12,7 +12,7 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
 else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
   $hostname = 'thuis.wierper.net';
   $password = 'root';
-  $username = 'root';
+  $username = 'W13rp3r1411JD';
 }
     $port = 3306;
     $database = 'portfolio';
