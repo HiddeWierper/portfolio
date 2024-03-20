@@ -11,8 +11,8 @@ if($_SERVER['SERVER_NAME'] == 'localhost') {
 }
 else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
   $hostname = 'thuis.wierper.net';
-  $password = 'root';
-  $username = 'W13rp3r1411JD';
+  $password = 'W13rp3r1411JD';
+  $username = 'root';
 }
     $port = 3306;
     $database = 'portfolio';
@@ -24,6 +24,9 @@ try {
 } catch(PDOException $e) {
     echo 'ERROR: ' . $e->getMessage();
 }
+echo $username;
+echo $password;
+echo $hostname;
 
 
 
@@ -116,7 +119,7 @@ try {
     $username = 'root';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
     $hostname = 'thuis.wierper.net';
-    $password = 'W13rp3r1411JD';
+    $password = 'Wierper1411';
     $username = 'root';
   }
 
@@ -188,7 +191,7 @@ try {
     $username = 'root';
   }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
     $hostname = 'thuis.wierper.net';
-    $password = 'W13rp3r1411JD';
+    $password = 'Wierper1411';
     $username = 'root';
   } 
   $port = 3306;
