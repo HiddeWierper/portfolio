@@ -304,22 +304,27 @@ try{
       $projectWebLink = $newProjectWebLink;
       $projectImg = $newProjectImg;
       
-      $affectedRows = $updateStmt->rowCount();
-      if ($affectedRows > 0) {
-        echo "<div id='warning'>
-        <h1>Succesfully updated! <br>
-        </h1>
-        <input type='button' value='Close' onclick='hideWarning();'>
-      </div>";
+      if ($updateStmt->execute()) {
+          if ($updateStmt->rowCount() > 0) {
+              echo "<div id='warning'>
+              <h1>Succesfully updated! <br>
+              </h1>
+              <input type='button' value='Close' onclick='hideWarning();'>
+            </div>";
+          } else {
+              echo "<div id='warning'>
+              <h1>Nothing to update!<br>
+              </h1>
+              <input type='button' value='Close' onclick='hideWarning();'>
+            </div>";
+          }
+      } else {
+          echo "<div id='warning'>
+          <h1>Error updating!<br>
+          </h1>
+          <input type='button' value='Close' onclick='hideWarning();'>
+        </div>";
       }
-      else if ($affectedRows == 0){
-        echo "<div id='warning'>
-        <h1>Nothing to update!<br>
-        </h1>
-        <input type='button' value='Close' onclick='hideWarning();'>
-      </div>";
-      }
-
       // header("location: /portfolio/subpages/admin.php#projects");
 }
 }
