@@ -24,26 +24,22 @@ if (isset($_GET["logout"])) {
 }
 
 
-if($_SERVER['SERVER_NAME'] == 'localhost') {
-  $hostname = 'localhost';
-  $password = 'root';
-  $username = 'root';
-}else if($_SERVER['SERVER_NAME'] == '192.168.1.33') {
-  $hostname = '192.168.1.33';
-  $password = 'root';
-  $username = 'root';
-  
-}  
-$database = 'portfolio';
-$port = '3306';
+include 'connection.php';
+try {
+    $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-if ($_SESSION["username"] !== "HiddeW2007") {
-  $readonly = "readonly='true'";
-  $inputDisabled = "disabled='true'"; 
-} else {
-    $readonly = "";
-    $inputDisabled = "";
+    $stmt = $dbh->prepare("SELECT * FROM inlog WHERE username = :username");
+    $stmt->bindParam(':username', $_SESSION['username']);
+    $stmt->execute();
 
+    if ($stmt->rowCount() == 0) {
+      $readonly = "readonly='true'";
+      $inputDisabled = "disabled='true'";
+    } else {
+      $readonly = "";
+      $inputDisabled = "";
+      
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST['up'])) {
@@ -161,21 +157,7 @@ $specialMessage = ($_SESSION["username"] === "HiddeW2007")
     : "You are logged in as a regular user. No special actions can be performed";
 // Database connection details
 
-$port = '3306';
-$database = 'portfolio';
 
-
-
-if($_SERVER['SERVER_NAME'] == 'localhost') {
-  $hostname = 'localhost';
-  $password = 'root';
-  $username = 'root';
-}else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-  $hostname = 'thuis.wierper.net';
-  $password = 'W13rp3r1411JD';
-  $username = 'root';
-  
-}
 
 try {
   sleep(1);
@@ -276,8 +258,9 @@ try{
     if (isset($_POST['submitProjects'])) {
         sleep(1); 
 
-        $currentImageSql = "SELECT imgDir FROM projects WHERE id = $id";
+        $currentImageSql = "SELECT imgDir FROM projects WHERE id = :id";
         $currentImageStmt = $dbh->prepare($currentImageSql);
+        $currentImageStmt->bindParam(':id', $id);
         $currentImageStmt->execute();
         $currentImageRow = $currentImageStmt->fetch(PDO::FETCH_ASSOC);
         $currentImageFromDatabase = $currentImageRow['imgDir'];
@@ -302,7 +285,7 @@ try{
       $newProjectLangContent = $_POST['projectLangContent'];
       $newProjectWebLink = $_POST['projectWebLink'];
       $newProjectImg = basename($newProjectImg);
-      $updateSql = "UPDATE projects SET IconLink = :newProjectIconContent, projectName = :newProjectNameContent, projectInfo = :newProjectInfoContent, projectLanguages = :newProjectLangContent, projectWebsiteLink = :newProjectWebLink, imgDir = :newProjectImg WHERE id = $id";
+      $updateSql = "UPDATE projects SET IconLink = :newProjectIconContent, projectName = :newProjectNameContent, projectInfo = :newProjectInfoContent, projectLanguages = :newProjectLangContent, projectWebsiteLink = :newProjectWebLink, imgDir = :newProjectImg WHERE id = :id";
       $updateStmt = $dbh->prepare($updateSql);
       $updateStmt->bindParam(':newProjectIconContent', $newProjectIconContent);
       $updateStmt->bindParam(':newProjectNameContent', $newProjectNameContent);
@@ -310,7 +293,7 @@ try{
       $updateStmt->bindParam(':newProjectLangContent', $newProjectLangContent);
       $updateStmt->bindParam(':newProjectWebLink', $newProjectWebLink);
       $updateStmt->bindParam(':newProjectImg', $newProjectImg);
-      $updateStmt->execute();
+      $updateStmt->bindParam(':id', $id);
 
 
       // Update the content variable to reflect the changes
@@ -443,6 +426,9 @@ catch(PDOException $e) {
   echo "Database Connection failed: " . $e->getMessage() . "<br><br>";
 }
 
+    }
+} catch(PDOException $e) {
+    echo 'ERROR: ' . $e->getMessage();
 }
 
 

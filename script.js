@@ -354,3 +354,4 @@ function inputControl(input, originalValue) {
     input.value = originalValue;
   }
 }
+

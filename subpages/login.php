@@ -210,24 +210,7 @@ $headers = 'From: hmrwierper@gmail.com;' . "\r\n" .
 }
 
 try {
-//   when on server remove //
-  // $hostname = 'thuis.wierper.net';
-  // $password = 'W13rp3r1411JD';
-
-  if($_SERVER['SERVER_NAME'] == 'localhost') {
-    $hostname = 'localhost';
-    $password = 'root';
-    $username = 'root';
-  }else if($_SERVER['SERVER_NAME'] == '192.168.1.33') {
-    $hostname = '192.168.1.33';
-    $password = 'root';
-    $username = 'root';
-    
-  }
- 
-  $port = 3306;  
-  
-  $database= 'portfolio';
+include_once 'connection.php';
   $dbh = new PDO('mysql: host=' . $hostname.'; dbname='.$database
                 .'; port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

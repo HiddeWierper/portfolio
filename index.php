@@ -1,74 +1,7 @@
 <?php
 session_start();
-if($_SERVER['SERVER_NAME'] == 'localhost') {
-  $hostname = 'localhost';
-  $password = 'root';
-  $username = 'root';
-}else if($_SERVER['SERVER_NAME'] == '192.168.1.33') {
-  $hostname = '192.168.1.33';
-  $password = 'user';
-  $username = 'user';
-}
-else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-  $hostname = 'thuis.wierper.net';
-  $password = 'W13rp3r1411JD';
-  $username = 'root';
-}
-    $port = 3306;
-    $database = 'portfolio';
-try {
-    $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    
+include_once 'subpages/connection.php';
 
-} catch(PDOException $e) {
-    echo 'ERROR: 1' . $e->getMessage();
-}
-echo $username;
-echo $password;
-echo $hostname;
-
-
-
-?>
-
-
-<?php
-// Start de sessie
-session_start();
-
-try {
-    // Maak verbinding met de database
-    $db = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
-
-    // Zet PDO error mode naar exception
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Bereid de SQL-query voor
-    $stmt = $db->prepare("SELECT * FROM inlog WHERE username = :username");
-
-    // Controleer of de sessievariabele bestaat
-    if (!isset($_SESSION['username'])) {
-        throw new Exception('Sessievariabele username is niet ingesteld');
-    }
-
-    // Bind de parameters
-    $stmt->bindParam(':username', $_SESSION['username']);
-
-    // Voer de query uit
-    $stmt->execute();
-
-    // Controleer of de gebruikersnaam bestaat in de tabel
-    if ($stmt->rowCount() > 0) {
-        $_SESSION['rights'] = true;
-    } else {
-        $_SESSION['rights'] = false;
-    }
-} catch (PDOException $e) {
-    echo "Database error: " . $e->getMessage();
-} catch (Exception $e) {
-    echo "Error: " . $e->getMessage();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,18 +43,6 @@ try {
   <section class="all">
   <?php
   // Maak verbinding met de database
-
-
-
-  if($_SERVER['SERVER_NAME'] == 'localhost') {
-    $hostname = 'localhost';
-    $password = 'root';
-    $username = 'root';
-  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-    $hostname = 'thuis.wierper.net';
-    $password = 'W13rp3r1411JD';
-    $username = 'user';
-  }
 
   $conn = new mysqli($hostname, $username, $password, $database);
 
@@ -185,18 +106,7 @@ try {
      showcasing projects <br> developed in various programming languages.</p>
 <?php
 try {
-  if($_SERVER['SERVER_NAME'] == 'localhost') {
-    $hostname = 'localhost';
-    $password = 'root';
-    $username = 'root';
-  }else if($_SERVER['SERVER_NAME'] == 'thuis.wierper.net') {
-    $hostname = 'thuis.wierper.net';
-    $password = 'W13rp3r1411JD';
-    $username = 'root';
-  } 
-  $port = 3306;
-  $database = 'portfolio';
-  
+
 
   $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
