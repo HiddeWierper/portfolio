@@ -43,7 +43,6 @@ include_once 'subpages/connection.php';
   <section class="all">
   <?php
   // Maak verbinding met de database
-
   $conn = new mysqli($hostname, $username, $password, $database);
 
 

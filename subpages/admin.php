@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 try{
-$mysqli = new mysqli('localhost', 'root', 'root', 'portfolio');
+$mysqli = new mysqli($hostname, $username, $password, $database);
 if ($mysqli->connect_error) {
   die('Connect Error (' . $mysqli->connect_errno . ') ' . $mysqli->connect_error);
 }
