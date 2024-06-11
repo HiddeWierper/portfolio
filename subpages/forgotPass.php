@@ -19,7 +19,7 @@ try {
 
     // Check if the entered auth code matches the stored auth code
     if(isset($_POST['change-pass'])){
-      sleep(1);
+      sleep(0.3);
 
     $enteredAuthCode = $_POST['authCode'];
       if ($enteredAuthCode == $_SESSION['authCode']) {

@@ -219,7 +219,7 @@ include_once 'connection.php';
   }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-sleep(1);
+sleep(0.3);
     if (!empty($_POST["username"]) && !empty($_POST["password"])) {
         $username = $_POST["username"];
         $password = $_POST["password"];

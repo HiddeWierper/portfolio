@@ -43,7 +43,7 @@ try {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST['up'])) {
-    sleep(1);
+    sleep(0.3);
     $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST['down'])) {
-    sleep(1);
+    sleep(0.3);
     if ($id > 1) {
       
       $id--;
@@ -98,7 +98,7 @@ if ($mysqli->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (isset($_POST['add'])) {
-    sleep(1);
+    sleep(0.3);
 
     // Vind het hoogste id in de tabel
     $query = "SELECT MAX(id) AS max_id FROM projects";
@@ -160,7 +160,7 @@ $specialMessage = ($_SESSION["username"] === "HiddeW2007")
 
 
 try {
-  sleep(1);
+  sleep(0.3);
     $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
     $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -191,7 +191,7 @@ try {
     // header("location: /portfolio/subpages/admin.php");
 }
 try {
-  sleep(1);
+  sleep(0.3);
   $dbh = new PDO('mysql:host=' . $hostname . ';dbname=' . $database . ';port=' . $port, $username, $password);
   $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -256,7 +256,7 @@ try{
   // Update content if the form is submitted
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['submitProjects'])) {
-        sleep(1); 
+        sleep(0.3); 
 
         $currentImageSql = "SELECT imgDir FROM projects WHERE id = :id";
         $currentImageStmt = $dbh->prepare($currentImageSql);
@@ -338,7 +338,7 @@ try {
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if (isset($_POST['hide'])) {
-      sleep(1);
+      sleep(0.3);
       // Use the current $id to delete the correct row
       $deleteSql = "UPDATE projects set deleted = 1 where id = ?";
       $deleteStmt = $dbh->prepare($deleteSql);
@@ -367,7 +367,7 @@ try {
      
     }
     else if(isset($_POST['show'])){
-      sleep(1);
+      sleep(0.3);
       // Use the current $id to delete the correct row
       $deleteSql = "UPDATE projects set deleted = 0 where id = ?";
       $deleteStmt = $dbh->prepare($deleteSql);
@@ -399,7 +399,7 @@ try {
 
    
   else if(isset($_POST['show'])){
-    sleep(1);
+    sleep(0.3);
     // Use the current $id to delete the correct row
     $deleteSql = "UPDATE projects set deleted = 0 where id = ?";
     $deleteStmt = $dbh->prepare($deleteSql);
@@ -439,7 +439,7 @@ catch(PDOException $e) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(isset($_POST['change-pass'])){
-   sleep(1);
+   sleep(0.3);
    
    $currentPass = $_POST['currentPass'];
    $newPass = $_POST['newPass'];
